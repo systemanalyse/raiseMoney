@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "RaiseMoney": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "",
+    "database": "Raisemoney",
+    "password": "123456",
+    "name": "RaiseMoney",
+    "user": "root",
+    "connector": "mysql"
+  }
+}

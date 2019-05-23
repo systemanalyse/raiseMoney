@@ -31,5 +31,17 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "UserInformation": {
+    "dataSource": "RaiseMoney",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "DD": {
+    "dataSource": "RaiseMoney",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

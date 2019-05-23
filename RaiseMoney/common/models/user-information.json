@@ -1,0 +1,81 @@
+{
+  "name": "UserInformation",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "school": {
+      "type": "string",
+      "comments": "Sun Yat-sen University"
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "enrollment": {
+      "type": "number",
+      "comments": "2015"
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "phonenumber": {
+      "type": "string"
+    },
+    "wechatid": {
+      "type": "string"
+    },
+    "ppid": {
+      "type": "string"
+    },
+    "money": {
+      "type": "number",
+      "comments": "0"
+    },
+    "email": {
+      "type": "string"
+    },
+    "PPPnumber": {
+      "type": "number",
+      "comments": "0"
+    },
+    "sex": {
+      "type": "string",
+      "comments": "M"
+    },
+    "DDPnumber": {
+      "type": "number",
+      "comments": "0"
+    },
+    "PPRnumber": {
+      "type": "number",
+      "comments": "0"
+    },
+    "DDRnumber": {
+      "type": "number",
+      "comments": "0"
+    },
+    "online": {
+      "type": "boolean"
+    },
+    "dormitorysite": {
+      "type": "string",
+      "index": false
+    },
+    "name": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

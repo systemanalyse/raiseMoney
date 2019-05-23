@@ -1,0 +1,44 @@
+{
+  "name": "DD",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "deadline": {
+      "type": "string"
+    },
+    "totalnumber": {
+      "type": "number"
+    },
+    "picture": {
+      "type": "string"
+    },
+    "bonus": {
+      "type": "number"
+    },
+    "bonus_pay_way": {
+      "type": "number",
+      "comments": "0"
+    },
+    "received_number": {
+      "type": "number",
+      "comments": "0"
+    },
+    "start_time": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

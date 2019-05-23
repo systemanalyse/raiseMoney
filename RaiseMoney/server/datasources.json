@@ -6,8 +6,7 @@
   "RaiseMoney": {
     "host": "localhost",
     "port": 3306,
-    "url": "",
-    "database": "Raisemoney",
+    "database": "RaiseMoney",
     "password": "123456",
     "name": "RaiseMoney",
     "user": "root",

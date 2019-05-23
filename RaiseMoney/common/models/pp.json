@@ -1,0 +1,46 @@
+{
+  "name": "PP",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "site": {
+      "type": "string",
+      "required": true
+    },
+    "deadline": {
+      "type": "string",
+      "required": true
+    },
+    "weight": {
+      "type": "string"
+    },
+    "bonus": {
+      "type": "string"
+    },
+    "picture": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "start_time": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

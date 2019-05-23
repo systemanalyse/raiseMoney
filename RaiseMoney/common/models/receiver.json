@@ -1,0 +1,24 @@
+{
+  "name": "Receiver",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "uid": {
+      "type": "string"
+    },
+    "received_time": {
+      "type": "string"
+    },
+    "bonus": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

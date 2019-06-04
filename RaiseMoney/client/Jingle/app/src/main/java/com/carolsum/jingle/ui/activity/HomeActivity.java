@@ -1,4 +1,4 @@
-package com.carolsum.jingle.ui;
+package com.carolsum.jingle.ui.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.carolsum.jingle.R;
-import com.carolsum.jingle.ui.home.HomeFragment;
-import com.carolsum.jingle.ui.publish.PublishFragment;
-import com.carolsum.jingle.ui.space.SpaceFragment;
+import com.carolsum.jingle.ui.fragment.HomeFragment;
+import com.carolsum.jingle.ui.fragment.PublishFragment;
+import com.carolsum.jingle.ui.fragment.SpaceFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{

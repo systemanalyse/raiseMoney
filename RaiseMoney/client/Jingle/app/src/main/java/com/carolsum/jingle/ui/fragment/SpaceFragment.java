@@ -1,4 +1,4 @@
-package com.carolsum.jingle.ui.space;
+package com.carolsum.jingle.ui.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,15 +12,23 @@ import com.carolsum.jingle.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SpaceFragment extends Fragment {
+public class SpaceFragment extends BaseFragment {
 
     private TabLayout tabLayout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_space, container, false);
+    protected void initEvent() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected View initView() {
+        return View.inflate(getActivity(), R.layout.fragment_space, null);
     }
 
 }

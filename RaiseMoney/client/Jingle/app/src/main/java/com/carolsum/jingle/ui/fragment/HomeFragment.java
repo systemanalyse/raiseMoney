@@ -1,4 +1,4 @@
-package com.carolsum.jingle.ui.home;
+package com.carolsum.jingle.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +11,31 @@ import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     private View fragmentView;
     private TabLayout tabLayout;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentView =  inflater.inflate(R.layout.fragment_home, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+        initEvent();
+    }
+
+    @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected View initView() {
+        fragmentView =  View.inflate(getActivity(), R.layout.fragment_home, null);
         tabLayout = fragmentView.findViewById(R.id.tabs);
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
@@ -39,17 +55,5 @@ public class HomeFragment extends Fragment {
             }
         });
         return fragmentView;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-        initEvent();
-    }
-
-    private void initData() {}
-
-    private void initEvent() {
     }
 }

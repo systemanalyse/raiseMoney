@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.carolsum.jingle.ui.HomeActivity;
+import com.carolsum.jingle.ui.activity.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 

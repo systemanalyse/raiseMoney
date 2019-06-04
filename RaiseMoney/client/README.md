@@ -1,3 +1,3 @@
-## Client
+## 挣闲钱项目（安卓端）
 
-This is the place for your application front-end files.
+  采用 Material Design 的安卓原生项目。

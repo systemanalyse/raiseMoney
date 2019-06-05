@@ -4,6 +4,6 @@ public class LoginEvent {
     public final String username;
 
     public LoginEvent(String username) {
-       this.username = username;
+        this.username = username;
     }
 }

@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.event.LoginEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +36,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 String type = tab.getText().toString();
-                Toast.makeText(fragmentView.getContext(), type, Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new LoginEvent(type));
             }
 
             @Override

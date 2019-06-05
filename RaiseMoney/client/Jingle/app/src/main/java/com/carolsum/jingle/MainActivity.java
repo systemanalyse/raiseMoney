@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.carolsum.jingle.event.LoginEvent;
 import com.carolsum.jingle.ui.activity.HomeActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

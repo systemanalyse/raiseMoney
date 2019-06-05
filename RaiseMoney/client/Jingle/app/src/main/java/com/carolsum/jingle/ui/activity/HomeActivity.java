@@ -8,12 +8,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.event.LoginEvent;
 import com.carolsum.jingle.ui.fragment.HomeFragment;
 import com.carolsum.jingle.ui.fragment.PublishFragment;
 import com.carolsum.jingle.ui.fragment.SpaceFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +81,23 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             viewPager.setCurrentItem(menuItem.getOrder());
             return true;
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginEvent event) {
+        Toast.makeText(getApplicationContext(), "Welcome " + event.username + "!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override

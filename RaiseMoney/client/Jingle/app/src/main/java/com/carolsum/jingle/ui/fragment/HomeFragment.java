@@ -3,18 +3,22 @@ package com.carolsum.jingle.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class HomeFragment extends BaseFragment {
 
     private View fragmentView;
-    private TabLayout tabLayout;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+
+    private Unbinder unbinder;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -25,18 +29,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initEvent() {
-
-    }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected View initView() {
-        fragmentView =  View.inflate(getActivity(), R.layout.fragment_home, null);
-        tabLayout = fragmentView.findViewById(R.id.tabs);
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -54,6 +46,23 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected View initView() {
+        fragmentView =  View.inflate(getActivity(), R.layout.fragment_home, null);
+        unbinder = ButterKnife.bind(this, fragmentView);
         return fragmentView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

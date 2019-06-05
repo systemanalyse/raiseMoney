@@ -15,25 +15,38 @@ import com.carolsum.jingle.ui.fragment.PublishFragment;
 import com.carolsum.jingle.ui.fragment.SpaceFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
-    private BottomNavigationViewEx bnve;
-    private ViewPager viewPager;
+    @BindView(R.id.bottom_nav_bar)
+    BottomNavigationViewEx bnve;
+    @BindView(R.id.home_viewPager)
+    ViewPager viewPager;
 
     private HomeFragment homeFragment = new HomeFragment();
     private SpaceFragment spaceFragment = new SpaceFragment();
     private PublishFragment publishFragment = new PublishFragment();
 
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        unbinder = ButterKnife.bind(this);
         initViewPager();
         initBottomNavBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
+    }
+
     private void initViewPager() {
-        viewPager = findViewById(R.id.home_viewPager);
         viewPager.addOnPageChangeListener(this);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -57,15 +70,10 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     private void initBottomNavBar() {
-        bnve = (BottomNavigationViewEx) findViewById(R.id.bottom_nav_bar);
         bnve.enableItemShiftingMode(false);
-
-        bnve.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                viewPager.setCurrentItem(menuItem.getOrder());
-                return true;
-            }
+        bnve.setOnNavigationItemSelectedListener(menuItem -> {
+            viewPager.setCurrentItem(menuItem.getOrder());
+            return true;
         });
     }
 

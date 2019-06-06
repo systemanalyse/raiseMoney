@@ -30,7 +30,7 @@
     app:sv_animationType="Line" />
 
 
-    <RelativeLayout
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
@@ -47,6 +47,7 @@
         android:textSize="24dp"/>
 
       <TextView
+        android:id="@+id/step_desc"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
@@ -66,12 +67,353 @@
     </RelativeLayout>
 
   <LinearLayout
+    android:id="@+id/step1_layout"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:visibility="visible">
 
+    <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="20dp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:layout_marginRight="20dp"
+      android:hint="邮箱">
 
+      <android.support.design.widget.TextInputEditText
+        android:id="@+id/register_email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="20dp"
+      android:layout_marginRight="20dp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:hint="密码">
+
+      <android.support.design.widget.TextInputEditText
+        android:id="@+id/register_password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="20dp"
+      android:layout_marginRight="20dp"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:hint="确认密码">
+
+      <android.support.design.widget.TextInputEditText
+        android:id="@+id/register_confirm_password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/step2_layout"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:visibility="gone"
+    >
+
+    <View
+      android:id="@+id/student_card_image"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:background="@color/light_gray"
+      />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:src="@drawable/home"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="32dp"
+          android:layout_marginLeft="5dp"
+          android:text="学生信息"
+          android:gravity="center"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="姓名"/>
+
+        <EditText
+          android:id="@+id/register_username"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="请输入你的姓名"
+          android:textSize="14dp"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="性别"/>
+
+        <RadioGroup
+          android:id="@+id/register_radio_group"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <RadioButton
+            android:id="@+id/register_male_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="男生"/>
+          <RadioButton
+            android:id="@+id/register_female_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="女生"/>
+
+        </RadioGroup>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="学校"/>
+
+        <EditText
+          android:id="@+id/register_school"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="中山大学"
+          android:textSize="14dp"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="入学年份"/>
+
+        <EditText
+          android:id="@+id/register_enrollment"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="14dp"
+          android:hint="年份选择器"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="宿舍地址"/>
+
+        <EditText
+          android:id="@+id/register_dorm"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="请输入宿舍地址, 如: 至善园2号666"
+          android:textSize="14dp"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/step3_layout"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:visibility="gone"
+    >
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp">
+
+      <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/publish"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+          android:id="@+id/profile_username"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="白彧歌"
+          android:textSize="15dp"/>
+
+        <TextView
+          android:id="@+id/profile_dorm"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="至善园2号522"
+          />
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="个性签名"/>
+
+      <EditText
+        android:id="@+id/register_signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:maxLength="25"
+        android:hint="请输入你的个性签名，不超过25个字"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:layout_marginTop="5dp"
+      android:layout_marginLeft="20dp"
+      android:layout_marginRight="20dp"
+      >
+
+      <EditText
+        android:id="@+id/register_phone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawableLeft="@drawable/phone"
+        android:hint="请输入你的手机号（必填）"
+        android:inputType="phone"/>
+
+      <EditText
+        android:id="@+id/register_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/phone"
+        android:hint="请输入你的微信号"
+        android:inputType="text"/>
+
+      <EditText
+        android:id="@+id/register_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/phone"
+        android:hint="请输入你的qq号"
+        android:inputType="number"/>
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/register_feedback"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/info"
+      android:layout_marginLeft="20dp"
+      android:layout_marginRight="20dp"
+      android:layout_marginTop="20dp"
+      android:textSize="14dp"
+      android:text="* 请至少输入两种联系方式"/>
 
   </LinearLayout>
 
@@ -79,7 +421,7 @@
     android:id="@+id/test_btn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="5dp"
     android:layout_marginBottom="20dp"
     android:background="#c6e2ff"
     android:text="下一步"/>

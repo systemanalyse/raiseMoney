@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".ui.activity.RegisterActivity">
+
+  <com.shuhart.stepview.StepView
+    android:id="@+id/step_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    app:sv_selectedCircleColor="@color/colorPrimary"
+    app:sv_selectedTextColor="@android:color/white"
+    app:sv_stepLineWidth="1dp"
+    app:sv_stepPadding="4dp"
+    app:sv_nextTextColor="@color/colorAccent"
+    app:sv_nextStepLineColor="@color/deep_gray"
+    app:sv_doneCircleColor="@color/colorPrimary"
+    app:sv_doneStepLineColor="@color/colorPrimary"
+    app:sv_doneTextColor="#fff"
+    app:sv_doneCircleRadius="12dp"
+    app:sv_selectedCircleRadius="12dp"
+    app:sv_selectedStepNumberColor="@android:color/white"
+    app:sv_stepViewStyle="@style/StepView"
+    app:sv_doneStepMarkColor="@android:color/white"
+    app:sv_stepNumberTextSize="12sp"
+    app:sv_animationType="Line" />
+
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="20dp"
+      android:layout_marginRight="20dp">
+
+      <TextView
+        android:id="@+id/register_title_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Step1. 创建你的账号"
+        android:textColor="#000"
+        android:layout_alignParentLeft="true"
+        android:textSize="24dp"/>
+
+      <TextView
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/step_image"
+        android:background="@color/deep_gray"
+        android:textColor="@android:color/white"
+        android:text="这里是操作说明"/>
+
+      <View
+        android:id="@+id/step_image"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/deep_gray"/>
+
+    </RelativeLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+
+
+  </LinearLayout>
+
+  <android.support.design.button.MaterialButton
+    android:id="@+id/test_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="#c6e2ff"
+    android:text="下一步"/>
+
+</LinearLayout>

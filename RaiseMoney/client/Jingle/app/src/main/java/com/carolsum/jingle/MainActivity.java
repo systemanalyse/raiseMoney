@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.carolsum.jingle.event.LoginEvent;
 import com.carolsum.jingle.ui.activity.HomeActivity;
+import com.carolsum.jingle.ui.activity.RegisterActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton loginBtn;
     @BindView(R.id.clear_btn)
     MaterialButton clearBtn;
+    @BindView(R.id.register_btn)
+    MaterialButton registerBtn;
 
     private Unbinder unbinder;
 
@@ -47,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "登录成功趴~", Toast.LENGTH_SHORT).show();
         // todo@lijiehong 登录后保存token到本地 下次进入直接验证token
         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.register_btn)
+    public void gotoRegister() {
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
 

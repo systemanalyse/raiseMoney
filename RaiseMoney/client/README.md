@@ -9,4 +9,6 @@
 
 项目用到的第三方库：
 - StepView: https://github.com/shuhart/StepView
+- ImagePicker https://github.com/martin90s/ImagePicker
 - android-lite-http： https://github.com/litesuits/android-lite-http
+- Glide: https://github.com/bumptech/glide

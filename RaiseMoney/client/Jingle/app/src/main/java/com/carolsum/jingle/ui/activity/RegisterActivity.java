@@ -29,14 +29,19 @@ import com.imnjh.imagepicker.PickerConfig;
 import com.imnjh.imagepicker.SImagePicker;
 import com.imnjh.imagepicker.activity.PhotoPickerActivity;
 import com.shuhart.stepview.StepView;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
+import butterknife.OnTouch;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -69,6 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
     // step2 表单元素
     @BindView(R.id.student_card_image)
     ImageView studentCardImage;
+    @BindView(R.id.register_enrollment)
+    EditText enrollmentInput;
+
 
     // step3 表单元素
     @BindView(R.id.register_signature)
@@ -152,6 +160,30 @@ public class RegisterActivity extends AppCompatActivity {
           new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SELECT_PROFILE_IMAGE_CODE);
       }
     }
+
+    @OnFocusChange(R.id.register_enrollment)
+    public void setEnrollment(boolean focused) {
+        if (focused) {
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(new Date());
+          MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+            RegisterActivity.this,
+            new MonthPickerDialog.OnDateSetListener() {
+              @Override
+              public void onDateSet(int selectedMonth, int selectedYear) {
+                enrollmentInput.setText(Integer.toString(selectedYear) + "/" + String.format("%02d", selectedMonth + 1));
+              }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
+
+          builder.setMonthAndYearRange(Calendar.JANUARY, Calendar.DECEMBER, 1990, 2020)
+            .setActivatedMonth(calendar.get(Calendar.MONTH))
+            .setActivatedYear(calendar.get(Calendar.YEAR))
+            .setTitle("请选择入学年份")
+            .build()
+            .show();
+        }
+    }
+
 
     private void pickImage(int requestCode) {
       SImagePicker

@@ -13,6 +13,7 @@ create table if not exists `UserInformation` (
   ppid char(20),
   email char(255),
   money int default 0,
+  photourl char(255),
   PPPnumber int default 0,
   PPRnumber int default 0,
   DDPnumber int default 0,

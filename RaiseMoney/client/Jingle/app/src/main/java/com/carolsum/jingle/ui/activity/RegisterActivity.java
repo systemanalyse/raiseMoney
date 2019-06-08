@@ -16,9 +16,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTouch;
@@ -76,9 +80,20 @@ public class RegisterActivity extends AppCompatActivity {
     ImageView studentCardImage;
     @BindView(R.id.register_enrollment)
     EditText enrollmentInput;
-
+    @BindView(R.id.register_radio_group)
+    RadioGroup genderRadioGroup;
+    @BindView(R.id.register_username)
+    EditText registerNameInput;
+    @BindView(R.id.register_school)
+    EditText registerSchoolInput;
+    @BindView(R.id.register_dorm)
+    EditText registerDormInput;
 
     // step3 表单元素
+    @BindView(R.id.profile_username)
+    TextView profileUsername;
+    @BindView(R.id.profile_dorm)
+    TextView profileDorm;
     @BindView(R.id.register_signature)
     EditText signatureText;
     @BindView(R.id.register_phone)
@@ -96,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private String selectedStudentCardImagePath = "";
     private String selectedProfileImagePath = "";
+    private String registerGender = "";
 
     private static final String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
     private static final int SELECT_IMAGE_REQUEST_CODE = 1001;
@@ -131,11 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         changeEditForm(stepView.getCurrentStep() + 1);
         stepView.go(stepView.getCurrentStep() + 1, false);
       } else {
-        // 发起网络请求，并根据返回码判断是否创建成功
-        // 成功的话跳转到注册完成界面
-        Toast.makeText(this, "完成注册", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
-        startActivity(intent);
+        registerUser();
       }
     }
 
@@ -184,6 +196,25 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick({R.id.register_male_radio, R.id.register_female_radio})
+    public void onRadioButtonClicked(RadioButton radioButton) {
+      boolean checked = radioButton.isChecked();
+      if (checked) {
+        Toast.makeText(getApplicationContext(), radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
+        this.registerGender = radioButton.getText().toString();
+      }
+    }
+
+    private void registerUser() {
+      // 发起网络请求，并根据返回码判断是否创建成功
+      // 成功的话跳转到注册完成界面
+      StringBuilder builder = new StringBuilder();
+      // todo@lijiehong append all register fields
+
+      Toast.makeText(this, "完成注册", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
+      startActivity(intent);
+    }
 
     private void pickImage(int requestCode) {
       SImagePicker
@@ -215,6 +246,8 @@ public class RegisterActivity extends AppCompatActivity {
         case 2:
           this.state = 2;
           resetVisibility();
+          profileDorm.setText(registerDormInput.getText().toString());
+          profileUsername.setText(registerNameInput.getText().toString());
           step2Layout.setVisibility(View.VISIBLE);
       }
     }
@@ -234,6 +267,22 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validateStep2() {
+        if (registerNameInput.getText().toString().equals("")) {
+          Snackbar.make(stepView, "请输入学生姓名", Snackbar.LENGTH_SHORT).show();
+          return  false;
+        }
+        if (registerSchoolInput.getText().toString().equals("")) {
+            Snackbar.make(stepView, "请输入学校名称", Snackbar.LENGTH_SHORT).show();
+            return  false;
+        }
+        if (enrollmentInput.getText().toString().equals("")) {
+            Snackbar.make(stepView, "请选择入学年份", Snackbar.LENGTH_SHORT).show();
+            return  false;
+        }
+        if (registerDormInput.getText().toString().equals("")) {
+          Snackbar.make(stepView, "请输入宿舍地址", Snackbar.LENGTH_SHORT).show();
+          return  false;
+        }
         return true;
     }
 

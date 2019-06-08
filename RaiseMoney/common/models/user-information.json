@@ -72,6 +72,11 @@
     "name": {
       "type": "string",
       "required": false
+    },
+    "photourl": {
+      "type": [
+        "string"
+      ]
     }
   },
   "validations": [],

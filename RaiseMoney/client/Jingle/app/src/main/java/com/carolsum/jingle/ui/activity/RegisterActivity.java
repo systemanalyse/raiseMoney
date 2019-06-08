@@ -183,12 +183,13 @@ public class RegisterActivity extends AppCompatActivity {
             new MonthPickerDialog.OnDateSetListener() {
               @Override
               public void onDateSet(int selectedMonth, int selectedYear) {
-                enrollmentInput.setText(Integer.toString(selectedYear) + "/" + String.format("%02d", selectedMonth + 1));
+                enrollmentInput.setText(Integer.toString(selectedYear));
               }
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
 
-          builder.setMonthAndYearRange(Calendar.JANUARY, Calendar.DECEMBER, 1990, 2020)
-            .setActivatedMonth(calendar.get(Calendar.MONTH))
+          builder
+            .showYearOnly()
+            .setYearRange(1990, 2020)
             .setActivatedYear(calendar.get(Calendar.YEAR))
             .setTitle("请选择入学年份")
             .build()

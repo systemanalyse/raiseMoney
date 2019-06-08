@@ -10,6 +10,6 @@
 项目用到的第三方库：
 - StepView: https://github.com/shuhart/StepView
 - ImagePicker https://github.com/martin90s/ImagePicker
-- android-lite-http： https://github.com/litesuits/android-lite-http
+- OkHttp： https://github.com/square/okhttp
 - Glide: https://github.com/bumptech/glide
 - 年份选择器：https://github.com/premkumarroyal/MonthAndYearPicker

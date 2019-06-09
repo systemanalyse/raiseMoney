@@ -6,10 +6,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.carolsum.jingle.event.LoginEvent;
 import com.carolsum.jingle.ui.activity.HomeActivity;
+import com.carolsum.jingle.ui.activity.NotificationActivity;
 import com.carolsum.jingle.ui.activity.RegisterActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton clearBtn;
     @BindView(R.id.register_btn)
     MaterialButton registerBtn;
+
+    @BindView(R.id.notification_btn)
+    Button btn;
 
     private Unbinder unbinder;
 
@@ -65,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         pwd.setText("");
         username.clearFocus();
         pwd.clearFocus();
+    }
+
+    @OnClick(R.id.notification_btn)
+    public void gotoNotification() {
+      Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+      startActivity(intent);
     }
 
     @Override

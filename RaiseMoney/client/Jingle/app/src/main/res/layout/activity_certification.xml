@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.activity.CertificationActivity">
+
+  <ImageView
+    android:id="@+id/student_card_image"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/light_gray"
+    android:contentDescription="@string/student_card"
+    app:layout_constraintTop_toTopOf="parent"
+    />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintTop_toBottomOf="@+id/student_card_image">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp">
+
+      <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/home"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginLeft="5dp"
+        android:text="学生信息"
+        android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="姓名"/>
+
+      <EditText
+        android:id="@+id/register_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入你的姓名"
+        android:textSize="14dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="性别"/>
+
+      <RadioGroup
+        android:id="@+id/register_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+          android:id="@+id/register_male_radio"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="男生"/>
+        <RadioButton
+          android:id="@+id/register_female_radio"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="女生"/>
+
+      </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="学校"/>
+
+      <EditText
+        android:id="@+id/register_school"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="中山大学"
+        android:textSize="14dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="入学年份"/>
+
+      <EditText
+        android:id="@+id/register_enrollment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:hint="年份选择器"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="宿舍地址"/>
+
+      <EditText
+        android:id="@+id/register_dorm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入宿舍地址, 如: 至善园2号666"
+        android:textSize="14dp"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <android.support.design.button.MaterialButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="去认证"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

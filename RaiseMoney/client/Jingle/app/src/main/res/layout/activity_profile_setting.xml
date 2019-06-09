@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.activity.ProfileSettingActivity">
+
+  <android.support.design.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="15dp"
+    app:cardCornerRadius="15dp"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/profile_image"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:src="@drawable/publish"
+          app:civ_border_width="2dp"
+          app:civ_border_color="#FF000000"/>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:orientation="vertical"
+          android:layout_marginLeft="10dp">
+
+          <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="白彧歌"
+            android:textSize="15dp"/>
+
+          <TextView
+            android:id="@+id/profile_dorm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="至善园2号522"
+            />
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="个性签名"/>
+
+        <EditText
+          android:id="@+id/register_signature"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="14dp"
+          android:maxLength="25"
+          android:hint="请输入你的个性签名，不超过25个字"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+
+        <EditText
+          android:id="@+id/register_phone"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:drawableLeft="@drawable/phone"
+          android:hint="请输入你的手机号（必填）"
+          android:inputType="phone"/>
+
+        <EditText
+          android:id="@+id/register_wechat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/phone"
+          android:hint="请输入你的微信号"
+          android:inputType="text"/>
+
+        <EditText
+          android:id="@+id/register_qq"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/phone"
+          android:hint="请输入你的qq号"
+          android:inputType="number"/>
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/register_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/info"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        android:textSize="14dp"
+        android:text="* 请至少输入两种联系方式"/>
+
+      <android.support.design.button.MaterialButton
+        android:id="@+id/profile_setting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完成"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="end"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+</android.support.constraint.ConstraintLayout>
+

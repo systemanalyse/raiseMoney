@@ -10,11 +10,11 @@
     "uid": {
       "type": "string"
     },
-    "received_time": {
-      "type": "string"
-    },
     "bonus": {
       "type": "string"
+    },
+    "received_time": {
+      "type": "number"
     }
   },
   "validations": [],

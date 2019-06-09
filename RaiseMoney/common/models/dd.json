@@ -34,7 +34,7 @@
       "comments": "0"
     },
     "start_time": {
-      "type": "string"
+      "type": "number"
     }
   },
   "validations": [],

@@ -19,10 +19,6 @@
       "type": "string",
       "required": true
     },
-    "deadline": {
-      "type": "string",
-      "required": true
-    },
     "weight": {
       "type": "string"
     },
@@ -35,8 +31,12 @@
     "status": {
       "type": "string"
     },
+    "deadline": {
+      "type": "number",
+      "required": true
+    },
     "start_time": {
-      "type": "string"
+      "type": "number"
     }
   },
   "validations": [],

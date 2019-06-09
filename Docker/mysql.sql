@@ -26,12 +26,12 @@ create table if not exists `DD` (
   id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   username char(255),
   title char(255),
-  deadline char(255),
+  deadline int,
   totalnumber int,
   bonus int,
   bonus_pay_way int default 0,
   picture char(255),
-  start_time char(255),
+  start_time int,
   received_number int default 0,
   time timestamp DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 1 default charset = utf8;
@@ -41,19 +41,19 @@ create table if not exists `PP` (
   username char(255),
   title char(255),
   site char(255),
-  deadline char(255),
+  deadline int,
   weight int,
   bonus int,
   picture char(255),
   status int,
-  start_time char(255),
+  start_time int,
   time timestamp DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 1 default charset = utf8;
 
 create table if not exists `Receiver` (
   id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   uid char(255),
-  received_time char(255),
+  received_time int,
   bonus int,
   time timestamp DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 1 default charset = utf8;

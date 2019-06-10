@@ -15,6 +15,9 @@
     },
     "received_time": {
       "type": "number"
+    },
+    "username": {
+      "type": "string"
     }
   },
   "validations": [],

@@ -15,6 +15,7 @@ import com.carolsum.jingle.ui.activity.HomeActivity;
 import com.carolsum.jingle.ui.activity.NotificationActivity;
 import com.carolsum.jingle.ui.activity.RegisterActivity;
 import com.carolsum.jingle.ui.activity.SponsorListActivity;
+import com.carolsum.jingle.ui.activity.wallet.WalletActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.notification_btn)
     public void gotoNotification() {
-      Intent intent = new Intent(MainActivity.this, AcceptListActivity.class);
+      Intent intent = new Intent(MainActivity.this, WalletActivity.class);
       startActivity(intent);
     }
 

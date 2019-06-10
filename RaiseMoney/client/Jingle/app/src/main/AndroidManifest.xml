@@ -26,7 +26,9 @@
     <activity android:name=".ui.activity.CertificationActivity" />
     <activity android:name=".ui.activity.ProfileSettingActivity" />
     <activity android:name=".ui.activity.SponsorListActivity" />
-    <activity android:name=".ui.activity.AcceptListActivity"></activity>
+    <activity android:name=".ui.activity.AcceptListActivity" />
+    <activity android:name=".ui.activity.wallet.WalletActivity" />
+    <activity android:name=".ui.activity.wallet.WithdrawActivity"></activity>
   </application>
 
 </manifest>

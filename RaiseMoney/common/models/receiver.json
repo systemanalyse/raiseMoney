@@ -7,13 +7,16 @@
     "validateUpsert": true
   },
   "properties": {
-    "uid": {
-      "type": "string"
-    },
     "bonus": {
       "type": "string"
     },
     "received_time": {
+      "type": "number"
+    },
+    "username": {
+      "type": "string"
+    },
+    "uid": {
       "type": "number"
     }
   },

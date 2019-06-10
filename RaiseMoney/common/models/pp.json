@@ -25,9 +25,6 @@
     "bonus": {
       "type": "string"
     },
-    "picture": {
-      "type": "string"
-    },
     "status": {
       "type": "string"
     },
@@ -37,6 +34,11 @@
     },
     "start_time": {
       "type": "number"
+    },
+    "picture": {
+      "type": [
+        "string"
+      ]
     }
   },
   "validations": [],

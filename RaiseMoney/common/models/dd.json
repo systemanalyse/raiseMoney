@@ -19,9 +19,6 @@
     "totalnumber": {
       "type": "number"
     },
-    "picture": {
-      "type": "string"
-    },
     "bonus": {
       "type": "number"
     },
@@ -35,6 +32,11 @@
     },
     "start_time": {
       "type": "number"
+    },
+    "picture": {
+      "type": [
+        "string"
+      ]
     }
   },
   "validations": [],

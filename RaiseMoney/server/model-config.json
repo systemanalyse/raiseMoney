@@ -45,7 +45,7 @@
     "$resolved": true
   },
   "PP": {
-    "dataSource": "db",
+    "dataSource": "RaiseMoney",
     "public": true,
     "$promise": {},
     "$resolved": true

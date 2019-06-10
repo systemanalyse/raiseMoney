@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.carolsum.jingle.event.LoginEvent;
+import com.carolsum.jingle.ui.activity.AcceptListActivity;
 import com.carolsum.jingle.ui.activity.HomeActivity;
 import com.carolsum.jingle.ui.activity.NotificationActivity;
 import com.carolsum.jingle.ui.activity.RegisterActivity;
+import com.carolsum.jingle.ui.activity.SponsorListActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.notification_btn)
     public void gotoNotification() {
-      Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+      Intent intent = new Intent(MainActivity.this, AcceptListActivity.class);
       startActivity(intent);
     }
 

@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.register_btn)
     MaterialButton registerBtn;
 
-    @BindView(R.id.notification_btn)
-    Button btn;
-
     private Unbinder unbinder;
 
     @Override
@@ -73,12 +70,6 @@ public class MainActivity extends AppCompatActivity {
         pwd.setText("");
         username.clearFocus();
         pwd.clearFocus();
-    }
-
-    @OnClick(R.id.notification_btn)
-    public void gotoNotification() {
-      Intent intent = new Intent(MainActivity.this, WalletActivity.class);
-      startActivity(intent);
     }
 
     @Override

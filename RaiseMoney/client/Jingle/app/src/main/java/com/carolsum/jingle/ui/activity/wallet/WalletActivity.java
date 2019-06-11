@@ -35,7 +35,10 @@ public class WalletActivity extends AppCompatActivity {
   }
 
   @OnClick(R.id.recharge_btn)
-  public void gotoRecharge() {}
+  public void gotoRecharge() {
+    Intent intent = new Intent(WalletActivity.this, RechargeActivity.class);
+    startActivity(intent);
+  }
 
   @OnClick(R.id.withdraw_btn)
   public void gotoWithdraw() {

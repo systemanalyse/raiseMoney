@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="15dp"
+  tools:context=".ui.activity.wallet.RechargeActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:background="@color/light_gray"/>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="请选择充值金额"
+      android:textSize="20dp"
+      android:layout_marginLeft="10dp"
+      android:layout_gravity="center_vertical"
+      android:textStyle="bold"/>
+
+  </LinearLayout>
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="1 JIN币 = 0.1 RMB"/>
+
+  <android.support.design.card.MaterialCardView
+    android:id="@+id/recharge_50_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/cardview_edge"
+      android:padding="10dp">
+
+      <View
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/light_gray"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="50"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="售价 5 元"
+        android:textColor="@color/twitter_blue"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+  <android.support.design.card.MaterialCardView
+    android:id="@+id/recharge_100_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="15dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/cardview_edge"
+      android:padding="10dp">
+
+      <View
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/light_gray"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="100"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="售价 9.8 元"
+        android:textColor="@color/twitter_blue"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+  <android.support.design.card.MaterialCardView
+    android:id="@+id/recharge_200_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="15dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/cardview_edge"
+      android:padding="10dp">
+
+      <View
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/light_gray"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="200"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="售价 19 元"
+        android:textColor="@color/twitter_blue"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+  <android.support.design.card.MaterialCardView
+    android:id="@+id/recharge_500_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/cardview_edge"
+      android:padding="10dp">
+
+      <View
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/light_gray"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="500"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="售价 45 元"
+        android:textColor="@color/twitter_blue"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+  <android.support.design.card.MaterialCardView
+    android:id="@+id/recharge_1000_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/cardview_edge"
+      android:padding="10dp">
+
+      <View
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/light_gray"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="1000"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/twitter_blue"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="售价 88 元"
+        android:textColor="@color/twitter_blue"/>
+
+    </LinearLayout>
+
+  </android.support.design.card.MaterialCardView>
+
+</LinearLayout>

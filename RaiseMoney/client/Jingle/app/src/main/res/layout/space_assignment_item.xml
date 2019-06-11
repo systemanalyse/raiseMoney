@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:elevation="2dp"
+  app:cardCornerRadius="15dp"
+  android:layout_marginTop="5dp"
+  android:layout_marginBottom="5dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <ImageView
+        android:id="@+id/assignment_type"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/phone"/>
+
+      <TextView
+        android:id="@+id/assignment_title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:text="求好心人帮拿快递!"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp" />
+
+      <TextView
+        android:id="@+id/assignment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="待接单"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:id="@+id/paopao_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/light_gray"/>
+
+          <TextView
+            android:id="@+id/assignment_start_position"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="明6邮局"/>
+
+          <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/right"/>
+
+          <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/light_gray"/>
+
+          <TextView
+            android:id="@+id/assignment_end_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:text="至善园2号"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/light_gray"/>
+
+          <TextView
+            android:id="@+id/assignment_ddl"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="20:00 前"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/diandian_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="进度"/>
+
+        <com.liulishuo.magicprogresswidget.MagicProgressBar
+          android:id="@+id/assignment_process"
+          android:layout_width="match_parent"
+          android:layout_weight="1"
+          android:layout_height="match_parent"
+          app:mpb_fill_color="@color/twitter_blue"
+          app:mpb_background_color="@color/light_gray"
+          app:mpb_flat="true"
+          app:mpb_percent="0.5"/>
+
+        <TextView
+          android:id="@+id/assignment_progress_info"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="20/35"/>
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/assignment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textSize="12dp"
+        android:text="发布时间：今天17:40"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</android.support.design.card.MaterialCardView>

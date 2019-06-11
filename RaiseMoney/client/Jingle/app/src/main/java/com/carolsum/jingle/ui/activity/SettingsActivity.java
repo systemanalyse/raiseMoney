@@ -40,11 +40,14 @@ public class SettingsActivity extends AppCompatActivity {
 
   @OnClick(R.id.campus_certification_setting)
   public void gotoCertificationSetting() {
-//    Intent intent = new Intent(this, certification)
+    Intent intent = new Intent(this, CertificationActivity.class);
+    startActivity(intent);
   }
 
   @OnClick(R.id.profile_setting)
   public void gotoProfileSetting() {
+    Intent intent = new Intent(this, ProfileSettingActivity.class);
+    startActivity(intent);
   }
 
   @OnClick(R.id.logout_btn)

@@ -1,0 +1,749 @@
+swagger: "2.0"
+info:
+  description: "This is a RESTful API Raise-Money written in Go(Maybe it will be JS, but... what ever). And you can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). "
+  version: "1.0.0"
+  title: "RaiseMoney"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+tags:
+- name: "User"
+  description: "The user of RM system, can acccept/publish mission."
+schemes:
+- "http"
+paths:
+  # privacy infomation includes user all information 
+  /user/{userId}/Privacy:
+    get:
+      tags:
+      - User
+      summary: Get privacy infomation  use email
+      description: Get the user detailed information, return the User infomation privacy, cann't use by others
+      operationId: GetUserInfoPrivacy
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return User privacy information
+          schema:
+            $ref: "#/definitions/UserInfoPrivacy"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+    post:
+      tags:
+      - User
+      summary: user upload privacy info, need user info public
+      description: Return privacy information(success) / wrong message(fail)
+      operationId: SetUserInfoPrivacy
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: UserInformation
+        in: formData
+        description: User Business Card information
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation, return user privacy info
+          schema:
+            $ref: "#/definitions/UserInfoPrivacy"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+    put:
+      tags:
+      - User
+      summary: Modify the Public info(BusinessCard), need card info
+      description: return user public infomation(success)/ wrong message(fail)
+      operationId: ModifyUserInfoPrivacy
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters: 
+      - name: userId
+        in: path
+        description: email of user
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: userInfo
+        in: formData
+        description: new Business Card information
+        required: true
+        type: string
+        x-exportParamName: user infomation
+      responses:
+        200:
+          description: Successful operation, return user privacy information
+          schema:
+            $ref: "#/definitions/UserInfoPrivacy"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  # user public infomation only includes business card information, its 4 others
+  /user/{userId}/Public:
+    get:
+      tags:
+      - User
+      summary: Get user Public info(BusinessCard), need email
+      description: return user public information(success)/ wrong message(fail)
+      operationId: GetUserInfoPublic
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return user public info
+          schema:
+            $ref: "#/definitions/UserInfoPublic"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/Notice:
+    get: 
+      tags:
+      - User
+      summary: Get user Notice list
+      description: return notice list(success)/ wrong message(fail)
+      operationId: GetUserNotice
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return User Notices
+          schema:
+            $ref: "#/definitions/Notices"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/ReadNotice:
+    put: 
+      tags:
+      - User
+      summary: Set user all notice status is false
+      description: return nothing(success)/ wrong message(fail)
+      operationId: UserReadNotice
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/Wallet:
+    get:
+      tags:
+      - User
+      summary: Get user Jin acount, need email
+      description: return user Jin account(success)/ wrong message(fail)
+      operationId: GetUserJin
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return user Jin num
+          schema:
+            $ref: "#/definitions/Jin"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+    put:
+      tags:
+      - User
+      summary: recharge/ withdraw, use positive as recharge, negative as withdraw
+      description: return wallet account(success)/ wrong message(fail)
+      operationId: ModifyUserJin
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters: 
+      - name: userId
+        in: path
+        description: email of user
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: Jin
+        in: formData
+        description: Jin coin num to modify
+        required: true
+        type: number
+        x-exportParamName: Jin coin num to modify
+      responses:
+        200:
+          description: Successful operation, return user account balance
+          schema:
+            $ref: "#/definitions/Jin"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/Settings/Overview:
+    get:
+      tags:
+      - User
+      summary: Get overview of setting
+      description: Get the user current overview(success)/ wrong message(fail)
+      operationId: GetUserSettingOverview
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return User setting overview, it should be an interger
+          schema:
+            required:
+              - settingsOverview
+            properties:
+              profile:
+                description: as "80%"
+                type: string
+              certification:
+                description: certification or not
+                type: boolean
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/tasks/Running:
+    get:
+      tags:
+      - User
+      # u should pay attention in attribution "beginTime" & "origin" in task
+      summary: Get running task list of user Publish & publish
+      description: return task list(success)/ wrong message(fail)
+      operationId: GetUserTask
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return task list
+          schema:
+            $ref: "#/definitions/Tasks"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/tasks/Accept:
+    get:
+      tags:
+      - User
+      # u should pay attention in attribution "beginTime" in task
+      summary: Get task list of user accept
+      description: return task list(success)/ wrong message(fail)
+      operationId: GetUserAcceptTask
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return task list
+          schema:
+            $ref: "#/definitions/Tasks"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /user/{userId}/tasks/Publish:
+    get:
+      tags:
+      - User
+      # u should pay attention in attribution "beginTime" in task
+      summary: Get task list of user Publish
+      description: return task list(success)/ wrong message(fail)
+      operationId: GetUserPublishTask
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return task list
+          schema:
+            $ref: "#/definitions/Tasks"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /regist:
+    post:
+      tags:
+      - Regist
+      summary: user regist, need detailed UserInformation
+      description: Return detailed UserInformation
+      operationId: regist
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: UserInformation
+        in: formData
+        description: User detailed infomation
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/UserInfoPrivacy"
+        400:
+          description: wrong format, return wrong message
+          schema:
+            type: string
+        406:
+          description: User already regist, return wrong message
+          schema:
+            type: string
+  /login:
+    post:
+      tags:
+      - Login
+      summary: User log in the system, need email & password
+      description: Return detailed UserInformation(success)/ reason(fail)
+      operationId: login
+      parameters:
+        - name: userInfo
+          in: body
+          description: the email & password of user
+          schema:
+            required:
+              - userInfo
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+                format: password
+      responses:
+        200:
+          description: Successful operation, get the token of user
+          schema:
+            $ref: "#/definitions/UserInfoPrivacy"
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        406:
+          description: Already log in, return wrong message
+          schema:
+            type: string
+  /picture:
+    get:
+      tags:
+      - Picture
+      summary: get picture use URL 
+      description: Return the picture
+      operationId: DownloadPicture
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: URL
+        in: body
+        description: picture URL
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation, return the picture
+          schema:
+            type: string
+        404:
+          description: URL not found, return wrong message
+          schema:
+            type: string
+        414:
+          description: URL too long, cann't handle; return wrong meaasge
+          schema: 
+            type: string
+    post:
+      tags:
+      - Picture
+      summary: Upload a picture, need the picture
+      description: Return the picture URL (success)/ wrong message (fail)
+      operationId: UploadPicture
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: picture
+        in: formData
+        description: picture, the data stream
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation, return picture URL
+          schema:
+            type: string
+        403:
+          description: Refuse the request, return wrong message
+          schema:
+            type: string
+      
+definitions:
+  Notice:
+    type: object
+    description: user Notice
+    properties:
+      userType:
+        description: user type, acceptor(true) & publisher(false)
+        type: boolean
+      taskType: 
+        description: task type, PP(true) & DD(false)
+        type: boolean
+      title:
+        type: string
+      desc:
+        description: task description
+        type: string
+      time:
+        description: notice time (send)
+        type: string
+      status:
+        description: have read(true) & not(false)
+        type: boolean
+  Notices:
+    type: array
+    items:
+      $ref: "#/definitions/Notice"
+  Jin:
+    type: "number"
+    description: Jin coin
+  Task:
+    type: object
+    description: user Notice
+    properties:
+      origin:
+        description: relattive to user? user publish(1), user accept(2), no relation(0)
+        type: integer
+        format: int64
+      taskStatus:
+        description: task status, running(true) & finish(false)
+        type: boolean
+      taskType: 
+        description: task type, PP(true) & DD(false)
+        type: boolean
+      status:
+        type: object
+        properties:
+          statusCode:
+            type: integer
+            format: int64
+          desc:
+            description: discription of status
+            type: string
+      beginTime:
+        description: publish time
+        type: string
+      value:
+        description: task bounce
+        type: number
+      title:
+        type: string
+      desc:
+        description: task description
+        type: string
+      time:
+        description: notice time (send)
+        type: string
+      # PP task need
+      startPosition:
+        type: string
+      endPosition:
+        type: string
+      ddl:
+        type: string
+      # DD task need
+      finishNum:
+        description: finish task num
+        type: integer
+        format: int64
+      totalNum:
+        description: total task num
+        type: integer
+        format: int64
+  Tasks:
+    type: array
+    items:
+      $ref: "#/definitions/Task"
+  # its 4 BusinessCard information, certification, user relative infomation is in UserInfoPrivacy
+  UserInfoPublic:
+    type: "object"
+    description: user business card, visible to everyone
+    properties:
+      name:
+        type: "string"
+      dormitory:
+        description: "location of user dormitory"
+        type: "string"
+      avatarURL:
+        description: "user avatar URL"
+        type: "string"
+      signature:
+        type: "string"
+      phone:
+        type: "string"
+      wechart:
+        type: "string"
+      qq:
+        type: "string"
+  UserInfoPrivacy:
+    description: "User detailed information, only visible to userself"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      name:
+        type: "string"
+      gender:
+        description: "sexy of user, true is male, default true"
+        type: "boolean"
+      school:
+        type: "string"
+      enrollment:
+        description: "only year"
+        type: "string"
+      dormitory:
+        description: "location of user dormitory"
+        type: "string"
+      studentCardURL:
+        type: "string"
+      avatarURL:
+        description: "user avatar URL"
+        type: "string"
+      signature:
+        type: "string"
+      phone:
+        type: "string"
+      wechart:
+        type: "string"
+      qq:
+        type: "string"
+      acceptNum:
+        description: "accept task num"
+        type: "integer"
+        format: "int64"
+      publishNum:
+        description: "publish task num"
+        type: "integer"
+        format: "int64"
+      Jin:
+        description: "account balance"
+        type: "number"

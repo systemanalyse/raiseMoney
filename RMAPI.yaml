@@ -10,6 +10,8 @@ host: "localhost"
 tags:
 - name: "User"
   description: "The user of RM system, can acccept/publish mission."
+- name: Task
+  description: The task including PP and DD
 schemes:
 - "http"
 paths:

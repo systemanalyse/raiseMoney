@@ -477,6 +477,326 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # publish a task, task type will define in "taskType"
+  /task/Publish/{userId}:
+    post:
+      tags:
+      - Task
+      summary: publish a task, need task infomation 
+      description: Return task information(success) / wrong message(fail)
+      operationId: Publish
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: TaskInfo
+        in: formData
+        description: Task detailed infomation
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation, return user privacy info
+          schema:
+            $ref: "#/definitions/Task"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  # get PP task list, don't have finished & Full starffed task
+  # include task u publish
+  # U should return two list, first list is task from the same buildings, the second list is other buildings
+  /task/{userId}/PP:
+    get:
+      tags:
+      - Task
+      summary: Get PP task list, need user email
+      description: return two PP task list (success)/ wrong message(fail), only need base infomation
+      operationId: GetTaskListPP
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user email
+        required: true
+        type: string
+        x-exportParamName: email
+      responses:
+        200:
+          description: Successful operation, return PP task list
+          schema:
+            $ref: "#/definitions/TasksInList"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /task/DD:
+    get:
+      tags:
+      - Task
+      summary: Get DD task list
+      description: return DD task list information(success), only need base infomation / wrong message(fail)
+      operationId: GetTaskListDD
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Successful operation, return DD task list
+          schema:
+            $ref: "#/definitions/Tasks"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  # look task detailed infomation
+  # if a finished PP task, u should return a task and a receipt
+  # if a DD task, u can make accepter null
+  /task/{taskId}:
+    get:
+      tags:
+      - Task
+      summary: Get a task detailed information (PP need receipt), need task id
+      description: return a task (success)/ wrong message(fail)
+      operationId: GetTask
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: taskId
+        in: path
+        description: taskId
+        required: true
+        type: string
+        x-exportParamName: task id
+      responses:
+        200:
+          description: Successful operation, return task
+          schema:
+            $ref: "#/definitions/Task"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /task/{taskId}/Receipt/{userId}:
+    get:
+      tags:
+      - Task
+      summary: Get task receipt, need taskid and accepter email
+      description: return a receipt (success)/ wrong message(fail)
+      operationId: GetReceipt
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: taskId
+        in: path
+        description: taskId
+        required: true
+        type: string
+        x-exportParamName: task id
+      - name: userId
+        in: path
+        description: accepter email
+        required: true
+        type: string
+        x-exportParamName: userId
+      responses:
+        200:
+          description: Successful operation, return task
+          schema:
+            $ref: "#/definitions/Receipt"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /task/{taskId}/Accepter:
+    get:
+      tags:
+      - Task
+      summary: Get a accpter list(UserInfoInTask), need task id, use in DD
+      description: return a user Info list (success)/ wrong message(fail)
+      operationId: GetDDAccpter
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: taskId
+        in: path
+        description: taskId
+        required: true
+        type: string
+        x-exportParamName: task id
+      responses:
+        200:
+          description: Successful operation, return task
+          schema:
+            $ref: "#/definitions/UserInfosInTask"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /task/{taskId}/SendReceipt/{userId}:
+    post:
+      tags:
+      - User
+      summary: accepter send a receipt to publisher, need a receipt
+      description: Return receipt (success) / wrong message(fail)
+      operationId: SendReceipt
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: taskId
+        in: path
+        description: task id
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: userId
+        in: path
+        description: accepter email
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: receipt
+        in: formData
+        description: accepter receipt
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation, return receipt
+          schema:
+            $ref: "#/definitions/Receipt"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
+  /task/{taskId}/ConfirmReceipt/{userId}:
+    post:
+      tags:
+      - User
+      summary: Confirm a receipt from a accepter, send bounce
+      description: Return bounce num (success) / wrong message(fail)
+      operationId: ConfirmReceipt
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: taskId
+        in: path
+        description: task id
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: userId
+        in: path
+        description: accepter email
+        required: true
+        type: string
+        x-exportParamName: email
+      - name: receipt
+        in: formData
+        description: accepter receipt
+        required: true
+        type: string
+      responses:        
+        200:
+          description: Successful operation, return bounce num
+          schema:
+            type: string
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
   /regist:
     post:
       tags:
@@ -595,7 +915,6 @@ paths:
           description: Refuse the request, return wrong message
           schema:
             type: string
-      
 definitions:
   Notice:
     type: object
@@ -625,10 +944,13 @@ definitions:
   Jin:
     type: "number"
     description: Jin coin
-  Task:
+  TaskInList:
     type: object
-    description: user Notice
+    description: task base infomation, only visible in list
     properties:
+      taskId:
+        description: Unique identifier
+        type: string
       origin:
         description: relattive to user? user publish(1), user accept(2), no relation(0)
         type: integer
@@ -643,6 +965,51 @@ definitions:
         type: object
         properties:
           statusCode:
+            # statue code, need descussion
+            description: ...
+            type: integer
+            format: int64
+          desc:
+            description: discription of status
+            type: string     
+      beginTime:
+        description: publish time
+        type: string
+      value:
+        description: task bounce / people will get bounce
+        type: number
+      title:
+        type: string
+      publisherInfo:
+        description: UserinfoInTask, publish
+        type: object
+  TasksInList:
+    type: array
+    items:
+      $ref: "#/definitions/TaskInList"
+  Task:
+    type: object
+    description: task detailed infomation
+    properties:
+      taskId:
+        description: Unique identifier
+        type: string
+      origin:
+        description: relattive to user? user publish(1), user accept(2), no relation(0)
+        type: integer
+        format: int64
+      taskStatus:
+        description: task status, running(true) & finish(false)
+        type: boolean
+      taskType: 
+        description: task type, PP(true) & DD(false)
+        type: boolean
+      status:
+        type: object
+        properties:
+          statusCode:
+            # statue code, need descussion
+            description: ...
             type: integer
             format: int64
           desc:
@@ -662,6 +1029,12 @@ definitions:
       time:
         description: notice time (send)
         type: string
+      publisherInfo:
+        description: UserinfoInTask, publish
+        type: object
+      accepterInfo:
+        description: UserinfoInTask, accepter, only use in PP (DD has too many accepter, can't save, u can make it null)
+        type: object
       # PP task need
       startPosition:
         type: string
@@ -682,6 +1055,19 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Task"
+  Receipt:
+    type: "object"
+    description: task Receipt
+    properties:
+      imgURL:
+        description: receipt URL
+        type: string
+      desc:
+        description: receipt description
+        type: string
+      time:
+        description: accepter finish time
+        type: string
   # its 4 BusinessCard information, certification, user relative infomation is in UserInfoPrivacy
   UserInfoPublic:
     type: "object"
@@ -704,6 +1090,7 @@ definitions:
       qq:
         type: "string"
   UserInfoPrivacy:
+    type: "object"
     description: "User detailed information, only visible to userself"
     properties:
       email:
@@ -747,3 +1134,31 @@ definitions:
       Jin:
         description: "account balance"
         type: "number"
+  UserInfoInTask:
+    type: "object"
+    description: user info in task
+    properties:
+      email:
+        description: unique identify
+        type: string
+      name:
+        type: "string"
+      dormitory:
+        description: "location of user dormitory"
+        type: "string"
+      signature:
+        type: "string"
+      acceptNum:
+        description: "accept task num"
+        type: "integer"
+        format: "int64"
+      publishNum:
+        description: "publish task num"
+        type: "integer"
+        format: "int64"
+      phone:
+        type: string
+  UserInfosInTask:
+    type: array
+    items:
+      $ref: "#/definitions/UserInfoInTask"

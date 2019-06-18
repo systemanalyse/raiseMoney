@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#8437F1</color>
+    <color name="colorAccent">#597EF7</color>
 
     <color name="black_overlay">#66000000</color>
     <color name="twitter_blue">#1da1f2</color>
@@ -11,4 +11,6 @@
     <color name="light_gray">#f2f2f2</color>
     <color name="tab_selected">@color/twitter_blue</color>
     <color name="info">#007FFF</color>
+    <color name="text_color_0">#303233</color>
+    <color name="text_color_1">#696969</color>
 </resources>

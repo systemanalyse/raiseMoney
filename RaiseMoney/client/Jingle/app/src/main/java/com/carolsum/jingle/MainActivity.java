@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.carolsum.jingle.event.LoginEvent;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.login_btn)
     MaterialButton loginBtn;
     @BindView(R.id.clear_btn)
-    MaterialButton clearBtn;
+    TextView clearBtn;
     @BindView(R.id.register_btn)
     MaterialButton registerBtn;
 

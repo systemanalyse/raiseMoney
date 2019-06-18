@@ -181,14 +181,13 @@
             android:id="@+id/register_male_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/man"
             android:textSize="0sp"
             android:text="男生"/>
+
           <RadioButton
             android:id="@+id/register_female_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/woman"
             android:textSize="0sp"
             android:text="女生"/>
 

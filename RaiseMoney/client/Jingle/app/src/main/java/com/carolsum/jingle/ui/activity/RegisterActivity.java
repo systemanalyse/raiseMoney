@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -247,6 +248,19 @@ public class RegisterActivity extends AppCompatActivity {
           titleText.setText("校园认证");
           stepDesc.setText("为确保你和其他同学的安全只有通过校园认证才能正常使用和查看这款App");
           stepImage.setImageResource(R.drawable.step_2);
+
+          // 修改RadioButton drawableRight 的大小
+          RadioButton maleButton = findViewById(R.id.register_male_radio);
+          Drawable maleIcon = getDrawable(R.drawable.man);
+          maleIcon.setBounds(0,0,54,54);
+          maleButton.setCompoundDrawables(null, maleIcon, null, null);
+
+          RadioButton femaleButton = findViewById(R.id.register_female_radio);
+          Drawable femaleIcon = getDrawable(R.drawable.woman);
+          femaleIcon.setBounds(0,0,54,54);
+          femaleButton.setCompoundDrawables(null, femaleIcon, null, null);
+
+
           step1Layout.setVisibility(View.VISIBLE);
           break;
         case 2:

@@ -13,4 +13,6 @@
     <color name="info">#007FFF</color>
     <color name="text_color_0">#303233</color>
     <color name="text_color_1">#696969</color>
+    <color name="text_color_2">#9E9E9E</color>
+    <color name="text_color_3">#707070</color>
 </resources>

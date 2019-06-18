@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,11 +52,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.step_view)
-    StepView stepView;
     @BindView(R.id.test_btn)
     MaterialButton test;
-
+    @BindView(R.id.step_image)
+    ImageView stepImage;
     @BindView(R.id.step_desc)
     TextView stepDesc;
     @BindView(R.id.register_title_text)
@@ -92,8 +92,8 @@ public class RegisterActivity extends AppCompatActivity {
     // step3 表单元素
     @BindView(R.id.profile_username)
     TextView profileUsername;
-    @BindView(R.id.profile_dorm)
-    TextView profileDorm;
+    @BindView(R.id.profile_gender)
+    ImageView profileGender;
     @BindView(R.id.register_signature)
     EditText signatureText;
     @BindView(R.id.register_phone)
@@ -106,8 +106,15 @@ public class RegisterActivity extends AppCompatActivity {
     TextView registerFeedback;
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
+    @BindView(R.id.profile_image_template)
+    ImageView profileImageTemplate;
+    @BindView(R.id.profile_image_wrapper)
+    RelativeLayout profileImageWrapper;
+    @BindView(R.id.jump_register_btn)
+    MaterialButton jumpRegisterBtn;
 
     private int state = 0;
+    private int totalState = 3;
     private Unbinder unbinder;
     private String selectedStudentCardImagePath = "";
     private String selectedProfileImagePath = "";
@@ -123,16 +130,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         unbinder = ButterKnife.bind(this);
-        setupStepView();
         SImagePicker.init(new PickerConfig.Builder().setAppContext(this)
           .setImageLoader(new GlideImageLoader())
           .setToolbaseColor(getColor(R.color.colorPrimary))
           .build());
     }
 
-    private void setupStepView() {
-        stepView.setStepsNumber(3);
-    }
 
     @Override
     protected void onDestroy() {
@@ -143,9 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
     @OnClick(R.id.test_btn)
     public void click() {
       if(!validate()) return;
-      if (stepView.getCurrentStep() != stepView.getStepCount() - 1) {
-        changeEditForm(stepView.getCurrentStep() + 1);
-        stepView.go(stepView.getCurrentStep() + 1, false);
+      if (this.state != this.totalState - 1) {
+        changeEditForm(this.state + 1);
       } else {
         registerUser();
       }
@@ -162,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
       }
     }
 
-    @OnClick(R.id.profile_image)
+    @OnClick(R.id.profile_image_wrapper)
     public void selectProfileImage() {
       int checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
       if (checkPermission == PackageManager.PERMISSION_GRANTED){
@@ -242,13 +244,24 @@ public class RegisterActivity extends AppCompatActivity {
         case 1:
           this.state = 1;
           resetVisibility();
+          titleText.setText("校园认证");
+          stepDesc.setText("为确保你和其他同学的安全只有通过校园认证才能正常使用和查看这款App");
+          stepImage.setImageResource(R.drawable.step_2);
           step1Layout.setVisibility(View.VISIBLE);
           break;
         case 2:
           this.state = 2;
           resetVisibility();
-          profileDorm.setText(registerDormInput.getText().toString());
+          titleText.setText("填写名片");
+          stepDesc.setText("让其他同学更了解你。你也可以先跳过此部分，可在“我的-设置”中继续完善更改。");
+          stepImage.setImageResource(R.drawable.step_3);
+          if (this.registerGender.equals("男生")) {
+            profileGender.setImageResource(R.drawable.man);
+          } else {
+            profileGender.setImageResource(R.drawable.woman);
+          }
           profileUsername.setText(registerNameInput.getText().toString());
+          jumpRegisterBtn.setVisibility(View.VISIBLE);
           step2Layout.setVisibility(View.VISIBLE);
       }
     }
@@ -263,25 +276,25 @@ public class RegisterActivity extends AppCompatActivity {
         if (emailInput.getText().toString().matches(emailReg) && !passwordInput.getText().toString().equals("") && passwordInput.getText().toString().equals(confirmInput.getText().toString())) {
           return true;
         }
-        Snackbar.make(stepView, "邮箱格式错误或密码不匹配", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(test, "邮箱格式错误或密码不匹配", Snackbar.LENGTH_SHORT).show();
         return  false;
     }
 
     private boolean validateStep2() {
         if (registerNameInput.getText().toString().equals("")) {
-          Snackbar.make(stepView, "请输入学生姓名", Snackbar.LENGTH_SHORT).show();
+          Snackbar.make(test, "请输入学生姓名", Snackbar.LENGTH_SHORT).show();
           return  false;
         }
         if (registerSchoolInput.getText().toString().equals("")) {
-            Snackbar.make(stepView, "请输入学校名称", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(test, "请输入学校名称", Snackbar.LENGTH_SHORT).show();
             return  false;
         }
         if (enrollmentInput.getText().toString().equals("")) {
-            Snackbar.make(stepView, "请选择入学年份", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(test, "请选择入学年份", Snackbar.LENGTH_SHORT).show();
             return  false;
         }
         if (registerDormInput.getText().toString().equals("")) {
-          Snackbar.make(stepView, "请输入宿舍地址", Snackbar.LENGTH_SHORT).show();
+          Snackbar.make(test, "请输入宿舍地址", Snackbar.LENGTH_SHORT).show();
           return  false;
         }
         return true;
@@ -327,6 +340,8 @@ public class RegisterActivity extends AppCompatActivity {
           this.selectedStudentCardImagePath = pathList.get(0);
           Toast.makeText(this, pathList.get(0), Toast.LENGTH_SHORT).show();
         } else if (requestCode == SELECT_PROFILE_IMAGE_CODE) {
+          profileImageTemplate.setVisibility(View.GONE);
+          profileImage.setVisibility(View.VISIBLE);
           Glide.with(this).load(pathList.get(0)).into(profileImage);
           this.selectedProfileImagePath = pathList.get(0);
           Toast.makeText(this, pathList.get(0), Toast.LENGTH_SHORT).show();

@@ -5,66 +5,49 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
-  tools:context=".ui.activity.RegisterActivity">
+  tools:context=".ui.activity.RegisterActivity"
+  android:layout_marginTop="40dp"
+  android:layout_marginLeft="20dp"
+  android:layout_marginRight="20dp"
+  android:layout_marginBottom="20dp">
 
-  <com.shuhart.stepview.StepView
-    android:id="@+id/step_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp"
-    app:sv_selectedCircleColor="@color/colorPrimary"
-    app:sv_selectedTextColor="@android:color/white"
-    app:sv_stepLineWidth="1dp"
-    app:sv_stepPadding="4dp"
-    app:sv_nextTextColor="@color/colorAccent"
-    app:sv_nextStepLineColor="@color/deep_gray"
-    app:sv_doneCircleColor="@color/colorPrimary"
-    app:sv_doneStepLineColor="@color/colorPrimary"
-    app:sv_doneTextColor="#fff"
-    app:sv_doneCircleRadius="12dp"
-    app:sv_selectedCircleRadius="12dp"
-    app:sv_selectedStepNumberColor="@android:color/white"
-    app:sv_stepViewStyle="@style/StepView"
-    app:sv_doneStepMarkColor="@android:color/white"
-    app:sv_stepNumberTextSize="12sp"
-    app:sv_animationType="Line" />
-
-
-  <RelativeLayout
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp">
+      android:orientation="horizontal">
 
-      <TextView
-        android:id="@+id/register_title_text"
-        android:layout_width="250dp"
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="Step1. 创建你的账号"
-        android:textColor="#000"
-        android:layout_alignParentLeft="true"
-        android:textSize="24dp"/>
+        android:orientation="vertical">
 
-      <TextView
-        android:id="@+id/step_desc"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:gravity="center"
-        android:layout_alignBottom="@+id/step_image"
-        android:background="@color/deep_gray"
-        android:textColor="@android:color/white"
-        android:text="这里是操作说明"/>
+        <TextView
+          android:id="@+id/register_title_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="创建你的账号"
+          android:textColor="@color/text_color_0"
+          android:textSize="20sp"/>
 
-      <View
+        <TextView
+          android:id="@+id/step_desc"
+          android:layout_width="174dp"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_color_2"
+          android:textSize="13sp"
+          android:layout_marginTop="12dp"
+          android:text="你可以通过使用邮箱登陆这款App，在这里设置你的登陆邮箱和密码"/>
+
+      </LinearLayout>
+
+      <ImageView
         android:id="@+id/step_image"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_alignParentRight="true"
-        android:background="@color/deep_gray"/>
+        android:layout_width="106dp"
+        android:layout_height="94dp"
+        android:src="@drawable/step_1"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
   <LinearLayout
     android:id="@+id/step1_layout"
@@ -72,16 +55,13 @@
     android:layout_height="0dp"
     android:layout_weight="1"
     android:orientation="vertical"
-    android:layout_marginTop="10dp"
+    android:gravity="center_vertical"
     android:visibility="visible">
 
     <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      android:layout_marginRight="20dp"
-      android:hint="邮箱">
+      android:hint="请输入用于注册的邮箱">
 
       <android.support.design.widget.TextInputEditText
         android:id="@+id/register_email_input"
@@ -94,10 +74,7 @@
     <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      android:hint="密码">
+      android:hint="请输入密码">
 
       <android.support.design.widget.TextInputEditText
         android:id="@+id/register_password_input"
@@ -110,10 +87,7 @@
     <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      android:hint="确认密码">
+      android:hint="请再次确认密码">
 
       <android.support.design.widget.TextInputEditText
         android:id="@+id/register_confirm_password_input"
@@ -134,18 +108,29 @@
     android:visibility="gone"
     >
 
-    <ImageView
-      android:id="@+id/student_card_image"
+
+    <android.support.v7.widget.CardView
       android:layout_width="match_parent"
-      android:layout_height="150dp"
-      android:background="@color/light_gray"
-      android:contentDescription="@string/student_card"
-      />
+      android:layout_height="160dp"
+      android:layout_marginTop="32dp"
+      app:cardCornerRadius="8dp"
+      >
+
+      <ImageView
+        android:id="@+id/student_card_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/add_student_card_image"
+        android:scaleType="fitXY"
+        />
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:orientation="vertical"
+      android:layout_marginTop="20dp">
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -153,42 +138,22 @@
         android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-
-        <ImageView
-          android:layout_width="32dp"
-          android:layout_height="32dp"
-          android:src="@drawable/home"/>
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="32dp"
-          android:layout_marginLeft="5dp"
-          android:text="学生信息"
-          android:gravity="center"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:textSize="14sp">
 
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:gravity="center"
+          android:textSize="14sp"
           android:text="姓名"/>
 
         <EditText
           android:id="@+id/register_username"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="请输入你的姓名"
-          android:textSize="14dp"/>
+          android:hint="点击输入"
+          android:textSize="14sp"
+          />
 
       </LinearLayout>
 
@@ -203,6 +168,7 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:gravity="center"
+          android:textSize="14sp"
           android:text="性别"/>
 
         <RadioGroup
@@ -215,11 +181,15 @@
             android:id="@+id/register_male_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableRight="@drawable/man"
+            android:textSize="0sp"
             android:text="男生"/>
           <RadioButton
             android:id="@+id/register_female_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableRight="@drawable/woman"
+            android:textSize="0sp"
             android:text="女生"/>
 
         </RadioGroup>
@@ -237,6 +207,7 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:gravity="center"
+          android:textSize="14sp"
           android:text="学校"/>
 
         <EditText
@@ -244,7 +215,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="中山大学"
-          android:textSize="14dp"/>
+          android:textSize="14sp"/>
 
       </LinearLayout>
 
@@ -259,13 +230,14 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:gravity="center"
+          android:textSize="14sp"
           android:text="入学年份"/>
 
         <EditText
           android:id="@+id/register_enrollment"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:textSize="14dp"
+          android:textSize="14sp"
           android:hint="年份选择器"/>
 
       </LinearLayout>
@@ -281,14 +253,15 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:gravity="center"
+          android:textSize="14sp"
           android:text="宿舍地址"/>
 
         <EditText
           android:id="@+id/register_dorm"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="请输入宿舍地址, 如: 至善园2号666"
-          android:textSize="14dp"/>
+          android:hint="如：至善园2号522"
+          android:textSize="14sp"/>
 
       </LinearLayout>
 
@@ -308,65 +281,60 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:layout_marginLeft="15dp"
-      android:layout_marginRight="15dp"
-      android:layout_marginTop="10dp"
-      android:layout_marginBottom="10dp">
+      android:orientation="vertical"
+      android:layout_marginTop="32dp"
+      android:layout_marginBottom="32dp"
+      android:gravity="center_horizontal">
 
-      <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/publish"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+      <RelativeLayout
+        android:id="@+id/profile_image_wrapper"
+        android:layout_width="91dp"
+        android:layout_height="80dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/profile_image"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          android:src="@drawable/publish"
+          app:civ_border_width="2dp"
+          app:civ_border_color="#FF000000"
+          android:visibility="gone"/>
+
+        <ImageView
+          android:id="@+id/profile_image_template"
+          android:layout_width="91dp"
+          android:layout_height="80dp"
+          android:visibility="visible"
+          android:src="@drawable/register_profile_image"
+          />
+
+      </RelativeLayout>
 
       <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
 
         <TextView
           android:id="@+id/profile_username"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="白彧歌"
-          android:textSize="15dp"/>
+          android:textColor="@color/text_color_0"
+          android:textSize="16sp"/>
 
-        <TextView
-          android:id="@+id/profile_dorm"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="至善园2号522"
-          />
+        <ImageView
+          android:id="@+id/profile_gender"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_marginLeft="5dp"
+          android:layout_gravity="center_vertical"
+          android:src="@drawable/man"/>
+
       </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:layout_marginLeft="10dp"
-      android:layout_marginRight="10dp">
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="个性签名"/>
-
-      <EditText
-        android:id="@+id/register_signature"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:maxLength="25"
-        android:hint="请输入你的个性签名，不超过25个字"/>
 
     </LinearLayout>
 
@@ -375,33 +343,99 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:layout_marginTop="5dp"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp"
       >
 
-      <EditText
-        android:id="@+id/register_phone"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:drawableLeft="@drawable/phone"
-        android:hint="请输入你的手机号（必填）"
-        android:inputType="phone"/>
-
-      <EditText
-        android:id="@+id/register_wechat"
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/phone"
-        android:hint="请输入你的微信号"
-        android:inputType="text"/>
+        android:orientation="horizontal">
 
-      <EditText
-        android:id="@+id/register_qq"
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="14sp"
+          android:text="个性签名"/>
+
+        <EditText
+          android:id="@+id/register_signature"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:textSize="14sp"
+          android:gravity="right"
+          android:maxLength="32"
+          android:hint="点击输入，不超过32字"/>
+
+      </LinearLayout>
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/phone"
-        android:hint="请输入你的qq号"
-        android:inputType="number"/>
+        android:orientation="horizontal" >
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="14sp"
+          android:text="手机"/>
+
+        <EditText
+          android:id="@+id/register_phone"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:hint="点击输入 (必填)"
+          android:gravity="right"
+          android:textSize="14sp"
+          android:inputType="phone"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="14sp"
+          android:text="微信"/>
+
+        <EditText
+          android:id="@+id/register_wechat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="right"
+          android:textSize="14sp"
+          android:hint="点击输入"
+          android:inputType="text"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="14sp"
+          android:text="QQ"/>
+
+        <EditText
+          android:id="@+id/register_qq"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="right"
+          android:textSize="14sp"
+          android:hint="点击输入"
+          android:inputType="number"/>
+
+      </LinearLayout>
 
     </LinearLayout>
 
@@ -410,22 +444,37 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textColor="@color/info"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp"
       android:layout_marginTop="20dp"
       android:visibility="gone"
-      android:textSize="14dp"
+      android:textSize="14sp"
       android:text="* 请至少输入两种联系方式"/>
 
   </LinearLayout>
 
-  <android.support.design.button.MaterialButton
-    android:id="@+id/test_btn"
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="20dp"
-    android:background="#c6e2ff"
-    android:text="下一步"/>
+    android:orientation="horizontal">
+
+    <android.support.design.button.MaterialButton
+      android:id="@+id/jump_register_btn"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      app:cornerRadius="24dp"
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:text="以后再说"
+      android:layout_marginRight="15dp"
+      android:visibility="gone"/>
+
+    <android.support.design.button.MaterialButton
+      android:id="@+id/test_btn"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      app:cornerRadius="24dp"
+      android:text="下一步"/>
+
+  </LinearLayout>
 
 </LinearLayout>

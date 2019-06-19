@@ -10,14 +10,14 @@ public class Assignment {
   /**
    * statue 应该是一个枚举值
    */
-  public String status;
+  public int status;
   public String time;
   public String startPos;
   public String endPos;
   public int finishNum;
   public int totalNum;
 
-  public Assignment(String title, int type, int value, String status, String time, String startPos, String endPos, int finishNum, int totalNum) {
+  public Assignment(String title, int type, int value, int status, String time, String startPos, String endPos, int finishNum, int totalNum) {
     this.title = title;
     this.type = type;
     this.value = value;
@@ -62,7 +62,7 @@ public class Assignment {
     this.endPos = endPos;
   }
 
-  public Assignment(String title, int type, int value, String status, String time, String startPos, String endPos) {
+  public Assignment(String title, int type, int value, int status, String time, String startPos, String endPos) {
     this.title = title;
     this.type = type;
     this.value = value;
@@ -72,7 +72,7 @@ public class Assignment {
     this.endPos = endPos;
   }
 
-  public Assignment(String title, int type, int value, String status, String time) {
+  public Assignment(String title, int type, int value, int status, String time) {
     this.title = title;
     this.type = type;
     this.value = value;
@@ -107,11 +107,11 @@ public class Assignment {
     this.value = value;
   }
 
-  public String getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 

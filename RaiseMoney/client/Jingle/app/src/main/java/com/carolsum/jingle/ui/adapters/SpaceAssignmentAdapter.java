@@ -36,7 +36,7 @@ public class SpaceAssignmentAdapter extends RecyclerView.Adapter<SpaceAssignment
     Assignment assignment = assignmentList.get(i);
     if (assignment.getType() == 0) {
       // paopao
-      viewHolder.assignmentTypeImage.setImageResource(R.drawable.home);
+      viewHolder.assignmentTypeImage.setImageResource(R.drawable.pao);
       viewHolder.startPos.setText(assignment.getStartPos());
       viewHolder.endPos.setText(assignment.getEndPos());
       viewHolder.ddl.setText(assignment.getTime());
@@ -44,16 +44,25 @@ public class SpaceAssignmentAdapter extends RecyclerView.Adapter<SpaceAssignment
       viewHolder.diandianInfoLayout.setVisibility(View.GONE);
     } else {
       // diandian
-      viewHolder.assignmentTypeImage.setImageResource(R.drawable.publish);
+      viewHolder.assignmentTypeImage.setImageResource(R.drawable.dian);
       viewHolder.progressBar.setSmoothPercent((float) assignment.getFinishNum() / assignment.getTotalNum());
       viewHolder.assignmentProgressInfo.setText(Integer.toString(assignment.getFinishNum()) + "/" + Integer.toString(assignment.getTotalNum()));
       viewHolder.paopaoInfoLayout.setVisibility(View.GONE);
       viewHolder.diandianInfoLayout.setVisibility(View.VISIBLE);
     }
     viewHolder.assignmentTitle.setText(assignment.getTitle());
-    viewHolder.assignmentStatus.setText(assignment.getStatus());
+    switch (assignment.getStatus()) {
+      case 0:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
+        break;
+      case 1:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
+        break;
+      default:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
+        break;
+    }
     viewHolder.assignmentTime.setText(assignment.getTime());
-
   }
 
   @Override
@@ -64,7 +73,7 @@ public class SpaceAssignmentAdapter extends RecyclerView.Adapter<SpaceAssignment
   static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView assignmentTypeImage;
     TextView assignmentTitle;
-    TextView assignmentStatus;
+    ImageView assignmentStatus;
     LinearLayout paopaoInfoLayout;
     LinearLayout diandianInfoLayout;
     TextView startPos;

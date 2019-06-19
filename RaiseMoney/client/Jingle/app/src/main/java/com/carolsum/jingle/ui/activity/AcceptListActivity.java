@@ -55,15 +55,15 @@ public class AcceptListActivity extends AppCompatActivity {
 
   private void initAssignment() {
     for(int i = 0; i < 1; i++) {
-      Assignment assignment = new Assignment("求好心人帮拿快递！", 1, -5, "待接单", "发布时间：今天17:40");
-      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 0, -10, "进度：20/35", "发布时间：今天17:40");
+      Assignment assignment = new Assignment("求好心人帮拿快递！", 1, -5, 0, "发布时间：今天17:40");
+      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 0, -10, 1, "发布时间：今天17:40");
       runningList.add(assignment);
       runningList.add(assignment1);
     }
 
     for(int i = 0; i < 4; i++) {
-      Assignment assignment = new Assignment("求好心人帮拿快递！", 1, -34, "已超期", "结束时间：18/5/22 17:40");
-      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 0, -7, "进度：20/35", "结束时间：18/5/22 17:40");
+      Assignment assignment = new Assignment("求好心人帮拿快递！", 1, -34, 0, "结束时间：18/5/22 17:40");
+      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 0, -7, 1, "结束时间：18/5/22 17:40");
       finishedList.add(assignment1);
       finishedList.add(assignment);
     }

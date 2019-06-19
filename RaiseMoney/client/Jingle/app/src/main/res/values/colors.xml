@@ -12,9 +12,14 @@
     <color name="tab_selected">@color/twitter_blue</color>
     <color name="info">#007FFF</color>
     <color name="text_color_0">#303233</color>
+    <color name="text_color_8">#606466</color>
     <color name="text_color_1">#696969</color>
     <color name="text_color_2">#9E9E9E</color>
+    <color name="text_color_6">#909599</color>
     <color name="text_color_3">#707070</color>
+    <color name="text_color_4">#AFAFAF</color>
+    <color name="text_color_5">#AFAFAF</color>
+    <color name="text_color_7">#E6E4E4</color>
     <color name="toolbar_bottom_line">#E1E1E1</color>
     <color name="setting_card_bg">#F5F8FA</color>
     <color name="recharge_cart_item_border">#F5A623</color>

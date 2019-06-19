@@ -17,4 +17,9 @@
     <color name="text_color_3">#707070</color>
     <color name="toolbar_bottom_line">#E1E1E1</color>
     <color name="setting_card_bg">#F5F8FA</color>
+    <color name="recharge_cart_item_border">#F5A623</color>
+    <color name="recharge_cart_item_inner_bg">#F6D567</color>
+    <color name="recharge_cart_item_active_bg">#F4C62A</color>
+    <color name="info_button">#EDF0F2</color>
+    <color name="withdraw_card_bg">#B2DC85</color>
 </resources>

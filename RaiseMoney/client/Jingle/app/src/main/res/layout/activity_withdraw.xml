@@ -4,140 +4,197 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="#FFFFFF"
   tools:context=".ui.activity.wallet.WithdrawActivity">
 
-  <android.support.design.card.MaterialCardView
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_margin="15dp"
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/appbarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
-    >
+    android:elevation="4dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:liftOnScroll="true">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/withdraw_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#fff"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="提现"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/toolbar_bottom_line"/>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    app:layout_constraintTop_toBottomOf="@+id/appbarLayout">
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
-      <LinearLayout
+      <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@color/light_gray">
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="到账银行卡"
-          android:textStyle="bold"
-          android:textSize="16dp"/>
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        android:layout_margin="20dp"
+        >
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:layout_marginTop="5dp">
+          android:orientation="vertical">
 
-          <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/publish"/>
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@color/withdraw_card_bg">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="到账银行卡"
+              android:textColor="#6FA24A"
+              android:textStyle="bold"
+              android:textSize="16sp"/>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="5dp">
+
+              <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/publish" />
+
+              <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="XX银行（1234）"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="center_vertical"/>
+
+              <ImageView
+                android:layout_width="11dp"
+                android:layout_height="32dp"
+                android:src="@drawable/next"
+                android:scaleType="fitXY"
+                android:tint="@color/white"/>
+
+            </LinearLayout>
+
+          </LinearLayout>
 
           <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="XX银行（1234）"
+            android:text="提现金额"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_0"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"/>
+            android:layout_margin="15dp"/>
 
-          <ImageView
-            android:layout_width="24dp"
-            android:layout_height="36dp"
-            android:src="@drawable/next"/>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="￥"
+              android:textSize="20sp"
+              android:textColor="#444"
+              android:textStyle="bold"
+              />
+
+            <android.support.design.widget.TextInputEditText
+              android:id="@+id/withdraw_number"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="numberDecimal"/>
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+              android:id="@+id/withdraw_user_deposit"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="5dp"
+              android:text="剩余 196 JIN币 = 19.6 RMB"
+              android:layout_gravity="center_vertical"/>
+
+            <TextView
+              android:id="@+id/withdraw_all_btn"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="20dp"
+              android:textColor="@color/twitter_blue"
+              android:text="全部提现"/>
+
+          </LinearLayout>
+
+          <android.support.design.button.MaterialButton
+            android:id="@+id/withdraw_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            app:cornerRadius="24dp"
+            android:backgroundTint="@color/withdraw_card_bg"
+            android:text="确认提现"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
 
         </LinearLayout>
 
-      </LinearLayout>
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="提现金额"
-        android:textSize="18dp"
-        android:textColor="#444"
-        android:textStyle="bold"
-        android:layout_margin="15dp"/>
-
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="￥"
-          android:textSize="18dp"
-          android:textColor="#444"
-          android:textStyle="bold"
-          />
-
-        <android.support.design.widget.TextInputEditText
-          android:id="@+id/withdraw_number"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="numberDecimal"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
-
-        <View
-          android:layout_width="24dp"
-          android:layout_height="24dp"
-          android:background="@color/light_gray"/>
-
-        <TextView
-          android:id="@+id/withdraw_user_deposit"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="5dp"
-          android:text="剩余 196 JIN币 = 19.6 RMB"
-          android:layout_gravity="center_vertical"/>
-
-        <TextView
-          android:id="@+id/withdraw_all_btn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
-          android:layout_marginLeft="20dp"
-          android:textColor="@color/twitter_blue"
-          android:text="全部提现"/>
-
-      </LinearLayout>
-
-      <android.support.design.button.MaterialButton
-        android:id="@+id/withdraw_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text="提现"
-        android:layout_marginBottom="10dp"/>
+      </android.support.design.card.MaterialCardView>
 
     </LinearLayout>
 
-  </android.support.design.card.MaterialCardView>
+  </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

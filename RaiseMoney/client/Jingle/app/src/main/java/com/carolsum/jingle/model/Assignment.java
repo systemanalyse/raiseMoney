@@ -9,6 +9,13 @@ public class Assignment {
   public int value;
   /**
    * statue 应该是一个枚举值
+   * 0: 待确认
+   * 1: 待接单
+   * 2：已接单
+   * 3：进行中
+   * 4：已完成
+   * 5：已超期
+   * 6：未按时
    */
   public int status;
   public String time;

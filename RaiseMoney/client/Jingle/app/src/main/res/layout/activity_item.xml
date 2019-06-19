@@ -2,11 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:paddingLeft="15dp"
-  android:paddingRight="15dp"
-  android:paddingTop="15dp"
-  android:paddingBottom="15dp"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:layout_marginTop="12dp"
+  android:layout_marginBottom="12dp">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -15,25 +13,26 @@
 
     <ImageView
       android:id="@+id/assignment_type"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:src="@drawable/phone"/>
+      android:layout_width="18dp"
+      android:layout_height="18dp"
+      android:src="@drawable/pao"/>
 
     <TextView
       android:id="@+id/assignment_title"
       android:layout_width="0dp"
       android:layout_weight="1"
       android:layout_height="match_parent"
-      android:text="求好心人帮拿快递!"
-      android:textStyle="bold"
+      android:text="求好心人帮拿快递！"
+      android:textColor="@color/black"
+      android:textSize="13sp"
       android:gravity="center_vertical"
-      android:layout_marginLeft="5dp" />
+      android:layout_marginLeft="7dp" />
 
-    <TextView
+    <ImageView
       android:id="@+id/assignment_status"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
+      android:layout_width="60dp"
+      android:layout_height="20dp"
+      android:src="@drawable/state_running"
       android:text="待接单"/>
 
   </LinearLayout>
@@ -41,31 +40,44 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="12dp">
 
     <ImageView
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:src="@drawable/home"/>
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:src="@drawable/coin"/>
 
     <TextView
       android:id="@+id/assignment_value"
       android:layout_width="0dp"
       android:layout_weight="1"
       android:layout_height="match_parent"
-      android:text="-5"
+      android:text="- 5"
+      android:textSize="16sp"
+      android:textColor="@color/text_color_8"
       android:textStyle="bold"
       android:gravity="center_vertical"
-      android:layout_marginLeft="5dp" />
-
-    <TextView
-      android:id="@+id/assignment_time"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:textSize="12dp"
-      android:text="发布时间：今天17:40"/>
+      android:layout_marginLeft="6dp" />
 
   </LinearLayout>
+
+  <TextView
+    android:id="@+id/assignment_time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:textColor="@color/text_color_8"
+    android:textSize="10sp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="9dp"
+    android:text="今天17:40 发起"/>
+
+  <View
+    android:id="@+id/assignment_divider"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#D6D6D6"
+    android:layout_marginBottom="4dp"/>
 
 </LinearLayout>

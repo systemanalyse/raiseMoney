@@ -93,10 +93,8 @@ public class NotificationActivity extends AppCompatActivity {
   private void initNotifications() {
     for (int i = 0; i < 5; i++) {
       JNotification notification = new JNotification(0, "你发起的任务已完成，点击确认", 0, "求好心人帮忙带快递～求好心人帮gadugiaugdiuga", "今天17:40", false);
-//      JNotification notification2 = new JNotification(1, "你接受的任务已被确认完成，点击查看", 1, "帮我评论点个赞？谢啦", "今天12:10", false);
       JNotification notification3 = new JNotification(2, "你的提现请求已完成，点击查看", 2, "您于2018/5/22 17:35分向XXX提...", "今天17:40", true);
       unreadList.add(notification);
-//      unreadList.add(notification2);
       readList.add(notification3);
     }
   }

@@ -1,5 +1,6 @@
 package com.carolsum.jingle.ui.adapters;
 
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,13 +34,44 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
   public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
     Assignment assignment = assignmentList.get(i);
     viewHolder.assignmentTitle.setText(assignment.getTitle());
-    viewHolder.assignmentStatus.setText(assignment.getStatus());
-    viewHolder.assignmentValue.setText(Integer.toString(assignment.getValue()));
+    switch (assignment.getStatus()) {
+      case 0:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
+        break;
+      case 1:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_wait_for_order);
+        break;
+      case 2:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
+        break;
+      case 3:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_running);
+        break;
+      case 4:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_finish);
+        break;
+      case 5:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_overdue);
+        break;
+      case 6:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_not_on_time);
+        break;
+    }
+    int value = assignment.getValue();
+    if (value < 0) {
+      viewHolder.assignmentValue.setText("- " + Integer.toString(-value));
+    } else {
+      viewHolder.assignmentValue.setText("+ " + Integer.toString(value));
+    }
     viewHolder.assignmentTime.setText(assignment.getTime());
     if (assignment.getType() == 0) {
-      viewHolder.assignmentTypeImage.setImageResource(R.drawable.home);
+      viewHolder.assignmentTypeImage.setImageResource(R.drawable.pao);
     } else {
-      viewHolder.assignmentTypeImage.setImageResource(R.drawable.publish);
+      viewHolder.assignmentTypeImage.setImageResource(R.drawable.dian);
+    }
+
+    if (i == assignmentList.size() - 1) {
+      viewHolder.divider.setVisibility(View.GONE);
     }
   }
 
@@ -51,9 +83,10 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
   static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView assignmentTypeImage;
     TextView assignmentTitle;
-    TextView assignmentStatus;
+    ImageView assignmentStatus;
     TextView assignmentValue;
     TextView assignmentTime;
+    View divider;
 
     public ViewHolder(View view) {
       super(view);
@@ -62,7 +95,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
       assignmentStatus = view.findViewById(R.id.assignment_status);
       assignmentValue = view.findViewById(R.id.assignment_value);
       assignmentTime = view.findViewById(R.id.assignment_time);
+      divider = view.findViewById(R.id.assignment_divider);
     }
   }
-
 }

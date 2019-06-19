@@ -1,82 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  tools:context=".ui.activity.AcceptListActivity"
-  android:fillViewport="true">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#FFFFFF"
+  tools:context=".ui.activity.AcceptListActivity">
 
-  <LinearLayout
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/appbarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:elevation="4dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:liftOnScroll="true">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#fff"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="已接受的任务"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/toolbar_bottom_line"/>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/appbarLayout">
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:paddingLeft="10dp"
-      android:paddingRight="10dp"
-      android:paddingTop="5dp"
-      android:paddingBottom="5dp"
-      android:background="@color/light_gray">
+      android:orientation="vertical">
 
-      <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/home"/>
+      <LinearLayout
+        android:id="@+id/running_list_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginLeft="5dp"
-        android:text="进行中"
-        android:gravity="center"/>
+        <TextView
+          android:layout_width="66dp"
+          android:layout_height="28dp"
+          android:gravity="center"
+          android:text="进行中"
+          android:layout_marginTop="20dp"
+          android:textSize="16sp"
+          android:textColor="@color/white"
+          android:background="@drawable/mission_list_running_title"/>
+
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/running_accept_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="6dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+      </LinearLayout>
+
+      <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#F5F8FA"/>
+
+      <LinearLayout
+        android:id="@+id/finish_list_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+          android:layout_width="66dp"
+          android:layout_height="28dp"
+          android:gravity="center"
+          android:text="已结束"
+          android:layout_marginTop="20dp"
+          android:textSize="16sp"
+          android:textColor="@color/text_color_6"
+          android:background="@drawable/mission_list_finish_title"/>
+
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/finished_accept_list"
+          android:layout_width="match_parent"
+          android:layout_marginTop="6dp"
+          android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+      </LinearLayout>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="96dp"/>
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/running_accept_list"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:nestedScrollingEnabled="false"
-      >
+  </android.support.v4.widget.NestedScrollView>
 
-    </android.support.v7.widget.RecyclerView>
+</android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:paddingLeft="10dp"
-      android:paddingRight="10dp"
-      android:paddingTop="5dp"
-      android:paddingBottom="5dp"
-      android:background="@color/light_gray">
-
-      <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/home"/>
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginLeft="5dp"
-        android:text="已结束"
-        android:gravity="center"/>
-
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/finished_accept_list"
-      android:layout_width="match_parent"
-      android:nestedScrollingEnabled="false"
-      android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
-
-  </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>

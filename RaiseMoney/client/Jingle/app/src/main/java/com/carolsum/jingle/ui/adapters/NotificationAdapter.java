@@ -34,7 +34,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         JNotification notification = notificationList.get(i);
         // 将 notification 实例上的数据绑定到 viewHolder 中
-         viewHolder.originImage.setImageResource(R.drawable.default_icon);
+        switch (notification.getOrigin()) {
+          case 0:
+            viewHolder.originImage.setImageResource(R.drawable.publish_icon);
+            break;
+          case 1:
+            viewHolder.originImage.setImageResource(R.drawable.accept_msg_icon);
+            break;
+          case 2:
+            viewHolder.originImage.setImageResource(R.drawable.wallet_msg_icon);
+            break;
+        }
 
         viewHolder.titleText.setText(notification.getTitle());
         if (notification.isRead()) {
@@ -44,20 +54,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
         if (notification.getType() == 0) {
-          viewHolder.typeImage.setImageResource(R.drawable.home);
+          viewHolder.typeImage.setImageResource(R.drawable.pao);
+        } else if (notification.getType() == 1) {
+          viewHolder.typeImage.setImageResource(R.drawable.dian);
         } else {
-          viewHolder.typeImage.setImageResource(R.drawable.publish);
+          viewHolder.typeImage.setVisibility(View.GONE);
         }
-//        switch(notification.getType()) {
-//          case 0:
-//            viewHolder.typeImage.setImageResource(R.drawable.home);
-//          case 1:
-//            viewHolder.typeImage.setImageResource(R.drawable.publish);
-//        }
+
         viewHolder.descText.setText(notification.getDesc());
         // todo@lijiehong 这里日期格式需要使用helper做一个转换
         viewHolder.dateText.setText(notification.getDate());
         viewHolder.markView.setVisibility(notification.isRead() ? View.INVISIBLE: View.VISIBLE);
+
+        if (i == notificationList.size() - 1) {
+          viewHolder.divider.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -72,6 +83,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
           TextView descText;
           TextView dateText;
           View markView;
+          View divider;
 
           public ViewHolder(View view) {
             super(view);
@@ -81,6 +93,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             descText = view.findViewById(R.id.message_desc);
             dateText = view.findViewById(R.id.message_date);
             markView = view.findViewById(R.id.new_message_mark);
+            divider = view.findViewById(R.id.item_divider);
           }
       }
 }

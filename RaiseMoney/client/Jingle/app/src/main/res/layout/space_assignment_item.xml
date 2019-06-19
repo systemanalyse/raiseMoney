@@ -114,8 +114,8 @@
         android:id="@+id/assignment_process"
         android:layout_width="178dp"
         android:layout_height="18dp"
-        app:mpb_fill_color="@color/twitter_blue"
-        app:mpb_background_color="@color/light_gray"
+        app:mpb_fill_color="@color/progress_bar_fill"
+        app:mpb_background_color="#EDF0F2"
         app:mpb_flat="true"
         app:mpb_percent="0.5"/>
 

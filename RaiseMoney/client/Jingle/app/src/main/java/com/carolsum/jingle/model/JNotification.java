@@ -7,7 +7,7 @@ public class JNotification {
   public int origin;
   public String title;
   /**
-   * type: 0 表示 跑跑; 1 表示 点点
+   * type: 0 表示 跑跑; 1 表示 点点; 2 表示其他
    */
   public int type;
   public String desc;

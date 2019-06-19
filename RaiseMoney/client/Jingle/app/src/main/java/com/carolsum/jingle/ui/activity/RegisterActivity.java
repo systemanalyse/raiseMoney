@@ -253,13 +253,12 @@ public class RegisterActivity extends AppCompatActivity {
           RadioButton maleButton = findViewById(R.id.register_male_radio);
           Drawable maleIcon = getDrawable(R.drawable.man);
           maleIcon.setBounds(0,0,54,54);
-          maleButton.setCompoundDrawables(null, maleIcon, null, null);
+          maleButton.setCompoundDrawables(null, null, maleIcon, null);
 
           RadioButton femaleButton = findViewById(R.id.register_female_radio);
           Drawable femaleIcon = getDrawable(R.drawable.woman);
           femaleIcon.setBounds(0,0,54,54);
-          femaleButton.setCompoundDrawables(null, femaleIcon, null, null);
-
+          femaleButton.setCompoundDrawables(null, null, femaleIcon, null);
 
           step1Layout.setVisibility(View.VISIBLE);
           break;

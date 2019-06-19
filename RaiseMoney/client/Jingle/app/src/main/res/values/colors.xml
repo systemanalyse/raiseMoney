@@ -15,4 +15,6 @@
     <color name="text_color_1">#696969</color>
     <color name="text_color_2">#9E9E9E</color>
     <color name="text_color_3">#707070</color>
+    <color name="toolbar_bottom_line">#E1E1E1</color>
+    <color name="setting_card_bg">#F5F8FA</color>
 </resources>

@@ -269,186 +269,186 @@
   </LinearLayout>
 
   <LinearLayout
-    android:id="@+id/step3_layout"
+  android:id="@+id/step3_layout"
+  android:layout_width="match_parent"
+  android:layout_height="0dp"
+  android:layout_weight="1"
+  android:orientation="vertical"
+  android:visibility="gone"
+  >
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="gone"
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="32dp"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+      android:id="@+id/profile_image_wrapper"
+      android:layout_width="91dp"
+      android:layout_height="80dp">
+
+      <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/publish"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"
+        android:visibility="gone"/>
+
+      <ImageView
+        android:id="@+id/profile_image_template"
+        android:layout_width="91dp"
+        android:layout_height="80dp"
+        android:visibility="visible"
+        android:src="@drawable/register_profile_image"
+        />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="horizontal"
+      android:layout_marginTop="12dp">
+
+      <TextView
+        android:id="@+id/profile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="白彧歌"
+        android:textColor="@color/text_color_0"
+        android:textSize="16sp"/>
+
+      <ImageView
+        android:id="@+id/profile_gender"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/man"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
     >
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:layout_marginTop="32dp"
-      android:layout_marginBottom="32dp"
-      android:gravity="center_horizontal">
+      android:orientation="horizontal">
 
-      <RelativeLayout
-        android:id="@+id/profile_image_wrapper"
-        android:layout_width="91dp"
-        android:layout_height="80dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-          xmlns:app="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/profile_image"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          android:src="@drawable/publish"
-          app:civ_border_width="2dp"
-          app:civ_border_color="#FF000000"
-          android:visibility="gone"/>
-
-        <ImageView
-          android:id="@+id/profile_image_template"
-          android:layout_width="91dp"
-          android:layout_height="80dp"
-          android:visibility="visible"
-          android:src="@drawable/register_profile_image"
-          />
-
-      </RelativeLayout>
-
-      <LinearLayout
+      <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="个性签名"/>
 
-        <TextView
-          android:id="@+id/profile_username"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="白彧歌"
-          android:textColor="@color/text_color_0"
-          android:textSize="16sp"/>
-
-        <ImageView
-          android:id="@+id/profile_gender"
-          android:layout_width="16dp"
-          android:layout_height="16dp"
-          android:layout_marginLeft="5dp"
-          android:layout_gravity="center_vertical"
-          android:src="@drawable/man"/>
-
-      </LinearLayout>
+      <EditText
+        android:id="@+id/register_signature"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textSize="14sp"
+        android:gravity="right"
+        android:maxLength="32"
+        android:hint="点击输入，不超过32字"/>
 
     </LinearLayout>
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:layout_marginTop="5dp"
-      >
+      android:orientation="horizontal" >
 
-      <LinearLayout
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="手机"/>
+
+      <EditText
+        android:id="@+id/register_phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:textSize="14sp"
-          android:text="个性签名"/>
-
-        <EditText
-          android:id="@+id/register_signature"
-          android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:textSize="14sp"
-          android:gravity="right"
-          android:maxLength="32"
-          android:hint="点击输入，不超过32字"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:textSize="14sp"
-          android:text="手机"/>
-
-        <EditText
-          android:id="@+id/register_phone"
-          android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:hint="点击输入 (必填)"
-          android:gravity="right"
-          android:textSize="14sp"
-          android:inputType="phone"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:textSize="14sp"
-          android:text="微信"/>
-
-        <EditText
-          android:id="@+id/register_wechat"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="right"
-          android:textSize="14sp"
-          android:hint="点击输入"
-          android:inputType="text"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:textSize="14sp"
-          android:text="QQ"/>
-
-        <EditText
-          android:id="@+id/register_qq"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="right"
-          android:textSize="14sp"
-          android:hint="点击输入"
-          android:inputType="number"/>
-
-      </LinearLayout>
+        android:layout_height="48dp"
+        android:hint="点击输入 (必填)"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:inputType="phone"/>
 
     </LinearLayout>
 
-    <TextView
-      android:id="@+id/register_feedback"
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textColor="@color/info"
-      android:layout_marginTop="20dp"
-      android:visibility="gone"
-      android:textSize="14sp"
-      android:text="* 请至少输入两种联系方式"/>
+      android:orientation="horizontal" >
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="微信"/>
+
+      <EditText
+        android:id="@+id/register_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:hint="点击输入"
+        android:inputType="text"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal" >
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="QQ"/>
+
+      <EditText
+        android:id="@+id/register_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:hint="点击输入"
+        android:inputType="number"/>
+
+    </LinearLayout>
 
   </LinearLayout>
+
+  <TextView
+    android:id="@+id/register_feedback"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/info"
+    android:layout_marginTop="20dp"
+    android:visibility="gone"
+    android:textSize="14sp"
+    android:text="* 请至少输入两种联系方式"/>
+
+</LinearLayout>
 
   <LinearLayout
     android:layout_width="match_parent"

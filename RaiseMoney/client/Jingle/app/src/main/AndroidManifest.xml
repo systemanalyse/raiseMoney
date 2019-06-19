@@ -22,7 +22,9 @@
     <activity android:name=".ui.activity.RegisterActivity" />
     <activity android:name=".ui.activity.RegisterSuccessActivity" />
     <activity android:name=".ui.activity.NotificationActivity" />
-    <activity android:name=".ui.activity.SettingsActivity" />
+    <activity
+      android:name=".ui.activity.SettingsActivity"
+      />
     <activity android:name=".ui.activity.CertificationActivity" />
     <activity android:name=".ui.activity.ProfileSettingActivity" />
     <activity android:name=".ui.activity.SponsorListActivity" />

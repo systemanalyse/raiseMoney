@@ -30,9 +30,6 @@
     <activity android:name=".ui.activity.wallet.WalletActivity" />
     <activity android:name=".ui.activity.wallet.WithdrawActivity" />
     <activity android:name=".ui.activity.wallet.RechargeActivity" />
-    <activity
-      android:name=".ui.activity.IntroActivity"
-      android:label="@string/app_intro" />
     <activity android:name=".ui.activity.GuideActivity"></activity>
   </application>
 

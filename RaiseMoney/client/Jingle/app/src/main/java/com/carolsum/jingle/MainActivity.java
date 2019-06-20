@@ -7,22 +7,12 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.carolsum.jingle.event.LoginEvent;
-import com.carolsum.jingle.ui.activity.AcceptListActivity;
 import com.carolsum.jingle.ui.activity.GuideActivity;
 import com.carolsum.jingle.ui.activity.HomeActivity;
-import com.carolsum.jingle.ui.activity.IntroActivity;
-import com.carolsum.jingle.ui.activity.NotificationActivity;
 import com.carolsum.jingle.ui.activity.RegisterActivity;
-import com.carolsum.jingle.ui.activity.SponsorListActivity;
-import com.carolsum.jingle.ui.activity.wallet.WalletActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

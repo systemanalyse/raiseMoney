@@ -20,6 +20,7 @@
     <color name="text_color_4">#AFAFAF</color>
     <color name="text_color_5">#AFAFAF</color>
     <color name="text_color_7">#E6E4E4</color>
+    <color name="intro_gray">#D8D8D8</color>
     <color name="toolbar_bottom_line">#E1E1E1</color>
     <color name="setting_card_bg">#F5F8FA</color>
     <color name="recharge_cart_item_border">#F5A623</color>

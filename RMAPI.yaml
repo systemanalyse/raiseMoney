@@ -16,69 +16,27 @@ schemes:
 - "http"
 paths:
   # privacy infomation includes user all information 
-  /user/{userId}/Privacy:
+  /user/{userId}/Privary:
     get:
       tags:
       - User
       summary: Get privacy infomation  use email
       description: Get the user detailed information, return the User infomation privacy, cann't use by others
-      operationId: GetUserInfoPrivacy
+      operationId: GetPrivaryInfo
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return User privacy information
-          schema:
-            $ref: "#/definitions/UserInfoPrivacy"
-        400:
-          description: Wrong format, return wrong message
-          schema:
-            type: string
-        401:
-          description: Unauthorized, need to authorized, return wrong message
-          schema:
-            type: string
-        403:
-          description: request refused, return wrong message
-          schema:
-            type: string
-        404:
-          description: User not found, return wrong message
-          schema:
-            type: string
-    post:
-      tags:
-      - User
-      summary: user upload privacy info, need user info public
-      description: Return privacy information(success) / wrong message(fail)
-      operationId: SetUserInfoPrivacy
-      consumes:
-      - application/x-www-form-urlencoded
-      produces:
-      - application/json
-      parameters:
-      - name: userId
-        in: path
-        description: user email
-        required: true
-        type: string
-        x-exportParamName: email
-      - name: UserInformation
-        in: formData
-        description: User Business Card information
-        required: true
-        type: string
-      responses:        
-        200:
-          description: Successful operation, return user privacy info
           schema:
             $ref: "#/definitions/UserInfoPrivacy"
         400:
@@ -102,7 +60,7 @@ paths:
       - User
       summary: Modify the Public info(BusinessCard), need card info
       description: return user public infomation(success)/ wrong message(fail)
-      operationId: ModifyUserInfoPrivacy
+      operationId: UpdateUserInfo
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -110,13 +68,14 @@ paths:
       parameters: 
       - name: userId
         in: path
-        description: email of user
+        description: id of user
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       - name: userInfo
         in: formData
-        description: new Business Card information
+        description: new praviry information
         required: true
         type: string
         x-exportParamName: user infomation
@@ -148,17 +107,18 @@ paths:
       - User
       summary: Get user Public info(BusinessCard), need email
       description: return user public information(success)/ wrong message(fail)
-      operationId: GetUserInfoPublic
+      operationId: GetPublicInfo
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return user public info
@@ -182,17 +142,18 @@ paths:
       - User
       summary: Get user Notice list
       description: return notice list(success)/ wrong message(fail)
-      operationId: GetUserNotice
+      operationId: GetNotice
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return User Notices
@@ -252,17 +213,18 @@ paths:
       - User
       summary: Get user Jin acount, need email
       description: return user Jin account(success)/ wrong message(fail)
-      operationId: GetUserJin
+      operationId: GetWallet
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return user Jin num
@@ -281,7 +243,7 @@ paths:
       - User
       summary: recharge/ withdraw, use positive as recharge, negative as withdraw
       description: return wallet account(success)/ wrong message(fail)
-      operationId: ModifyUserJin
+      operationId: ChangeWallet
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -289,10 +251,11 @@ paths:
       parameters: 
       - name: userId
         in: path
-        description: email of user
+        description: id of user
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       - name: Jin
         in: formData
         description: Jin coin num to modify
@@ -322,17 +285,17 @@ paths:
       - User
       summary: Get overview of setting
       description: Get the user current overview(success)/ wrong message(fail)
-      operationId: GetUserSettingOverview
+      operationId: GetSetting
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
         type: string
-        x-exportParamName: email
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return User setting overview, it should be an interger
@@ -486,7 +449,7 @@ paths:
       - Task
       summary: publish a task, need task infomation 
       description: Return task information(success) / wrong message(fail)
-      operationId: Publish
+      operationId: PublishTask
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -494,10 +457,11 @@ paths:
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
-        type: string
-        x-exportParamName: email
+        type: integer
+        format: int64
+        x-exportParamName: id
       - name: TaskInfo
         in: formData
         description: Task detailed infomation
@@ -805,7 +769,7 @@ paths:
       - Regist
       summary: user regist, need detailed UserInformation
       description: Return detailed UserInformation
-      operationId: regist
+      operationId: Register
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -835,7 +799,7 @@ paths:
       - Login
       summary: User log in the system, need email & password
       description: Return detailed UserInformation(success)/ reason(fail)
-      operationId: login
+      operationId: Login
       parameters:
         - name: userInfo
           in: body
@@ -1075,6 +1039,9 @@ definitions:
     type: "object"
     description: user business card, visible to everyone
     properties:
+      userId:
+        type: integer
+        format: int64
       name:
         type: "string"
       dormitory:
@@ -1095,6 +1062,9 @@ definitions:
     type: "object"
     description: "User detailed information, only visible to userself"
     properties:
+      userId:
+        type: integer
+        format: int64
       email:
         type: "string"
       password:
@@ -1140,6 +1110,9 @@ definitions:
     type: "object"
     description: user info in task
     properties:
+      userId:
+        type: integer
+        format: int64
       email:
         description: unique identify
         type: string

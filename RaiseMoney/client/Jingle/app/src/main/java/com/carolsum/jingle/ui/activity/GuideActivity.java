@@ -1,6 +1,13 @@
 package com.carolsum.jingle.ui.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +37,8 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
   private int currentPage = 0;
   private Unbinder unbinder;
 
+  private final int REQUEST_NETWORK_CODE = 1;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,11 +58,34 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
   @OnClick(R.id.intro_indicator_image)
   public void next() {
     if (currentPage == viewList.size() - 1) {
-      Intent intent = new Intent(this, MainActivity.class);
-      startActivity(intent);
-      finish();
+      int checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+      if (checkPermission == PackageManager.PERMISSION_GRANTED){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+      } else {
+        askForPermission(new String[]{Manifest.permission.INTERNET});
+      }
     } else {
       viewPager.setCurrentItem(currentPage + 1);
+    }
+  }
+
+  private void askForPermission(String[] permissions) {
+    ActivityCompat.requestPermissions(this, permissions, REQUEST_NETWORK_CODE);
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    switch (requestCode) {
+      case REQUEST_NETWORK_CODE:{
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          Intent intent = new Intent(this, MainActivity.class);
+          startActivity(intent);
+          finish();
+        }
+        return;
+      }
     }
   }
 

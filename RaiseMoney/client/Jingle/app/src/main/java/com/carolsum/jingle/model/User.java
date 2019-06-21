@@ -1,97 +1,50 @@
 package com.carolsum.jingle.model;
 
 public class User {
-  public String username;
-  public String school;
-  public String password;
-  public int enrollment;
-  public String introduction;
-  public String phonenumber;
-  public String wechatid;
-  public String ppid;
-  public int money;
+  public int userId;
   public String email;
-  public int PPPnumber;
-  public String sex;
-  public int DDPnumber;
-  public int PPRnumber;
-  public int DDRnumber;
-  public boolean online;
-  public String dormitorysite;
+  public String password;
   public String name;
-  public String[] photourl;
-  public int id;
+  public int gender;
+  public String school;
+  public String enrollment;
+  public String dormitory;
+  public String studentCardURL;
+  public String avatarURL;
+  public String signature;
+  public String phone;
+  public String wechat;
+  public String qq;
+  public int acceptNum;
+  public int publishNum;
+  public int Jin;
 
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getSchool() {
-    return school;
-  }
-
-  public void setSchool(String school) {
-    this.school = school;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
+  public User(int userId, String email, String password, String name, int gender, String school, String enrollment, String dormitory, String studentCardURL, String avatarURL, String signature, String phone, String wechat, String qq, int acceptNum, int publishNum, int jin) {
+    this.userId = userId;
+    this.email = email;
     this.password = password;
-  }
-
-  public int getEnrollment() {
-    return enrollment;
-  }
-
-  public void setEnrollment(int enrollment) {
+    this.name = name;
+    this.gender = gender;
+    this.school = school;
     this.enrollment = enrollment;
+    this.dormitory = dormitory;
+    this.studentCardURL = studentCardURL;
+    this.avatarURL = avatarURL;
+    this.signature = signature;
+    this.phone = phone;
+    this.wechat = wechat;
+    this.qq = qq;
+    this.acceptNum = acceptNum;
+    this.publishNum = publishNum;
+    Jin = jin;
   }
 
-  public String getIntroduction() {
-    return introduction;
+  public int getUserId() {
+    return userId;
   }
 
-  public void setIntroduction(String introduction) {
-    this.introduction = introduction;
-  }
-
-  public String getPhonenumber() {
-    return phonenumber;
-  }
-
-  public void setPhonenumber(String phonenumber) {
-    this.phonenumber = phonenumber;
-  }
-
-  public String getWechatid() {
-    return wechatid;
-  }
-
-  public void setWechatid(String wechatid) {
-    this.wechatid = wechatid;
-  }
-
-  public String getPpid() {
-    return ppid;
-  }
-
-  public void setPpid(String ppid) {
-    this.ppid = ppid;
-  }
-
-  public int getMoney() {
-    return money;
-  }
-
-  public void setMoney(int money) {
-    this.money = money;
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   public String getEmail() {
@@ -102,60 +55,12 @@ public class User {
     this.email = email;
   }
 
-  public int getPPPnumber() {
-    return PPPnumber;
+  public String getPassword() {
+    return password;
   }
 
-  public void setPPPnumber(int PPPnumber) {
-    this.PPPnumber = PPPnumber;
-  }
-
-  public String getSex() {
-    return sex;
-  }
-
-  public void setSex(String sex) {
-    this.sex = sex;
-  }
-
-  public int getDDPnumber() {
-    return DDPnumber;
-  }
-
-  public void setDDPnumber(int DDPnumber) {
-    this.DDPnumber = DDPnumber;
-  }
-
-  public int getPPRnumber() {
-    return PPRnumber;
-  }
-
-  public void setPPRnumber(int PPRnumber) {
-    this.PPRnumber = PPRnumber;
-  }
-
-  public int getDDRnumber() {
-    return DDRnumber;
-  }
-
-  public void setDDRnumber(int DDRnumber) {
-    this.DDRnumber = DDRnumber;
-  }
-
-  public boolean isOnline() {
-    return online;
-  }
-
-  public void setOnline(boolean online) {
-    this.online = online;
-  }
-
-  public String getDormitorysite() {
-    return dormitorysite;
-  }
-
-  public void setDormitorysite(String dormitorysite) {
-    this.dormitorysite = dormitorysite;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public String getName() {
@@ -166,61 +71,107 @@ public class User {
     this.name = name;
   }
 
-  public String[] getPhotourl() {
-    return photourl;
+  public int getGender() {
+    return gender;
   }
 
-  public void setPhotourl(String[] photourl) {
-    this.photourl = photourl;
+  public void setGender(int gender) {
+    this.gender = gender;
   }
 
-  public int getId() {
-    return id;
+  public String getSchool() {
+    return school;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public User() {
-  }
-
-  public User(String username, String school, String password, int enrollment, String introduction, String phonenumber, String wechatid, String ppid, int money, String email, int PPPnumber, String sex, int DDPnumber, int PPRnumber, int DDRnumber, boolean online, String dormitorysite, String name, String[] photourl, int id) {
-    this.username = username;
+  public void setSchool(String school) {
     this.school = school;
-    this.password = password;
-    this.enrollment = enrollment;
-    this.introduction = introduction;
-    this.phonenumber = phonenumber;
-    this.wechatid = wechatid;
-    this.ppid = ppid;
-    this.money = money;
-    this.email = email;
-    this.PPPnumber = PPPnumber;
-    this.sex = sex;
-    this.DDPnumber = DDPnumber;
-    this.PPRnumber = PPRnumber;
-    this.DDRnumber = DDRnumber;
-    this.online = online;
-    this.dormitorysite = dormitorysite;
-    this.name = name;
-    this.photourl = photourl;
-    this.id = id;
   }
 
-  public User(String username, String school, String password, int enrollment, String introduction, String phonenumber, String wechatid, String ppid, String email, String sex, String dormitorysite, String name, String[] photourl) {
-    this.username = username;
-    this.school = school;
-    this.password = password;
+  public String getEnrollment() {
+    return enrollment;
+  }
+
+  public void setEnrollment(String enrollment) {
     this.enrollment = enrollment;
-    this.introduction = introduction;
-    this.phonenumber = phonenumber;
-    this.wechatid = wechatid;
-    this.ppid = ppid;
-    this.email = email;
-    this.sex = sex;
-    this.dormitorysite = dormitorysite;
-    this.name = name;
-    this.photourl = photourl;
+  }
+
+  public String getDormitory() {
+    return dormitory;
+  }
+
+  public void setDormitory(String dormitory) {
+    this.dormitory = dormitory;
+  }
+
+  public String getStudentCardURL() {
+    return studentCardURL;
+  }
+
+  public void setStudentCardURL(String studentCardURL) {
+    this.studentCardURL = studentCardURL;
+  }
+
+  public String getAvatarURL() {
+    return avatarURL;
+  }
+
+  public void setAvatarURL(String avatarURL) {
+    this.avatarURL = avatarURL;
+  }
+
+  public String getSignature() {
+    return signature;
+  }
+
+  public void setSignature(String signature) {
+    this.signature = signature;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getWechat() {
+    return wechat;
+  }
+
+  public void setWechat(String wechat) {
+    this.wechat = wechat;
+  }
+
+  public String getQq() {
+    return qq;
+  }
+
+  public void setQq(String qq) {
+    this.qq = qq;
+  }
+
+  public int getAcceptNum() {
+    return acceptNum;
+  }
+
+  public void setAcceptNum(int acceptNum) {
+    this.acceptNum = acceptNum;
+  }
+
+  public int getPublishNum() {
+    return publishNum;
+  }
+
+  public void setPublishNum(int publishNum) {
+    this.publishNum = publishNum;
+  }
+
+  public int getJin() {
+    return Jin;
+  }
+
+  public void setJin(int jin) {
+    Jin = jin;
   }
 }

@@ -1,6 +1,7 @@
 package com.carolsum.jingle.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.button.MaterialButton;
 import android.support.design.card.MaterialCardView;
@@ -14,11 +15,17 @@ import android.view.ViewGroup;
 
 import com.carolsum.jingle.MainActivity;
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.net.HttpClient;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -76,9 +83,29 @@ public class SettingsActivity extends AppCompatActivity {
 
   @OnClick(R.id.logout_btn)
   public void logout() {
-    // 登出
-    Intent intent = new Intent(this, MainActivity.class);
-    startActivity(intent);
+    try {
+      HttpClient.getInstance().get("/logout", new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          // 登出
+          Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          startActivity(intent);
+          finish();
+        }
+      });
+      HttpClient.getInstance().clearCookie();
+      // 从 sharePreference 中清空 userid
+      SharedPreferences.Editor editor=getSharedPreferences("share",MODE_PRIVATE).edit();
+      editor.remove("userid");
+      editor.commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

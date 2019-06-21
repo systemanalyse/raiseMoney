@@ -1,59 +1,69 @@
-create table if not exists `UserInformation` (
+create table if not exists `user` (
   id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  username char(255),
+  email char(255),
   password char(255),
   name char(255),
-  sex char(1) default 'M',
+  gender boolean default 1,
   school char(255) default 'Sun Yat-sen University',
-  enrollment int default 2015,
-  dormitorysite char(255),
-  introduction char(255),
-  phonenumber char(20),
-  wechatid char(30),
-  ppid char(20),
-  email char(255),
-  money int default 0,
+  enrollment int,
+  dormitory char(255),
+  studentCardURL char(255),
+  avatarURL char(255),
+  signature char(255),
+  phone char(20),
+  wechat char(30),
+  qq char(20),
+  Jin float default 0
+) AUTO_INCREMENT = 1 default charset = utf8;
+
+create table if not exists `task` (
+  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  userid INT UNSIGNED,
+  taskType boolean, 
+  statusCode int,
+  allocation boolean,
+  totalValue char(255),
+  value char(255),
+  title char(255),
+  descr char(255),
+  startPosition char(255),
+  endPosition char(255),
+  time char(255),
+  beginTime char(255),
+  ddl char(255),
+  finishNum int default 0,
+  acceptNum int default 0,
+  confirmNum int default 0,
+  totalNum int,
+  acceptor char(255),
+  finishor char(255),
+  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE
+) AUTO_INCREMENT = 1 default charset = utf8;
+
+create table if not exists `notice` (
+  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  taskid INT UNSIGNED,
+  userid INT UNSIGNED,
+  cuserid INT UNSIGNED,
+  userType boolean,
+  taskType boolean,
+  title char(255),
+  descr char(255),
+  time char(255),
+  status boolean,
+  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (cuserid) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (taskid) REFERENCES task(id) ON DELETE CASCADE
+) AUTO_INCREMENT = 1 default charset = utf8;
+
+
+create table if not exists `feedback` (
+  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  taskid INT UNSIGNED,
+  userid INT UNSIGNED,
+  puserid INT UNSIGNED,
   photourl char(255),
-  PPPnumber int default 0,
-  PPRnumber int default 0,
-  DDPnumber int default 0,
-  DDRnumber int default 0,
-  online boolean,
-  time timestamp DEFAULT CURRENT_TIMESTAMP
-) AUTO_INCREMENT = 1 default charset = utf8;
-
-create table if not exists `DD` (
-  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  username char(255),
-  title char(255),
-  deadline int,
-  totalnumber int,
-  bonus int,
-  bonus_pay_way int default 0,
-  picture char(255),
-  start_time int,
-  received_number int default 0,
-  time timestamp DEFAULT CURRENT_TIMESTAMP
-) AUTO_INCREMENT = 1 default charset = utf8;
-
-create table if not exists `PP` (
-  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  username char(255),
-  title char(255),
-  site char(255),
-  deadline int,
-  weight int,
-  bonus int,
-  picture char(255),
-  status int,
-  start_time int,
-  time timestamp DEFAULT CURRENT_TIMESTAMP
-) AUTO_INCREMENT = 1 default charset = utf8;
-
-create table if not exists `Receiver` (
-  id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  uid char(255),
-  received_time int,
-  bonus int,
-  time timestamp DEFAULT CURRENT_TIMESTAMP
+  FOREIGN KEY (userid) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (puserid) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (taskid) REFERENCES task(id) ON DELETE CASCADE
 ) AUTO_INCREMENT = 1 default charset = utf8;

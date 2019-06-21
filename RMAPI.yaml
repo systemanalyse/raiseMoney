@@ -1091,7 +1091,7 @@ definitions:
         type: "string"
       phone:
         type: "string"
-      wechart:
+      wechat:
         type: "string"
       qq:
         type: "string"

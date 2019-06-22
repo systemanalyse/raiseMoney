@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -28,7 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.carolsum.jingle.MainActivity;
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.User;
+import com.carolsum.jingle.net.HttpClient;
 import com.imnjh.imagepicker.ImageLoader;
 import com.imnjh.imagepicker.PickerConfig;
 import com.imnjh.imagepicker.SImagePicker;
@@ -36,6 +41,10 @@ import com.imnjh.imagepicker.activity.PhotoPickerActivity;
 import com.shuhart.stepview.StepView;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +59,11 @@ import butterknife.OnFocusChange;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -210,14 +224,98 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-      // 发起网络请求，并根据返回码判断是否创建成功
-      // 成功的话跳转到注册完成界面
-      StringBuilder builder = new StringBuilder();
-      // todo@lijiehong append all register fields
+        // 发起网络请求，并根据返回码判断是否创建成功
+        // 成功的话跳转到注册完成界面
 
-      Toast.makeText(this, "完成注册", Toast.LENGTH_SHORT).show();
-      Intent intent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
-      startActivity(intent);
+        final JSONObject object = new JSONObject();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    object.put("email", emailInput.getText().toString());
+                    object.put("password", passwordInput.getText().toString());
+
+                    object.put("name", registerNameInput.getText().toString());
+                    object.put("gender", registerGender.equals("男生") ? 1 : 0);
+                    object.put("school", registerSchoolInput.getText().toString());
+                    object.put("enrollment", Integer.parseInt(enrollmentInput.getText().toString()));
+                    object.put("dormitory", registerDormInput.getText().toString());
+
+                    // 如果点击的是以后再说，那么此时应该不需要下面字段
+                    object.put("signature", signatureText.getText().toString());
+                    object.put("phone", phoneInput.getText().toString());
+                    object.put("wechat", wechatInput.getText().toString());
+                    object.put("qq", qqInput.getText().toString());
+
+                    if (!selectedStudentCardImagePath.equals("")) {
+                        // 上传用户头像以获取对应的uri
+                        String res = HttpClient.getInstance().upload(selectedStudentCardImagePath);
+                        if (res != null) {
+                            object.put("studentCardURL", res);
+                        }
+                    }
+
+                    if (!selectedProfileImagePath.equals("")) {
+                        // 上传用户头像以获取对应的uri
+                        String res = HttpClient.getInstance().upload(selectedProfileImagePath);
+                        if (res != null) {
+                            object.put("avatarURL", res);
+                        }
+                    }
+                    postRegisterInfo(object.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    private void postRegisterInfo(String json) {
+        Log.d("post json ", json);
+        try {
+            HttpClient.getInstance().post("/regist", json, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String res = response.body().string();
+                    try {
+                        User user = gson.fromJson(res, User.class);
+                        // 将 userid 存到 sharePreferences 中
+                        SharedPreferences.Editor editor = getSharedPreferences("share", MODE_PRIVATE).edit();
+                        editor.putString("userid", Integer.toString(user.getUserId()));
+                        editor.commit();
+                        loginRes(res, user);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void loginRes(String res, User user) {
+        // 切回主线程
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (user != null) {
+                    // 将 user 传递给 RegisterSuccessActivity
+                    Toast.makeText(RegisterActivity.this, "完成注册", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
 
     private void pickImage(int requestCode) {

@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
           if (user != null) {
             Toast.makeText(MainActivity.this, "登录成功趴~", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.putExtra("user", user);
             startActivity(intent);
             finish();
           }

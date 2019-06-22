@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.event.LoginEvent;
+import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.ui.fragment.HomeFragment;
 import com.carolsum.jingle.ui.fragment.PublishFragment;
 import com.carolsum.jingle.ui.fragment.SpaceFragment;
@@ -37,11 +38,14 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private Unbinder unbinder;
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         unbinder = ButterKnife.bind(this);
+        user = (User) getIntent().getSerializableExtra("user");
         initViewPager();
         initBottomNavBar();
     }

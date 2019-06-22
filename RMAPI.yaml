@@ -6,14 +6,14 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost"
+host: "118.89.20.188"
 tags:
 - name: "User"
   description: "The user of RM system, can acccept/publish mission."
 - name: Task
   description: The task including PP and DD
 schemes:
-- "http"
+- "https"
 paths:
   # privacy infomation includes user all information 
   /user/{userId}/Privary:
@@ -175,10 +175,12 @@ paths:
     put: 
       tags:
       - User
-      summary: Set user all notice status is false
+      summary: Set user notice status is false
       description: return nothing(success)/ wrong message(fail)
-      operationId: UserReadNotice
+      operationId: ReadNotice
       # U can cahnge it to function to adapt u, so as others.
+      consumes:
+      - application/x-www-form-urlencoded
       produces:
       - application/json
       parameters:
@@ -188,9 +190,16 @@ paths:
         required: true
         type: string
         x-exportParamName: email
+      - name: noticeId
+        in: formData
+        description: notice id had read
+        type: integer
+        format: int64
       responses:
         200:
           description: Successful operation
+          schema:
+            type: string
         400:
           description: Wrong format, return wrong message
           schema:
@@ -325,12 +334,13 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is no use!!!
   /user/{userId}/tasks/Running:
     get:
       tags:
       - User
       # u should pay attention in attribution "beginTime" & "origin" in task
-      summary: Get running task list of user Publish & publish
+      summary: Get running task list of user Publish & publish !!!API no use!!!
       description: return task list(success)/ wrong message(fail)
       operationId: GetUserTask
       # U can cahnge it to function to adapt u, so as others.
@@ -364,14 +374,15 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is replaced by task/Received/2/:Get!!!
   /user/{userId}/tasks/Accept:
     get:
       tags:
       - User
       # u should pay attention in attribution "beginTime" in task
-      summary: Get task list of user accept
-      description: return task list(success)/ wrong message(fail)
-      operationId: GetUserAcceptTask
+      summary: Get task list of user accept !!!API changed!!!
+      description: return task list(success)/ wrong message(fail)  !!!This API is replaced by task/Received/2/:Get!!!
+      operationId: UserReceivedTask
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
@@ -403,24 +414,25 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is replaced by task/Publish/{userId}/:Get!!!
   /user/{userId}/tasks/Publish:
     get:
       tags:
       - User
       # u should pay attention in attribution "beginTime" in task
-      summary: Get task list of user Publish
-      description: return task list(success)/ wrong message(fail)
-      operationId: GetUserPublishTask
+      summary: Get task list of user Publish !!!API changed!!!
+      description: return task list(success)/ wrong message(fail)   !!!This API is replaced by task/Publish/{userId}/:Get!!!
+      operationId: UserPublishTask
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
       parameters:
       - name: userId
         in: path
-        description: user email
+        description: user id
         required: true
         type: string
-        x-exportParamName: email
+        x-exportParamName: id
       responses:
         200:
           description: Successful operation, return task list
@@ -491,13 +503,13 @@ paths:
   # get PP task list, don't have finished & Full starffed task
   # include task u publish
   # U should return two list, first list is task from the same buildings, the second list is other buildings
-  /task/{userId}/PP:
+  /task/PP:
     get:
       tags:
       - Task
       summary: Get PP task list, need user email
       description: return two PP task list (success)/ wrong message(fail), only need base infomation
-      operationId: GetTaskListPP
+      operationId: GetPP
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
@@ -531,7 +543,7 @@ paths:
       - Task
       summary: Get DD task list
       description: return DD task list information(success), only need base infomation / wrong message(fail)
-      operationId: GetTaskListDD
+      operationId: GetDD
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
@@ -552,14 +564,56 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is replaced by task/ReceivePP/{taskId}/{userId}/ & task/ReceiveDD/{taskId}/{userId}/!!!
+  /task/{userId}/Accepte/{taskId}:
+    get:
+      tags:
+      - Task
+      summary: accept a task, need userId & taskId !!!API changed!!!
+      description: return task detailed infomation (success), only need base infomation / wrong message(fail) !!!This API is replaced by task/ReceivePP/{taskId}/{userId}/ & task/ReceiveDD/{taskId}/{userId}/!!!
+      operationId: ReceivePP_ReceiveDD
+      # U can cahnge it to function to adapt u, so as others.
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: user id
+        required: true
+        type: string
+        x-exportParamName: id
+      - name: taskId
+        in: path
+        description: task id
+        required: true
+        type: string
+        x-exportParamName: id
+      responses:
+        200:
+          description: Successful operation, return DD task list
+          schema:
+            $ref: "#/definitions/Task"
+        400:
+          description: Wrong format, return wrong message
+          schema:
+            type: string
+        403:
+          description: request refused, return wrong message
+          schema:
+            type: string
+        404:
+          description: User not found, return wrong message
+          schema:
+            type: string
   # look task detailed infomation
   # if a finished PP task, u should return a task and a receipt
   # if a DD task, u can make accepter null
+  # !!!This API is no use!!!
   /task/{taskId}:
     get:
       tags:
       - Task
-      summary: Get a task detailed information (PP need receipt), need task id
+      summary: Get a task detailed information (PP need receipt), need task id !!!API no use!!!
       description: return a task (success)/ wrong message(fail)
       operationId: GetTask
       # U can cahnge it to function to adapt u, so as others.
@@ -589,13 +643,14 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is changed by task/Feedback/{taskId}/{userId}/, need photoURL, I don't Y!!!
   /task/{taskId}/Receipt/{userId}:
     get:
       tags:
       - Task
-      summary: Get task receipt, need taskid and accepter email
-      description: return a receipt (success)/ wrong message(fail)
-      operationId: GetReceipt
+      summary: Get task receipt, need taskid and accepter email !!!API changed!!!
+      description: return a receipt (success)/ wrong message (fail)  !!!This API is changed by task/Feedback/{taskId}/{userId}/, need photoURL, I don't Y!!!
+      operationId: GetFeedback
       # U can cahnge it to function to adapt u, so as others.
       produces:
       - application/json
@@ -629,47 +684,14 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
-  /task/{taskId}/Accepter:
-    get:
-      tags:
-      - Task
-      summary: Get a accpter list(UserInfoInTask), need task id, use in DD
-      description: return a user Info list (success)/ wrong message(fail)
-      operationId: GetDDAccpter
-      # U can cahnge it to function to adapt u, so as others.
-      produces:
-      - application/json
-      parameters:
-      - name: taskId
-        in: path
-        description: taskId
-        required: true
-        type: string
-        x-exportParamName: task id
-      responses:
-        200:
-          description: Successful operation, return task
-          schema:
-            $ref: "#/definitions/UserInfosInTask"
-        400:
-          description: Wrong format, return wrong message
-          schema:
-            type: string
-        403:
-          description: request refused, return wrong message
-          schema:
-            type: string
-        404:
-          description: User not found, return wrong message
-          schema:
-            type: string
+  # !!!This API is changed by task/FinishPP/{taskId}/{userId}/ & task/FinishDD/{taskId}/{userId}/, just need photo URL!!!
   /task/{taskId}/SendReceipt/{userId}:
     post:
       tags:
-      - User
-      summary: accepter send a receipt to publisher, need a receipt
-      description: Return receipt (success) / wrong message(fail)
-      operationId: SendReceipt
+      - Task
+      summary: accepter send a receipt to publisher, need a receipt !!!API changed!!!
+      description: Return receipt (success) / wrong message(fail)  !!!This API is changed by task/FinishPP/{taskId}/{userId}/ & task/FinishDD/{taskId}/{userId}/ , just need photo URL!!!
+      operationId: FinishDD & FinishDD
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -713,13 +735,14 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
+  # !!!This API is changed by task/Confirm/{taskId}/{userId}/{???}/, need photoURL, I don't know Y!!!
   /task/{taskId}/ConfirmReceipt/{userId}:
     post:
       tags:
-      - User
-      summary: Confirm a receipt from a accepter, send bounce
-      description: Return bounce num (success) / wrong message(fail)
-      operationId: ConfirmReceipt
+      - Task
+      summary: Confirm a receipt from a accepter, send bounce !!!API changed!!!
+      description: Return bounce num (success) / wrong message(fail)  !!!This API is changed by task/Confirm/{taskId}/{userId}/{???}/, need photoURL, I don't know Y!!!
+      operationId: ConfirmFeedback
       consumes:
       - application/x-www-form-urlencoded
       produces:
@@ -826,6 +849,39 @@ paths:
           description: Already log in, return wrong message
           schema:
             type: string
+  /logout:
+    post:
+      tags:
+      - Logout
+      summary: User log in the system, need email & password
+      description: return success / failure message
+      operationId: Logout
+      parameters:
+        - name: userInfo
+          in: body
+          description: the email & password of user
+          schema:
+            required:
+              - userInfo
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+                format: password
+      responses:
+        200:
+          description: Successful operation, get the token of user
+          schema:
+            type: string
+        401:
+          description: Unauthorized, need to authorized, return wrong message
+          schema:
+            type: string
+        406:
+          description: Already log in, return wrong message
+          schema:
+            type: string
   /picture:
     get:
       tags:
@@ -886,6 +942,10 @@ definitions:
     type: object
     description: user Notice
     properties:
+      noticeId:
+        description: notice id
+        type: integer
+        format: int64
       userType:
         description: user type, acceptor(true) & publisher(false)
         type: boolean
@@ -999,7 +1059,7 @@ definitions:
         description: UserinfoInTask, publish
         type: object
       accepterInfo:
-        description: UserinfoInTask, accepter, only use in PP (DD has too many accepter, can't save, u can make it null)
+        description: UserinfosInTask, accepter, PP has a accepter, DD has a accepter list
         type: object
       # PP task need
       startPosition:
@@ -1091,7 +1151,7 @@ definitions:
         type: "string"
       phone:
         type: "string"
-      wechat:
+      wechart:
         type: "string"
       qq:
         type: "string"

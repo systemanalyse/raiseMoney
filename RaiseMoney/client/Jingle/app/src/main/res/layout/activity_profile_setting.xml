@@ -63,7 +63,7 @@
 
         <RelativeLayout
           android:id="@+id/profile_image_wrapper"
-          android:layout_width="91dp"
+          android:layout_width="80dp"
           android:layout_height="80dp">
 
           <de.hdodenhof.circleimageview.CircleImageView
@@ -74,15 +74,15 @@
             android:src="@drawable/publish"
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
-          <ImageView
-            android:id="@+id/profile_image_template"
-            android:layout_width="91dp"
-            android:layout_height="80dp"
-            android:visibility="visible"
-            android:src="@drawable/register_profile_image"
-            />
+          <!--<ImageView-->
+            <!--android:id="@+id/profile_image_template"-->
+            <!--android:layout_width="91dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:visibility="visible"-->
+            <!--android:src="@drawable/register_profile_image"-->
+            <!--/>-->
 
         </RelativeLayout>
 
@@ -229,6 +229,7 @@
   </ScrollView>
 
   <android.support.design.button.MaterialButton
+      android:id="@+id/modify_profile_btn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="确认修改"

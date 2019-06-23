@@ -215,7 +215,7 @@ public class SpaceFragment extends BaseFragment {
             Glide.with(this).load(HttpClient.getPictureBaseUrl + currentUser.avatarURL).into(userAvatar);
         } else {
             // 加载默认头像
-            Glide.with(this).load(R.drawable.register_profile_image).into(userAvatar);
+            Glide.with(this).load(R.drawable.default_avatar).into(userAvatar);
         }
         username.setText(currentUser.getName());
         address.setText(currentUser.getDormitory());

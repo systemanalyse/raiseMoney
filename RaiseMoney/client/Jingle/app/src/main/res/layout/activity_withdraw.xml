@@ -65,13 +65,13 @@
 
           <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:orientation="vertical"
             android:paddingLeft="18dp"
             android:paddingRight="18dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:background="@color/withdraw_card_bg">
+            android:background="@drawable/withdraw_card_bg">
 
             <TextView
               android:layout_width="wrap_content"

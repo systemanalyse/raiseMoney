@@ -1,15 +1,24 @@
 package com.carolsum.jingle.model;
 
 public class JNotification {
+
+  public int noticeId;
+  public String time;
+  public boolean status;
+  public int userType;
+  public int taskType;
+
   /**
    * origin: 0 表示发起任务相关, 1 表示接受任务相关, 2 表示钱包相关
    */
   public int origin;
-  public String title;
   /**
    * type: 0 表示 跑跑; 1 表示 点点; 2 表示其他
    */
   public int type;
+
+  public String title;
+
   public String desc;
   public String date;
   public boolean read;

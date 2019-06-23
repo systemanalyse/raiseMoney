@@ -13,13 +13,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.User;
+import com.carolsum.jingle.net.HttpClient;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 public class RechargeActivity extends AppCompatActivity {
 
@@ -62,12 +74,16 @@ public class RechargeActivity extends AppCompatActivity {
 
   private Unbinder unbinder;
 
+  private User user;
+  private int value = 0;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recharge);
     unbinder = ButterKnife.bind(this);
 
+    user = (User) getIntent().getSerializableExtra("user");
 
     // 获取状态栏高度 更新toolbar的marginTop
     int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -129,6 +145,7 @@ public class RechargeActivity extends AppCompatActivity {
     yuan50.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
 
     rechargeInfo.setText("共支付 5 元");
+    this.value = 5;
     rechargeInfo.setVisibility(View.VISIBLE);
   }
 
@@ -139,6 +156,7 @@ public class RechargeActivity extends AppCompatActivity {
     jin100.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     yuan100.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     rechargeInfo.setText("共支付 10 元");
+    this.value = 10;
     rechargeInfo.setVisibility(View.VISIBLE);
   }
 
@@ -149,6 +167,7 @@ public class RechargeActivity extends AppCompatActivity {
     jin500.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     yuan500.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     rechargeInfo.setText("共支付 50 元");
+    this.value = 50;
     rechargeInfo.setVisibility(View.VISIBLE);
   }
 
@@ -159,6 +178,47 @@ public class RechargeActivity extends AppCompatActivity {
     jin1000.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     yuan1000.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     rechargeInfo.setText("共支付 100 元");
+    this.value = 100;
     rechargeInfo.setVisibility(View.VISIBLE);
+  }
+
+  @OnClick(R.id.confirm_recharge_btn)
+  public void recharge() {
+    if (this.value != 0 && this.user != null) {
+      this.user.setJin(this.user.getJin() + this.value * 10);
+      new Thread(new Runnable() {
+        @Override
+        public void run() {
+          try {
+            String json = gson.toJson(user);
+            HttpClient.getInstance().put("/user/" + user.getUserid() + "/Privary", json, new Callback() {
+              @Override
+              public void onFailure(Call call, IOException e) {
+
+              }
+
+              @Override
+              public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+
+                runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                    if (response.isSuccessful()) {
+                      Toast.makeText(getApplicationContext(), "充值成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                      Toast.makeText(getApplicationContext(), "充值失败", Toast.LENGTH_SHORT).show();
+                    }
+                    finish();
+                  }
+                });
+              }
+            });
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+      }).start();
+    }
   }
 }

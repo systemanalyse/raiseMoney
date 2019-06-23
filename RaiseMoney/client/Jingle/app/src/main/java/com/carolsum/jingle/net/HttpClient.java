@@ -140,41 +140,19 @@ public class HttpClient {
         Request request = new Request.Builder()
                 .url(baseUrl + url)
                 .post(body)
-//      .addHeader("Connection", "close")
                 .build();
         client.newCall(request).enqueue(callback);
     }
 
-    public void put(String url, RequestBody body, final Callback callback) throws IOException {
+    public void put(String url, String json, final Callback callback) throws IOException {
+        RequestBody body = RequestBody.create(jsonMediaType, json);
         Request request = new Request.Builder()
-                .url(url)
+                .url(baseUrl + url)
                 .put(body)
                 .build();
         client.newCall(request).enqueue(callback);
     }
 
-    /**
-     * 上传图片示例 ！！接口只是示例 ！！
-     * @param uploadUrl
-     * @param localPath
-     * @return
-     * @throws IOException
-     */
-    public void putImg(String uploadUrl, String localPath) throws IOException {
-        File file = new File(localPath);
-        RequestBody body = RequestBody.create(imageMediaType, file);
-        put("/upload", body, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("response", response.body().string());
-            }
-        });
-    }
 
     /**
      * 同步上传图片

@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +32,11 @@ public class WalletActivity extends AppCompatActivity {
   @BindView(R.id.wallet_toolbar)
   Toolbar toolbar;
 
+  @BindView(R.id.jin_num)
+  TextView jinNum;
+
   private Unbinder unbinder;
+  private User user;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,22 @@ public class WalletActivity extends AppCompatActivity {
     }
   }
 
+  private void updateJin() {
+    user = (User) getIntent().getSerializableExtra("user");
+    if (user != null) {
+      jinNum.setText(Integer.toString(user.getJin()));
+    }
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    user = (User) getIntent().getSerializableExtra("user");
+    if (user != null) {
+      jinNum.setText(Integer.toString(user.getJin()));
+    }
+  }
+
   @Override
   protected void onDestroy() {
     unbinder.unbind();
@@ -63,12 +85,14 @@ public class WalletActivity extends AppCompatActivity {
   @OnClick(R.id.recharge_btn)
   public void gotoRecharge() {
     Intent intent = new Intent(WalletActivity.this, RechargeActivity.class);
+    intent.putExtra("user", user);
     startActivity(intent);
   }
 
   @OnClick(R.id.withdraw_btn)
   public void gotoWithdraw() {
     Intent intent = new Intent(WalletActivity.this, WithdrawActivity.class);
+    intent.putExtra("user", user);
     startActivity(intent);
   }
 

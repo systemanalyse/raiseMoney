@@ -272,6 +272,7 @@ public class SpaceFragment extends BaseFragment {
     @OnClick(R.id.space_jin_number)
     public void gotoWallet() {
       Intent intent = new Intent(getContext(), WalletActivity.class);
+      intent.putExtra("user", currentUser);
       startActivity(intent);
     }
 

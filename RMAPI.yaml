@@ -853,7 +853,7 @@ paths:
     post:
       tags:
       - Logout
-      summary: User log in the system, need email & password
+      summary: User log out the system, need email & password
       description: return success / failure message
       operationId: Logout
       parameters:
@@ -1031,16 +1031,8 @@ definitions:
         description: task type, PP(true) & DD(false)
         type: boolean
       status:
-        type: object
-        properties:
-          statusCode:
-            # statue code, need descussion
-            description: ...
-            type: integer
-            format: int64
-          desc:
-            description: discription of status
-            type: string
+        description: discription of status
+        type: string
       beginTime:
         description: publish time
         type: string
@@ -1058,9 +1050,15 @@ definitions:
       publisherInfo:
         description: UserinfoInTask, publish
         type: object
+        properties:
+          schema:
+            $ref: "#/definitions/UserInfoInTask"
       accepterInfo:
         description: UserinfosInTask, accepter, PP has a accepter, DD has a accepter list
         type: object
+        properties:
+          schema:
+            $ref: "#/definitions/UserInfosInTask"
       # PP task need
       startPosition:
         type: string

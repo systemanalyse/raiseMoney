@@ -139,9 +139,9 @@ public class SpaceFragment extends BaseFragment {
                 if (!userid.equals("")) {
                     try {
                         String res = HttpClient.getInstance().get("/user/" + userid + "/Privary");
-                        User user = gson.fromJson(res, User.class);
 
-                        if (user != null) {
+                        if (res.startsWith("{")) {
+                            User user = gson.fromJson(res, User.class);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

@@ -34,37 +34,45 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         JNotification notification = notificationList.get(i);
         // 将 notification 实例上的数据绑定到 viewHolder 中
-        switch (notification.getOrigin()) {
-          case 0:
+        if (notification.isUserType()) {
             viewHolder.originImage.setImageResource(R.drawable.publish_icon);
-            break;
-          case 1:
+        } else {
             viewHolder.originImage.setImageResource(R.drawable.accept_msg_icon);
-            break;
-          case 2:
-            viewHolder.originImage.setImageResource(R.drawable.wallet_msg_icon);
-            break;
         }
 
+
+//        switch (notification.getOrigin()) {
+//          case 0:
+//            viewHolder.originImage.setImageResource(R.drawable.publish_icon);
+//            break;
+//          case 1:
+//            viewHolder.originImage.setImageResource(R.drawable.accept_msg_icon);
+//            break;
+//          case 2:
+//            viewHolder.originImage.setImageResource(R.drawable.wallet_msg_icon);
+//            break;
+//        }
+
         viewHolder.titleText.setText(notification.getTitle());
-        if (notification.isRead()) {
+        if (notification.isStatus()) {
           viewHolder.titleText.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         } else {
           viewHolder.titleText.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
 
-        if (notification.getType() == 0) {
-          viewHolder.typeImage.setImageResource(R.drawable.pao);
-        } else if (notification.getType() == 1) {
+        if (notification.isTaskType()) {
           viewHolder.typeImage.setImageResource(R.drawable.dian);
         } else {
-          viewHolder.typeImage.setVisibility(View.GONE);
+          viewHolder.typeImage.setImageResource(R.drawable.pao);
         }
+//        else {
+//          viewHolder.typeImage.setVisibility(View.GONE);
+//        }
 
         viewHolder.descText.setText(notification.getDesc());
         // todo@lijiehong 这里日期格式需要使用helper做一个转换
-        viewHolder.dateText.setText(notification.getDate());
-        viewHolder.markView.setVisibility(notification.isRead() ? View.INVISIBLE: View.VISIBLE);
+        viewHolder.dateText.setText(notification.getTime());
+        viewHolder.markView.setVisibility(notification.isStatus() ? View.INVISIBLE: View.VISIBLE);
 
         if (i == notificationList.size() - 1) {
           viewHolder.divider.setVisibility(View.GONE);

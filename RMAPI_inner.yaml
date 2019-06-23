@@ -334,46 +334,6 @@ paths:
           description: User not found, return wrong message
           schema:
             type: string
-  # !!!This API is no use!!!
-  /user/{userId}/tasks/Running:
-    get:
-      tags:
-      - User
-      # u should pay attention in attribution "beginTime" & "origin" in task
-      summary: Get running task list of user Publish & publish !!!API no use!!!
-      description: return task list(success)/ wrong message(fail)
-      operationId: GetUserTask
-      # U can cahnge it to function to adapt u, so as others.
-      produces:
-      - application/json
-      parameters:
-      - name: userId
-        in: path
-        description: user email
-        required: true
-        type: string
-        x-exportParamName: email
-      responses:
-        200:
-          description: Successful operation, return task list
-          schema:
-            $ref: "#/definitions/Tasks"
-        400:
-          description: Wrong format, return wrong message
-          schema:
-            type: string
-        401:
-          description: Unauthorized, need to authorized, return wrong message
-          schema:
-            type: string
-        403:
-          description: request refused, return wrong message
-          schema:
-            type: string
-        404:
-          description: User not found, return wrong message
-          schema:
-            type: string
   # publish a task, task type will define in "taskType"
   /task/Publish/{userId}:
     get:
@@ -785,8 +745,8 @@ paths:
     put:
       tags:
       - Task
-      summary: Confirm a receipt from a accepter, send bounce !!!API changed!!!
-      description: Return bounce num (success) / wrong message(fail)  !!!This API is changed by task/Confirm/{taskId}/{userId}/{???}/, need photoURL, I don't know Y!!!
+      summary: Confirm a receipt from a accepter, send bounce
+      description: Return bounce num (success) / wrong message(fail)
       operationId: ConfirmFeedback
       consumes:
       - application/x-www-form-urlencoded

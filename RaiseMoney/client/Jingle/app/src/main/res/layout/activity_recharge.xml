@@ -60,18 +60,18 @@
         android:textSize="20sp"/>
 
       <android.support.design.card.MaterialCardView
-        android:id="@+id/recharge_50_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         android:layout_marginTop="16dp">
 
         <LinearLayout
-          android:layout_width="match_parent"
+            android:id="@+id/recharge_50_btn"
+            android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:gravity="center_vertical"
-          android:background="@drawable/cardview_edge"
+          android:background="@drawable/recharge_cardview_normal"
           android:paddingTop="20dp"
           android:paddingBottom="20dp"
           android:paddingLeft="16dp"
@@ -83,38 +83,40 @@
             android:src="@drawable/coin" />
 
           <TextView
+              android:id="@+id/jin50"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="50 JIN币"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
           <TextView
+              android:id="@+id/yuan50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5 元"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
         </LinearLayout>
 
       </android.support.design.card.MaterialCardView>
 
       <android.support.design.card.MaterialCardView
-        android:id="@+id/recharge_100_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         android:layout_marginTop="16dp">
 
         <LinearLayout
-          android:layout_width="match_parent"
+            android:id="@+id/recharge_100_btn"
+            android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:gravity="center_vertical"
-          android:background="@drawable/cardview_edge"
+          android:background="@drawable/recharge_cardview_normal"
           android:paddingTop="20dp"
           android:paddingBottom="20dp"
           android:paddingLeft="16dp"
@@ -126,38 +128,40 @@
             android:src="@drawable/coin" />
 
           <TextView
+              android:id="@+id/jin100"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="100 JIN币"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
           <TextView
+              android:id="@+id/yuan100"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10 元"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
         </LinearLayout>
 
       </android.support.design.card.MaterialCardView>
 
       <android.support.design.card.MaterialCardView
-        android:id="@+id/recharge_500_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         android:layout_marginTop="16dp">
 
         <LinearLayout
+            android:id="@+id/recharge_500_btn"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:gravity="center_vertical"
-          android:background="@drawable/cardview_edge"
+          android:background="@drawable/recharge_cardview_normal"
           android:paddingTop="20dp"
           android:paddingBottom="20dp"
           android:paddingLeft="16dp"
@@ -169,38 +173,40 @@
             android:src="@drawable/coin" />
 
           <TextView
+              android:id="@+id/jin500"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="500 JIN币"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
           <TextView
+              android:id="@+id/yuan500"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="50 元"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
         </LinearLayout>
 
       </android.support.design.card.MaterialCardView>
 
       <android.support.design.card.MaterialCardView
-        android:id="@+id/recharge_1000_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         android:layout_marginTop="16dp">
 
         <LinearLayout
+            android:id="@+id/recharge_1000_btn"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:gravity="center_vertical"
-          android:background="@drawable/cardview_edge"
+          android:background="@drawable/recharge_cardview_normal"
           android:paddingTop="20dp"
           android:paddingBottom="20dp"
           android:paddingLeft="16dp"
@@ -212,20 +218,22 @@
             android:src="@drawable/coin" />
 
           <TextView
+              android:id="@+id/jin1000"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="1000 JIN币"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
           <TextView
+              android:id="@+id/yuan1000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100 元"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/recharge_cardview_text_normal"/>
 
         </LinearLayout>
 

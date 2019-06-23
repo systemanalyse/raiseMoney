@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.event.LoginEvent;
+import com.carolsum.jingle.event.UserEvent;
 import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.ui.fragment.HomeFragment;
 import com.carolsum.jingle.ui.fragment.PublishFragment;
@@ -45,10 +46,17 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         unbinder = ButterKnife.bind(this);
-        user = (User) getIntent().getSerializableExtra("user");
         initViewPager();
         initBottomNavBar();
+        setupUser();
     }
+
+    private void setupUser() {
+        user = (User) getIntent().getSerializableExtra("user");
+        // 通过 eventbus 向fragment 传递 user 实例
+        EventBus.getDefault().post(new UserEvent(user));
+    }
+
 
     @Override
     protected void onDestroy() {

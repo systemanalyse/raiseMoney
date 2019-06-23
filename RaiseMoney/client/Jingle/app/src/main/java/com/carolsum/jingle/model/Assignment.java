@@ -1,6 +1,9 @@
 package com.carolsum.jingle.model;
 
 public class Assignment {
+  public String taskId;
+  public int origin;
+
   public String title;
   /**
    * @attr type 表示任务类型：0 for 跑跑, 1 for 点点
@@ -23,6 +26,29 @@ public class Assignment {
   public String endPos;
   public int finishNum;
   public int totalNum;
+
+//  {
+//    "taskId": "string",
+//          "origin": 0,
+//          "taskStatus": true,
+//          "taskType": true,
+//          "status": {
+//    "statusCode": 0,
+//            "desc": "string"
+//  },
+//    "beginTime": "string",
+//          "value": 0,
+//          "title": "string",
+//          "desc": "string",
+//          "time": "string",
+//          "publisherInfo": {},
+//    "accepterInfo": {},
+//    "startPosition": "string",
+//          "endPosition": "string",
+//          "ddl": "string",
+//          "finishNum": 0,
+//          "totalNum": 0
+//  }
 
   public Assignment(String title, int type, int value, int status, String time, String startPos, String endPos, int finishNum, int totalNum) {
     this.title = title;

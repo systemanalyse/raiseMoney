@@ -1,25 +1,40 @@
 package com.carolsum.jingle.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.carolsum.jingle.MainActivity;
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.event.UserEvent;
 import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.model.User;
+import com.carolsum.jingle.net.HttpClient;
 import com.carolsum.jingle.ui.activity.AcceptListActivity;
 import com.carolsum.jingle.ui.activity.NotificationActivity;
 import com.carolsum.jingle.ui.activity.SettingsActivity;
 import com.carolsum.jingle.ui.activity.SponsorListActivity;
 import com.carolsum.jingle.ui.activity.wallet.WalletActivity;
 import com.carolsum.jingle.ui.adapters.SpaceAssignmentAdapter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +42,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +59,22 @@ public class SpaceFragment extends BaseFragment {
     LinearLayout placeholder;
     @BindView(R.id.mission_list_wrapper)
     LinearLayout missionListWrapper;
+    @BindView(R.id.space_user_avatar)
+    CircleImageView userAvatar;
+    @BindView(R.id.space_username)
+    TextView username;
+    @BindView(R.id.space_gender)
+    ImageView genderImage;
+    @BindView(R.id.space_address)
+    TextView address;
+    @BindView(R.id.space_signature)
+    TextView signature;
+    @BindView(R.id.space_accept_number)
+    TextView acceptNum;
+    @BindView(R.id.space_publish_number)
+    TextView publishNum;
+    @BindView(R.id.space_jin_number)
+    TextView jinNum;
 
     // 进行中的任务列表相关
     @BindView(R.id.space_running_mission)
@@ -56,13 +90,17 @@ public class SpaceFragment extends BaseFragment {
     @BindView(R.id.list_type_number)
     TextView listTypeNumber;
 
+
     private Unbinder unbinder;
+    private User currentUser;
     private List<Assignment> acceptList = new ArrayList<>();
     private List<Assignment> publishList = new ArrayList<>();
 
+    private SpaceAssignmentAdapter acceptAdapter;
+    private SpaceAssignmentAdapter publishAdapter;
+
     @Override
     protected void initEvent() {
-
     }
 
     @Override
@@ -81,27 +119,129 @@ public class SpaceFragment extends BaseFragment {
 
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
       acceptRV.setLayoutManager(layoutManager);
-      SpaceAssignmentAdapter adapter = new SpaceAssignmentAdapter(acceptList);
-      acceptRV.setAdapter(adapter);
+      acceptAdapter = new SpaceAssignmentAdapter(acceptList);
+      acceptRV.setAdapter(acceptAdapter);
 
       LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
       publishRV.setLayoutManager(layoutManager1);
-      SpaceAssignmentAdapter adapter1 = new SpaceAssignmentAdapter(publishList);
-      publishRV.setAdapter(adapter1);
+      publishAdapter = new SpaceAssignmentAdapter(publishList);
+      publishRV.setAdapter(publishAdapter);
 
       setupListBoard();
+    }
+
+    private void fetchUserInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("share", Context.MODE_PRIVATE);
+                String userid = sharedPreferences.getString("userid","");
+                if (!userid.equals("")) {
+                    try {
+                        String res = HttpClient.getInstance().get("/user/" + userid + "/Privary");
+                        User user = gson.fromJson(res, User.class);
+
+                        if (user != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setUserInfo(user);
+                                }
+                            });
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private void fetchRunningTasks() {
+        if (currentUser == null) return;
+        publishList.clear();
+        acceptList.clear();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String json = HttpClient.getInstance().get("/user/" + currentUser.getUserid() + "/tasks/Running");
+                    JsonParser parser = new JsonParser();
+                    JsonArray jsonArray = parser.parse(json).getAsJsonArray();
+                    ArrayList<Assignment> assignments = new ArrayList<>();
+                    for (JsonElement element : jsonArray) {
+                        Assignment assignment = gson.fromJson(element, Assignment.class);
+                        assignments.add(assignment);
+                    }
+
+                    for (int i = 0 ; i < assignments.size(); i++) {
+                        // 接受列表
+                        if (assignments.get(i).origin == 1) {
+//                            publishList.add()
+//                            publishAdapter.notifyDataSetChanged();
+                        } else {
+//                            acceptList.add()
+//                            acceptAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchUserInfo();
+//        fetchRunningTasks();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UserEvent event) {
+        currentUser = event.user;
+        setUserInfo(currentUser);
+    }
+
+    public void setUserInfo(User user) {
+        currentUser = user;
+        if (currentUser != null &&  currentUser.avatarURL != null && !currentUser.avatarURL.equals("")) {
+            // 加载用户头像
+            Glide.with(this).load(HttpClient.getPictureBaseUrl + currentUser.avatarURL).into(userAvatar);
+        } else {
+            // 加载默认头像
+            Glide.with(this).load(R.drawable.register_profile_image).into(userAvatar);
+        }
+        username.setText(currentUser.getName());
+        address.setText(currentUser.getDormitory());
+        if (currentUser.getGender() == 1) {
+            genderImage.setImageResource(R.drawable.man);
+        } else {
+            genderImage.setImageResource(R.drawable.woman);
+        }
+        signature.setText(currentUser.getSignature());
+        acceptNum.setText(Integer.toString(currentUser.getAcceptNum()));
+        publishNum.setText(Integer.toString(currentUser.getPublishNum()));
+        jinNum.setText(Integer.toString(currentUser.getJin()));
     }
 
     @Override
     protected View initView() {
         View view =  View.inflate(getActivity(), R.layout.fragment_space, null);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 

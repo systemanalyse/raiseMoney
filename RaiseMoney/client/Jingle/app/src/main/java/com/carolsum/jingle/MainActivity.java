@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.clear_btn)
     TextView clearBtn;
     @BindView(R.id.register_btn)
-    MaterialButton registerBtn;
+    TextView registerBtn;
 
     private Unbinder unbinder;
 
@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
+        // 设置 httpClient 的上下文
+        HttpClient.getInstance().setContext(getApplicationContext());
+
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
@@ -85,16 +88,45 @@ public class MainActivity extends AppCompatActivity {
                   SharedPreferences sharedPreferences = getSharedPreferences("share",MODE_PRIVATE);
                   String userId = sharedPreferences.getString("userid","");
                   if (!userId.equals("")) {
-                    runOnUiThread(new Runnable() {
-                      @Override
-                      public void run() {
-                        // 跳过登录进入主页
-                        Toast.makeText(MainActivity.this, "欢迎回来~", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                      }
-                    });
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              Toast.makeText(MainActivity.this, "欢迎回来~", Toast.LENGTH_SHORT).show();
+                              Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                              startActivity(intent);
+                              finish();
+                          }
+                      });
+
+//                      try {
+//                          HttpClient.getInstance().getAsync("/user/" + userId + "/Privary", new Callback() {
+//                              @Override
+//                              public void onFailure(Call call, IOException e) {
+//
+//                              }
+//
+//                              @Override
+//                              public void onResponse(Call call, Response response) throws IOException {
+//                                  String res = response.body().string();
+//                                  User user = gson.fromJson(res, User.class);
+//                                  runOnUiThread(new Runnable() {
+//                                      @Override
+//                                      public void run() {
+//                                          // 跳过登录进入主页
+//                                          Toast.makeText(MainActivity.this, "欢迎回来~", Toast.LENGTH_SHORT).show();
+//                                          Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+//                                          if (user != null) {
+//                                              intent.putExtra("user", user);
+//                                          }
+//                                          startActivity(intent);
+//                                          finish();
+//                                      }
+//                                  });
+//                              }
+//                          });
+//                      } catch (IOException e) {
+//                          e.printStackTrace();
+//                      }
                   }
               }
             }
@@ -122,12 +154,20 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onResponse(Call call, Response response) throws IOException {
             String res = response.body().string();
-            Log.d(TAG, res);
             try {
+                if (res.equals("Wrong Email or Password")) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
               User user = gson.fromJson(res, User.class);
               // 将 userid 存到 sharePreferences 中
               SharedPreferences.Editor editor = getSharedPreferences("share", MODE_PRIVATE).edit();
-              editor.putString("userid", Integer.toString(user.getUserId()));
+              editor.putString("userid", Integer.toString(user.getUserid()));
               editor.commit();
               loginRes(res, user);
             } catch (Exception e) {

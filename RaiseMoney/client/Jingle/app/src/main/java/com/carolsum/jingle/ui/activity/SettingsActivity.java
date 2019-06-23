@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
   @OnClick(R.id.logout_btn)
   public void logout() {
     try {
-      HttpClient.getInstance().get("/logout", new Callback() {
+      HttpClient.getInstance().getAsync("/logout", new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
         }

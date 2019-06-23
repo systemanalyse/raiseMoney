@@ -1,5 +1,7 @@
 package com.carolsum.jingle.net;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.carolsum.jingle.helpers.ImageTypeHelper;
@@ -10,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,11 +25,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class HttpClient {
 
     private String baseUrl = "http://118.89.20.188:3000";
     private String uploadImageUrl = "http://118.89.20.188/upload.php";
-    private String getPictureBaseUrl = "http://118.89.20.188/";
+    private static String COOKIE_PREFS = "Cookie_";
+    public static String getPictureBaseUrl = "http://118.89.20.188/";
 
     public static final MediaType jsonMediaType = MediaType.get("application/json; charset=utf-8");
     public static final MediaType imageMediaType = MediaType.parse("image/*; charset=utf-8");
@@ -42,18 +45,54 @@ public class HttpClient {
     // 单例
     private static HttpClient instance = new HttpClient();
 
+    private Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
+        SharedPreferences sharedPreferences = context.getSharedPreferences(COOKIE_PREFS, Context.MODE_PRIVATE);
+        String urlStr = sharedPreferences.getString("url","");
+        String cookieStr = sharedPreferences.getString("set-cookie", "");
+        if (!urlStr.equals("") && !cookieStr.equals("")) {
+            HttpUrl url = HttpUrl.parse(urlStr);
+            Cookie cookie = Cookie.parse(url, cookieStr);
+            List<Cookie> cookies = new ArrayList<>();
+            cookies.add(cookie);
+            cookieStore.put(url.host(), cookies);
+        }
+    }
+
     private HttpClient() {
         cookieStore = new HashMap<>();
         client = new OkHttpClient.Builder()
                 .cookieJar(new CookieJar() {
                     @Override
                     public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                        cookieStore.put(url.host(), cookies);
+                        String host = url.host();
+                        cookieStore.put(host, cookies);
+
+                        // 将 userid 存到 sharePreferences 中
+                        SharedPreferences.Editor editor = context.getSharedPreferences(COOKIE_PREFS, Context.MODE_PRIVATE).edit();
+                        editor.putString("set-cookie", cookies.get(0).toString());
+                        editor.putString("url", url.toString());
+                        editor.commit();
+
+                        if (cookies != null) {
+                            for(Cookie cookie : cookies) {
+                                Log.d("save cookie", cookie.toString());
+                            }
+                            Log.d("save finished", "");
+                        }
                     }
 
                     @Override
                     public List<Cookie> loadForRequest(HttpUrl url) {
                         List<Cookie> cookies = cookieStore.get(url.host());
+                        if (cookies != null) {
+                            for(Cookie cookie : cookies) {
+                                Log.d("load cookie", cookie.toString());
+                            }
+                            Log.d("load finished", "");
+                        }
                         return cookies != null ? cookies : new ArrayList<>();
                     }
                 })
@@ -66,6 +105,10 @@ public class HttpClient {
 
     public void clearCookie() {
         cookieStore.clear();
+        SharedPreferences.Editor editor = context.getSharedPreferences(COOKIE_PREFS, Context.MODE_PRIVATE).edit();
+        editor.remove("url");
+        editor.remove("set-cookie");
+        editor.commit();
     }
 
     /**
@@ -73,10 +116,18 @@ public class HttpClient {
      * @param url
      * @throws IOException
      */
-    public void get(String url, final Callback callback) throws IOException {
+    public void getAsync(String url, final Callback callback) throws IOException {
         Request request = new Request.Builder().url(baseUrl + url).build();
         client.newCall(request).enqueue(callback);
     }
+
+    public String get(String url) throws IOException {
+        Request request = new Request.Builder().url(baseUrl + url).build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+    }
+
 
     /**
      * post 请求

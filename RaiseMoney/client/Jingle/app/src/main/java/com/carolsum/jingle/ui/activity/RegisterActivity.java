@@ -252,7 +252,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // 上传用户头像以获取对应的uri
                         String res = HttpClient.getInstance().upload(selectedStudentCardImagePath);
                         if (res != null) {
-                            object.put("studentCardURL", res);
+                            object.put("studentCardURL", res.replaceAll("\n", ""));
                         }
                     }
 
@@ -260,7 +260,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // 上传用户头像以获取对应的uri
                         String res = HttpClient.getInstance().upload(selectedProfileImagePath);
                         if (res != null) {
-                            object.put("avatarURL", res);
+                            object.put("avatarURL", res.replaceAll("\n", ""));
                         }
                     }
                     postRegisterInfo(object.toString());
@@ -271,7 +271,6 @@ public class RegisterActivity extends AppCompatActivity {
         }).start();
     }
     private void postRegisterInfo(String json) {
-        Log.d("post json ", json);
         try {
             HttpClient.getInstance().post("/regist", json, new Callback() {
                 @Override
@@ -286,7 +285,7 @@ public class RegisterActivity extends AppCompatActivity {
                         User user = gson.fromJson(res, User.class);
                         // 将 userid 存到 sharePreferences 中
                         SharedPreferences.Editor editor = getSharedPreferences("share", MODE_PRIVATE).edit();
-                        editor.putString("userid", Integer.toString(user.getUserId()));
+                        editor.putString("userid", Integer.toString(user.getUserid()));
                         editor.commit();
                         loginRes(res, user);
                     } catch (Exception e) {

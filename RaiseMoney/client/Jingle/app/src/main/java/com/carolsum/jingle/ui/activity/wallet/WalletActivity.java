@@ -11,14 +11,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.User;
+import com.carolsum.jingle.net.HttpClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 public class WalletActivity extends AppCompatActivity {
 
@@ -71,9 +83,25 @@ public class WalletActivity extends AppCompatActivity {
   protected void onStart() {
     super.onStart();
     user = (User) getIntent().getSerializableExtra("user");
-    if (user != null) {
-      jinNum.setText(Integer.toString(user.getJin()));
-    }
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          String res = HttpClient.getInstance().get("/user/" + user.getUserid() + "/Privary");
+          user = gson.fromJson(res, User.class);
+          if (res != null && user != null) {
+            runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                jinNum.setText(Integer.toString(user.getJin()));
+              }
+            });
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }).start();
   }
 
   @Override
@@ -85,6 +113,7 @@ public class WalletActivity extends AppCompatActivity {
   @OnClick(R.id.recharge_btn)
   public void gotoRecharge() {
     Intent intent = new Intent(WalletActivity.this, RechargeActivity.class);
+    intent.putExtra("money", user.getJin());
     intent.putExtra("user", user);
     startActivity(intent);
   }

@@ -19,6 +19,7 @@ import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.net.HttpClient;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class RechargeActivity extends AppCompatActivity {
 
   private Unbinder unbinder;
 
+  private int money;
   private User user;
   private int value = 0;
 
@@ -83,6 +85,7 @@ public class RechargeActivity extends AppCompatActivity {
     setContentView(R.layout.activity_recharge);
     unbinder = ButterKnife.bind(this);
 
+    money =  getIntent().getIntExtra("money", 0);
     user = (User) getIntent().getSerializableExtra("user");
 
     // 获取状态栏高度 更新toolbar的marginTop
@@ -184,14 +187,18 @@ public class RechargeActivity extends AppCompatActivity {
 
   @OnClick(R.id.confirm_recharge_btn)
   public void recharge() {
-    if (this.value != 0 && this.user != null) {
-      this.user.setJin(this.user.getJin() + this.value * 10);
+    if (this.value != 0) {
+      int value = money + this.value * 10;
       new Thread(new Runnable() {
         @Override
         public void run() {
           try {
-            String json = gson.toJson(user);
-            HttpClient.getInstance().put("/user/" + user.getUserid() + "/Privary", json, new Callback() {
+
+            JSONObject object = new JSONObject();
+            object.put("Jin", value);
+
+
+            HttpClient.getInstance().put("/user/" + user.getUserid() + "/Wallet", object.toString(), new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
 
@@ -215,6 +222,8 @@ public class RechargeActivity extends AppCompatActivity {
               }
             });
           } catch (IOException e) {
+            e.printStackTrace();
+          } catch (JSONException e) {
             e.printStackTrace();
           }
         }

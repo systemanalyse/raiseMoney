@@ -206,6 +206,7 @@
   </ScrollView>
 
   <android.support.design.button.MaterialButton
+      android:id="@+id/confirm_btn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="信息变更，重新认证"

@@ -44,8 +44,7 @@ var update = async (userid, params) => {
         "signature": params['signature'],
         "phone": params['phone'],
         "wechat": params['wechat'],
-        "qq": params['qq'],
-        "Jin": params['Jin']
+        "qq": params['qq']
       }
     }
   }

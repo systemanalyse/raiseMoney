@@ -18,7 +18,7 @@ var GetPrivaryUser = async (userid) => {
         "avatarURL": result['avatarURL'],
         "signature": result['signature'],
         "phone": result['phone'],
-        "wechart": result['wechat'],
+        "wechat": result['wechat'],
         "qq": result['qq'],
         "acceptNum": result['acceptNum'],
         "publishNum": result['publishNum'],

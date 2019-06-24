@@ -15,7 +15,7 @@ var FinishPP = require('../controller/FinishPP')
 var FinishDD = require('../controller/FinishDD')
 var GetFeedback = require('../controller/GetFeedback')
 var ConfirmTask = require('../controller/ConfirmTask')
-
+var GetDDValue = require('../controller/GetDDValue')
 
 
 router.use(session({
@@ -147,6 +147,17 @@ router.put('/Confirm/:taskid/:userid/:fuserid', async (req, res) => {
     res.status(403).send('Request refused')
   } else {
     let result = await ConfirmTask(req.params.taskid, req.params.userid, req.params.fuserid)
+    res.status(result['status']).send(result['data'])
+  }
+})
+
+router.get('/DD/:taskid/:userid/:number', async (req, res) => {
+  if (!!!req.session.userid) {
+    res.status(401).send('Unauthorized, need to authorized')
+  } else if (req.session.userid != req.params.userid) {
+    res.status(403).send('Request refused')
+  } else {
+    let result = await GetDDValue(req.params.taskid, req.params.userid, req.params.number)
     res.status(result['status']).send(result['data'])
   }
 })

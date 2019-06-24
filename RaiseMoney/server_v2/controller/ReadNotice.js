@@ -1,7 +1,13 @@
 const Notice = require('../model/Notice')
 
-var ReadNotice = async (userid) => {
+var ReadNotice = async (userid, noticeid) => {
   let notice = new Notice(userid)
+  if (!noticeid) {
+    notice.condition = {
+      'id': noticeid,
+      'userid': userid
+    }
+  }
   let result = await notice.updateNotice({
     'status': 0
   })

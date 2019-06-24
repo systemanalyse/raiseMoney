@@ -8,8 +8,8 @@ async function selectAllData(sql, value) {
 }
 
 function toArraySafe(key) {
-  for (let i = 0; i < key; i++) {
-    key[i] = key[i].replace("'", "\\'").replace("\\", "\\\\")
+  for (let i = 0; i < key.length; i++) {
+    key[i] = String(key[i]).replace("'", "\\'").replace("\\", "\\\\")
   }
   return key
 }

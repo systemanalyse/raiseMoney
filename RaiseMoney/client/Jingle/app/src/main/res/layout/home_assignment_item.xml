@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:layout_marginLeft="20dp"
+  android:layout_marginRight="20dp">
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="21dp"
+    android:layout_marginBottom="4dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/item_user_avatar"
+      android:layout_width="55dp"
+      android:layout_height="55dp"
+      android:src="@drawable/me"/>
+
+    <TextView
+      android:layout_width="48dp"
+      android:layout_height="16dp"
+      android:text="白彧歌"
+      android:textColor="#ff909599"
+      android:textSize="11sp"
+      android:layout_gravity="center_horizontal"
+      android:gravity="center_horizontal"
+      android:layout_marginTop="4dp"
+      android:layout_marginBottom="2dp"
+      />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="17dp"
+    android:layout_marginLeft="12dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/assignment_title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:text="求好心人帮拿快递!"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"/>
+
+
+      <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/coin"
+        android:layout_gravity="bottom"
+        />
+
+      <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="10dp"
+        android:layout_height="22dp"
+        android:text="5"
+        android:textColor="#ff606466"
+        android:textSize="16sp"
+        android:layout_marginLeft="6dp"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:id="@+id/paopao_info"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
+
+        <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:background="@drawable/mission_item_text_bg">
+
+          <TextView
+            android:id="@+id/assignment_start_position"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center_vertical"
+            android:text="明六邮局"
+            android:textSize="10sp"
+            android:textColor="@color/text_color_8"/>
+
+          <ImageView
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/arrowright_1"/>
+
+          <TextView
+            android:id="@+id/assignment_end_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="10sp"
+            android:textColor="@color/text_color_8"
+            android:layout_marginRight="14dp"
+            android:text="至善园2号"/>
+
+        </LinearLayout>
+
+        <TextView
+          android:id="@+id/assignment_ddl"
+          android:layout_width="wrap_content"
+          android:layout_marginLeft="12dp"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textColor="@color/text_color_8"
+          android:textSize="10sp"
+          android:paddingLeft="14dp"
+          android:paddingRight="14dp"
+          android:background="@drawable/mission_item_text_bg"
+          android:text="20:00前"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/diandian_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+
+        <com.liulishuo.magicprogresswidget.MagicProgressBar
+          android:id="@+id/assignment_process"
+          android:layout_width="178dp"
+          android:layout_height="18dp"
+          app:mpb_fill_color="@color/progress_bar_fill"
+          app:mpb_background_color="#EDF0F2"
+          app:mpb_flat="true"
+          app:mpb_percent="0.5"/>
+
+        <TextView
+          android:id="@+id/assignment_progress_info"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="8dp"
+          android:textColor="#A2A2A2"
+          android:textSize="10sp"
+          android:text="20/35"/>
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/assignment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:textColor="#909599"
+        android:textSize="8sp"
+        android:text="今天17:40 发布"/>
+
+    </LinearLayout>
+
+    <View
+      android:id="@+id/split_line"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginTop="8dp"
+      android:background="#EDF0F2"/>
+
+  </LinearLayout>
+
+</LinearLayout>

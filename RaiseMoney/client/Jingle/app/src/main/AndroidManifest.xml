@@ -33,6 +33,9 @@
     <activity android:name=".ui.activity.wallet.WithdrawActivity" />
     <activity android:name=".ui.activity.wallet.RechargeActivity" />
     <activity android:name=".ui.activity.GuideActivity"></activity>
+    <activity android:name=".ui.activity.AssignmentDetailActivity" />
+    <activity android:name=".ui.activity.AcceptorConfirmActivity" />
+    <activity android:name=".ui.activity.ConfirmFeedbackActivity" />
   </application>
 
 </manifest>

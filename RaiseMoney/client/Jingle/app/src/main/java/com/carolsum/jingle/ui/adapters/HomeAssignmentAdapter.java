@@ -2,7 +2,6 @@ package com.carolsum.jingle.ui.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class HomeAssignmentAdapter extends RecyclerView.Adapter<HomeAssignmentAd
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_assignment_item, viewGroup, false);
+    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_assignment_list_item, viewGroup, false);
     HomeAssignmentAdapter.ViewHolder holder = new HomeAssignmentAdapter.ViewHolder(view);
     return holder;
   }

@@ -34,37 +34,34 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
   public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
     Assignment assignment = assignmentList.get(i);
     viewHolder.assignmentTitle.setText(assignment.getTitle());
-    switch (assignment.getStatus()) {
+    switch (assignment.getStatusCode()) {
       case 0:
-        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
-        break;
-      case 1:
         viewHolder.assignmentStatus.setImageResource(R.drawable.state_wait_for_order);
         break;
-      case 2:
-        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
-        break;
-      case 3:
+      case 1:
         viewHolder.assignmentStatus.setImageResource(R.drawable.state_running);
         break;
-      case 4:
+      case 2:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
+        break;
+      case 3:
         viewHolder.assignmentStatus.setImageResource(R.drawable.state_finish);
         break;
-      case 5:
+      case 4:
         viewHolder.assignmentStatus.setImageResource(R.drawable.state_overdue);
         break;
-      case 6:
+      case 5:
         viewHolder.assignmentStatus.setImageResource(R.drawable.state_not_on_time);
         break;
     }
-    int value = assignment.getValue();
+    int value = Integer.parseInt(assignment.getValue());
     if (value < 0) {
       viewHolder.assignmentValue.setText("- " + Integer.toString(-value));
     } else {
       viewHolder.assignmentValue.setText("+ " + Integer.toString(value));
     }
-    viewHolder.assignmentTime.setText(assignment.getTime());
-    if (assignment.getType() == 0) {
+    viewHolder.assignmentTime.setText(assignment.getDdl());
+    if (assignment.getTaskType() == 1) {
       viewHolder.assignmentTypeImage.setImageResource(R.drawable.pao);
     } else {
       viewHolder.assignmentTypeImage.setImageResource(R.drawable.dian);

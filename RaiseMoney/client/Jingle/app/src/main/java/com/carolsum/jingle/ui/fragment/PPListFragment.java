@@ -84,10 +84,10 @@ public class PPListFragment extends BaseFragment {
     nearbyList.clear();
     moreList.clear();
     for(int i = 0; i < 3; i++) {
-      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
-      Assignment assignment1 = new Assignment("求好心人帮拿外卖！", 0, 2, 1, "17:40", "明6邮局", "至善园2号123", 20, 35);
-      nearbyList.add(assignment);
-      moreList.add(assignment1);
+//      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
+//      Assignment assignment1 = new Assignment("求好心人帮拿外卖！", 0, 2, 1, "17:40", "明6邮局", "至善园2号123", 20, 35);
+//      nearbyList.add(assignment);
+//      moreList.add(assignment1);
     }
   }
 

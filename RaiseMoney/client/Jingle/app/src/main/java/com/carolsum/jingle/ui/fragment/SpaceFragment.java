@@ -44,6 +44,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.carolsum.jingle.net.HttpClient.gson;
 
 /**
@@ -93,6 +94,7 @@ public class SpaceFragment extends BaseFragment {
 
     private Unbinder unbinder;
     private User currentUser;
+    private String userId = "";
     private List<Assignment> acceptList = new ArrayList<>();
     private List<Assignment> publishList = new ArrayList<>();
 
@@ -107,15 +109,6 @@ public class SpaceFragment extends BaseFragment {
     protected void initData() {
       acceptList.clear();
       publishList.clear();
-      for(int i = 0; i < 3; i++) {
-        Assignment assignment = new Assignment("帮我评论点个赞？谢啦", 1, -5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
-        Assignment assignment1 = new Assignment("求好心人帮拿快递！", 0, -10, 0, "17:40", "明6邮局", "至善园2号123", 20, 35);
-        acceptList.add(assignment);
-        publishList.add(assignment1);
-
-//        publishList.add(assignment);
-//        publishList.add(assignment1);
-      }
 
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
       acceptRV.setLayoutManager(layoutManager);
@@ -126,15 +119,13 @@ public class SpaceFragment extends BaseFragment {
       publishRV.setLayoutManager(layoutManager1);
       publishAdapter = new SpaceAssignmentAdapter(publishList);
       publishRV.setAdapter(publishAdapter);
-
-      setupListBoard();
     }
 
     private void fetchUserInfo() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("share", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("share", MODE_PRIVATE);
                 String userid = sharedPreferences.getString("userid","");
                 if (!userid.equals("")) {
                     try {
@@ -160,34 +151,64 @@ public class SpaceFragment extends BaseFragment {
     }
 
     private void fetchRunningTasks() {
-        if (currentUser == null) return;
-        publishList.clear();
-        acceptList.clear();
-
+        if (userId == null || userId.equals("")) return;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String json = HttpClient.getInstance().get("/user/" + currentUser.getUserid() + "/tasks/Running");
-                    JsonParser parser = new JsonParser();
-                    JsonArray jsonArray = parser.parse(json).getAsJsonArray();
-                    ArrayList<Assignment> assignments = new ArrayList<>();
-                    for (JsonElement element : jsonArray) {
-                        Assignment assignment = gson.fromJson(element, Assignment.class);
-                        assignments.add(assignment);
-                    }
+                    String res = HttpClient.getInstance().get("/task/" + "Publish/" + userId);
+                    if (res != null &&  !res.equals("")) {
+                        // 对返回的json串进行解析
+//                        String tempRes = "[{\"origin\":1,\"userid\":12,\"taskid\":1,\"taskStatus\":1,\"taskType\":1,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":10,\"acceptor\":[],\"finishor\":[]},{\"origin\":1,\"userid\":12,\"taskid\":2,\"taskStatus\":1,\"taskType\":0,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":1,\"acceptor\":[],\"finishor\":[]}]";
 
-                    for (int i = 0 ; i < assignments.size(); i++) {
-                        // 接受列表
-                        if (assignments.get(i).origin == 1) {
-//                            publishList.add()
-//                            publishAdapter.notifyDataSetChanged();
-                        } else {
-//                            acceptList.add()
-//                            acceptAdapter.notifyDataSetChanged();
+                        //Json的解析类对象
+                        JsonParser parser = new JsonParser();
+                        JsonArray jsonArray = parser.parse(res).getAsJsonArray();
+                        ArrayList<Assignment> assignments = new ArrayList<>();
+                        for (JsonElement assignment : jsonArray) {
+                          Assignment item = gson.fromJson(assignment, Assignment.class);
+                          assignments.add(item);
+                        }
+                        publishList.clear();
+                        for (Assignment assignment : assignments) {
+                            // 如果这个发布的任务正在进行中
+                            if (assignment.getTaskStatus() == 1) {
+                                publishList.add(assignment);
+                            }
                         }
                     }
 
+                    String res2 = HttpClient.getInstance().get("/task/" + "Received/" + userId);
+                    if (res2 != null &&  !res2.equals("")) {
+                        // 对返回的json串进行解析
+//                        String tempRes = "[{\"origin\":1,\"userid\":12,\"taskid\":1,\"taskStatus\":1,\"taskType\":1,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":10,\"acceptor\":[],\"finishor\":[]},{\"origin\":1,\"userid\":12,\"taskid\":2,\"taskStatus\":1,\"taskType\":0,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":1,\"acceptor\":[],\"finishor\":[]}]";
+
+                        //Json的解析类对象
+                        JsonParser parser = new JsonParser();
+                        JsonArray jsonArray = parser.parse(res2).getAsJsonArray();
+                        ArrayList<Assignment> assignments = new ArrayList<>();
+                        for (JsonElement assignment : jsonArray) {
+                            Assignment item = gson.fromJson(assignment, Assignment.class);
+                            assignments.add(item);
+                        }
+
+                        acceptList.clear();
+                        for (Assignment assignment : assignments) {
+                            // 如果这个接受的任务正在进行中
+                            if (assignment.getTaskStatus() == 1) {
+                                acceptList.add(assignment);
+                            }
+                        }
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            acceptAdapter.notifyDataSetChanged();
+                            publishAdapter.notifyDataSetChanged();
+                            setupListBoard();
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -199,7 +220,7 @@ public class SpaceFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         fetchUserInfo();
-//        fetchRunningTasks();
+        fetchRunningTasks();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -235,6 +256,8 @@ public class SpaceFragment extends BaseFragment {
         View view =  View.inflate(getActivity(), R.layout.fragment_space, null);
         unbinder = ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("share",MODE_PRIVATE);
+        userId = sharedPreferences.getString("userid","");
         return view;
     }
 
@@ -277,40 +300,52 @@ public class SpaceFragment extends BaseFragment {
     }
 
     private void setupListBoard() {
-      int totalNum = acceptList.size() + publishList.size();
-      runningMissionTitle.setText("正在进行中的任务（" + Integer.toString(totalNum) + "）");
-      if (totalNum == 0) {
+      if (acceptList.size() == 0 && publishList.size() == 0) {
         // 显示占位图 隐藏列表
         placeholder.setVisibility(View.VISIBLE);
         missionListWrapper.setVisibility(View.GONE);
       } else {
         placeholder.setVisibility(View.GONE);
         missionListWrapper.setVisibility(View.VISIBLE);
-
-        if (acceptList.size() > 0) {
-          showList(0);
+        int totalNum = acceptList.size() + publishList.size();
+        runningMissionTitle.setText("正在进行中的任务（" + Integer.toString(totalNum) + "）");
+        if (acceptList.size() == 0 && publishList.size() != 0) {
+          listTypeNumber.setText("共 1 项");
+          showList(1, true);
+        } else if (acceptList.size() != 0 && publishList.size() == 0) {
+          listTypeNumber.setText("共 1 项");
+          showList(0, true);
         } else {
-          showList(1);
+          listTypeNumber.setText("共 2 项");
+          showList(0, false);
         }
       }
     }
 
     // type: 0 显示接受列表, 1 显示发起列表
-    private void showList(int type) {
+    private void showList(int type, boolean forceHideOther) {
       switch (type) {
         case 0:
           accpetListBtn.setBackgroundResource(R.drawable.textview_bg_active);
           accpetListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-//          this.getResources().getColor(R.color.colorAccent)
-          publishListBtn.setBackgroundResource(R.drawable.textview_bg_normal);
-          publishListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_6));
+          if (forceHideOther) {
+            publishListBtn.setVisibility(View.GONE);
+          } else {
+            publishListBtn.setBackgroundResource(R.drawable.textview_bg_normal);
+            publishListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_6));
+          }
 
           acceptListLayout.setVisibility(View.VISIBLE);
           publishListLayout.setVisibility(View.GONE);
           break;
         case 1:
-          accpetListBtn.setBackgroundResource(R.drawable.textview_bg_normal);
-          accpetListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_6));
+          if (forceHideOther) {
+            accpetListBtn.setVisibility(View.GONE);
+          } else {
+            accpetListBtn.setBackgroundResource(R.drawable.textview_bg_normal);
+            accpetListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_6));
+          }
+
           publishListBtn.setBackgroundResource(R.drawable.textview_bg_active);
           publishListBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
@@ -322,12 +357,12 @@ public class SpaceFragment extends BaseFragment {
 
     @OnClick(R.id.accept_list_btn)
     public void showAcceptList() {
-      showList(0);
+      showList(0, false);
     }
 
     @OnClick(R.id.published_list_btn)
     public void showPublishedListBtn() {
-      showList(1);
+      showList(1, false);
     }
 
 }

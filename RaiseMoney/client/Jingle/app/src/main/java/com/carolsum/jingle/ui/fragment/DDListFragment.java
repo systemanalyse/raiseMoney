@@ -62,8 +62,8 @@ public class DDListFragment extends BaseFragment {
     protected void initData() {
       ddList.clear();
       for(int i = 0; i < 3; i++) {
-        Assignment assignment = new Assignment("帮我评论点个赞？谢啦", 1, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
-        ddList.add(assignment);
+//        Assignment assignment = new Assignment("帮我评论点个赞？谢啦", 1, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
+//        ddList.add(assignment);
       }
 
 

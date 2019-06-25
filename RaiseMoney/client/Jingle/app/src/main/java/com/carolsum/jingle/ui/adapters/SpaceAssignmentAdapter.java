@@ -34,12 +34,12 @@ public class SpaceAssignmentAdapter extends RecyclerView.Adapter<SpaceAssignment
   @Override
   public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
     Assignment assignment = assignmentList.get(i);
-    if (assignment.getType() == 0) {
+    if (assignment.getTaskType() == 1) {
       // paopao
       viewHolder.assignmentTypeImage.setImageResource(R.drawable.pao);
-      viewHolder.startPos.setText(assignment.getStartPos());
-      viewHolder.endPos.setText(assignment.getEndPos());
-      viewHolder.ddl.setText(assignment.getTime());
+      viewHolder.startPos.setText(assignment.getStartPosition());
+      viewHolder.endPos.setText(assignment.getEndPosition());
+      viewHolder.ddl.setText(assignment.getDdl());
       viewHolder.paopaoInfoLayout.setVisibility(View.VISIBLE);
       viewHolder.diandianInfoLayout.setVisibility(View.GONE);
     } else {
@@ -51,18 +51,27 @@ public class SpaceAssignmentAdapter extends RecyclerView.Adapter<SpaceAssignment
       viewHolder.diandianInfoLayout.setVisibility(View.VISIBLE);
     }
     viewHolder.assignmentTitle.setText(assignment.getTitle());
-    switch (assignment.getStatus()) {
+    switch (assignment.getStatusCode()) {
       case 0:
-        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_wait_for_order);
         break;
       case 1:
-        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_running);
         break;
-      default:
-        viewHolder.assignmentStatus.setImageResource(R.drawable.state_accepted);
+      case 2:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_unconfirm);
+        break;
+      case 3:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_finish);
+        break;
+      case 4:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_overdue);
+        break;
+      case 5:
+        viewHolder.assignmentStatus.setImageResource(R.drawable.state_not_on_time);
         break;
     }
-    viewHolder.assignmentTime.setText(assignment.getTime());
+    viewHolder.assignmentTime.setText(assignment.getDdl());
   }
 
   @Override

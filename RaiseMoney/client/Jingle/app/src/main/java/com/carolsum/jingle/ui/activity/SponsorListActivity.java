@@ -1,5 +1,6 @@
 package com.carolsum.jingle.ui.activity;
 
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
@@ -14,14 +15,21 @@ import android.widget.LinearLayout;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.net.HttpClient;
 import com.carolsum.jingle.ui.adapters.AssignmentAdapter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 public class SponsorListActivity extends AppCompatActivity {
 
@@ -46,11 +54,20 @@ public class SponsorListActivity extends AppCompatActivity {
   private List<Assignment> runningList = new ArrayList<>();
   private List<Assignment> finishedList = new ArrayList<>();
 
+  private AssignmentAdapter adapter;
+  private AssignmentAdapter _adapter;
+
+  private String userId;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sponsor_list);
     unbinder = ButterKnife.bind(this);
+
+    SharedPreferences sharedPreferences = getSharedPreferences("share",MODE_PRIVATE);
+    userId = sharedPreferences.getString("userid","");
+
 
     // 获取状态栏高度 更新toolbar的marginTop
     int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -67,42 +84,78 @@ public class SponsorListActivity extends AppCompatActivity {
       actionBar.setDisplayShowTitleEnabled(false);
     }
 
-    initAssignment();
     // 设置进行中列表
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     runnintListView.setLayoutManager(layoutManager);
-    AssignmentAdapter adapter = new AssignmentAdapter(runningList);
+    adapter = new AssignmentAdapter(runningList);
     runnintListView.setAdapter(adapter);
 
     // 设置已完成列表
     LinearLayoutManager _layoutManager = new LinearLayoutManager(this);
     finishedListView.setLayoutManager(_layoutManager);
-    AssignmentAdapter _adapter = new AssignmentAdapter(finishedList);
+    _adapter = new AssignmentAdapter(finishedList);
     finishedListView.setAdapter(_adapter);
+  }
 
-    setupList();
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    fetchSponsorList();
+  }
+
+  private void fetchSponsorList() {
+    if (userId == null || userId.equals("")) return;
+    runningList.clear();
+    finishedList.clear();
+
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          String res2 = HttpClient.getInstance().get("/task/" + "Publish/" + userId);
+          if (res2 != null &&  !res2.equals("")) {
+            // 对返回的json串进行解析
+//                        String tempRes = "[{\"origin\":1,\"userid\":12,\"taskid\":1,\"taskStatus\":1,\"taskType\":1,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":10,\"acceptor\":[],\"finishor\":[]},{\"origin\":1,\"userid\":12,\"taskid\":2,\"taskStatus\":1,\"taskType\":0,\"statusCode\":0,\"beginTime\":\"100\",\"value\":\"10\",\"title\":\"test\",\"desc\":\"test\",\"startPosition\":\"test\",\"endPosition\":\"test\",\"ddl\":\"100\",\"finishNum\":0,\"totalNum\":1,\"acceptor\":[],\"finishor\":[]}]";
+
+            //Json的解析类对象
+            JsonParser parser = new JsonParser();
+            JsonArray jsonArray = parser.parse(res2).getAsJsonArray();
+            ArrayList<Assignment> assignments = new ArrayList<>();
+            for (JsonElement assignment : jsonArray) {
+              Assignment item = gson.fromJson(assignment, Assignment.class);
+              assignments.add(item);
+            }
+
+            for (Assignment assignment : assignments) {
+              // 如果这个接受的任务正在进行中
+              if (assignment.getTaskStatus() == 1) {
+                runningList.add(assignment);
+              } else {
+                finishedList.add(assignment);
+              }
+            }
+          }
+
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              adapter.notifyDataSetChanged();
+              _adapter.notifyDataSetChanged();
+              setupList();
+            }
+          });
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }).start();
   }
 
   @Override
   protected void onDestroy() {
     unbinder.unbind();
     super.onDestroy();
-  }
-
-  private void initAssignment() {
-    for(int i = 0; i < 1; i++) {
-      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, -5, 3, "今天17:40 发起");
-      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 1, -10, 4, "今天17:40 发起");
-      runningList.add(assignment);
-      runningList.add(assignment1);
-    }
-
-    for(int i = 0; i < 4; i++) {
-      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, -34, 6, "今天17:40 发起");
-      Assignment assignment1 = new Assignment("帮我评论点个赞？谢啦", 1, -7, 2, "今天17:40 发起");
-      finishedList.add(assignment1);
-      finishedList.add(assignment);
-    }
   }
 
   @Override

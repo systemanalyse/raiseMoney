@@ -1041,6 +1041,7 @@
           android:visibility="gone">
 
           <TextView
+            android:id="@+id/tv_not_on_time_title"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="很抱歉，对方未能按时完成任务"
@@ -1056,6 +1057,7 @@
             android:visibility="visible">
 
             <TextView
+              android:id="@+id/tv_status_not_on_time_text"
               android:layout_width="wrap_content"
               android:layout_height="17dp"
               android:text="支付的 5 JIN币已退回你的钱包"
@@ -1092,6 +1094,7 @@
           android:visibility="gone">
 
           <TextView
+            android:id="@+id/tv_overdue_title"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="很遗憾，你发布的任务已过期"

@@ -122,10 +122,18 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     TextView tvStatusFinishHint;
   @BindView(R.id.iv_status_finish_logo)
   ImageView tvStatusFinishLogo;
+  @BindView(R.id.tv_overdue_title)
+  TextView tvOverdueTitle;
   @BindView(R.id.ll_status_overdue_hint)
   LinearLayout llStatusOverdueHint;
   @BindView(R.id.tv_status_overdue_text)
     TextView tvStatusOverdueText;
+  @BindView(R.id.tv_not_on_time_title)
+  TextView tvNotOnTimeTitle;
+  @BindView(R.id.ll_status_not_on_time_hint)
+  LinearLayout llStatusNotOnTimeHint;
+  @BindView(R.id.tv_status_not_on_time_text)
+  TextView tvStatusNotOnTimeText;
 
 
 
@@ -283,18 +291,36 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         case 4:
           ivAssignmentStatus.setImageResource(R.drawable.state_overdue);
           llStatusOverdue.setVisibility(View.VISIBLE);
+          // 作为发起方
           if (assignment.getOrigin() == 1) {
-            tvStatusOverdueText.setText("支付的" + assignment.getValue() + "IN币已退回你的钱包");
+            // 跑跑
+            if (assignment.getTaskType() == 0) {
+              tvStatusOverdueText.setText("支付的" + assignment.getValue() + "JIN币已退回你的钱包");
+            } else {
+              tvStatusOverdueText.setText("剩余的" + assignment.getValue() + "JIN币已退回你的钱包");
+            }
           } else {
             llStatusOverdueHint.setVisibility(View.GONE);
-            tvStatusOverdueText.setText("很遗憾，你未能按时完成任务包");
+            tvOverdueTitle.setText("很遗憾，你未能按时完成任务");
           }
 
           break;
         case 5:
-          ivAssignmentStatus.setImageResource(R.drawable.state_not_on_time);
+//          ivAssignmentStatus.setImageResource(R.drawable.state_not_on_time);
+//          llStatusNotOnTime.setVisibility(View.VISIBLE);
+//          // 作为发起方
+//          if (assignment.getOrigin() == 1) {
+//            // 跑跑
+//            if (assignment.getTaskType() == 0) {
+//              tvStatusNotOnTimeText.setText("支付的" + assignment.getValue() + "JIN币已退回你的钱包");
+//            } else {
+//              tvStatusNotOnTimeText.setText("剩余的" + assignment.getValue() + "JIN币已退回你的钱包");
+//            }
+//          } else {
+//            llStatusNotOnTimeHint.setVisibility(View.GONE);
+//            tvNotOnTimeTitle.setText("很遗憾，你未能按时完成任务");
+//          }
 
-          // TODO
           break;
       }
     }

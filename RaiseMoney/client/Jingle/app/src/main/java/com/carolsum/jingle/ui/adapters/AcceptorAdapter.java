@@ -33,11 +33,11 @@ public class AcceptorAdapter extends RecyclerView.Adapter<AcceptorAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Assignment assignment = assignmentList.get(i);
-        if (assignment.getType() == 0) {
+        if (assignment.getTaskType() == 1) {
             // paopao
-            viewHolder.startPos.setText(assignment.getStartPos());
-            viewHolder.endPos.setText(assignment.getEndPos());
-            viewHolder.ddl.setText(assignment.getTime());
+            viewHolder.startPos.setText(assignment.getStartPosition());
+            viewHolder.endPos.setText(assignment.getEndPosition());
+            viewHolder.ddl.setText(assignment.getDdl());
             viewHolder.paopaoInfoLayout.setVisibility(View.VISIBLE);
             viewHolder.diandianInfoLayout.setVisibility(View.GONE);
         } else {
@@ -51,7 +51,7 @@ public class AcceptorAdapter extends RecyclerView.Adapter<AcceptorAdapter.ViewHo
         if (i == assignmentList.size() - 1) {
             viewHolder.splitLine.setVisibility(View.GONE);
         }
-        viewHolder.assignmentTime.setText(assignment.getTime());
+        viewHolder.assignmentTime.setText(assignment.getDdl());
         viewHolder.assignmentValue.setText(assignment.getValue() + "");
 
         if (onItemClickListener != null) {

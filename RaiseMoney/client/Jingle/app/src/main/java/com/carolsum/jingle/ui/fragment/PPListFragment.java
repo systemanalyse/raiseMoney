@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.ui.activity.AssignmentDetailActivity;
 import com.carolsum.jingle.ui.adapters.HomeAssignmentAdapter;
 
@@ -86,8 +87,10 @@ public class PPListFragment extends BaseFragment {
     for(int i = 0; i < 3; i++) {
 //      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
 //      Assignment assignment1 = new Assignment("求好心人帮拿外卖！", 0, 2, 1, "17:40", "明6邮局", "至善园2号123", 20, 35);
-//      nearbyList.add(assignment);
-//      moreList.add(assignment1);
+      Assignment assignment = new Assignment(1, 1, 5, 0, 1,1,"17:40", "2", "求好心人帮拿快递！？谢啦", "aaaaaa", new ArrayList<String>(), new ArrayList<User>(),  "明6邮局", "至善园2号123", "123", 12, 20);
+      Assignment assignment1 = new Assignment(2, 1, 5, 1, 0,2,"17:40", "5", "求好心人帮拿外卖", "aaaaaa", new ArrayList<String>(), new ArrayList<User>(),  "明6邮局", "至善园2号123", "123", 20, 30);
+      nearbyList.add(assignment);
+      moreList.add(assignment1);
     }
   }
 

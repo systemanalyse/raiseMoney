@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.ui.activity.AssignmentDetailActivity;
 import com.carolsum.jingle.ui.adapters.HomeAssignmentAdapter;
 
@@ -62,11 +63,9 @@ public class DDListFragment extends BaseFragment {
     protected void initData() {
       ddList.clear();
       for(int i = 0; i < 3; i++) {
-//        Assignment assignment = new Assignment("帮我评论点个赞？谢啦", 1, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
-//        ddList.add(assignment);
+        Assignment assignment = new Assignment(1, 1, 5, 1, 1,2,"17:40", "10", "帮我评论点个赞？谢啦", "aaaaaa", new ArrayList<String>(), new ArrayList<User>(),  "明6邮局", "至善园2号123", "123", 20, 30);
+        ddList.add(assignment);
       }
-
-
     }
 
 

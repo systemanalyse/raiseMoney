@@ -94,6 +94,8 @@ public class Assignment implements Serializable {
   public int finishNum;
   public int totalNum;
 
+  public User publishorInfo;
+
   public Assignment(int taskid, int userid, int origin, int taskStatus, int taskType, int statusCode, String beginTime, String value, String title, String desc, List<String> finishor, List<User> acceptor, String startPosition, String endPosition, String ddl, int finishNum, int totalNum) {
     this.taskid = taskid;
     this.userid = userid;
@@ -248,5 +250,13 @@ public class Assignment implements Serializable {
 
   public void setTotalNum(int totalNum) {
     this.totalNum = totalNum;
+  }
+
+  public User getPublishorInfo() {
+    return publishorInfo;
+  }
+
+  public void setPublishorInfo(User publishorInfo) {
+    this.publishorInfo = publishorInfo;
   }
 }

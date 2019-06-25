@@ -1,6 +1,7 @@
 package com.carolsum.jingle.ui.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,15 +11,21 @@ import android.view.View;
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.Assignment;
 import com.carolsum.jingle.model.User;
+import com.carolsum.jingle.net.HttpClient;
 import com.carolsum.jingle.ui.activity.AssignmentDetailActivity;
 import com.carolsum.jingle.ui.adapters.HomeAssignmentAdapter;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.carolsum.jingle.net.HttpClient.gson;
 
 public class PPListFragment extends BaseFragment {
   private View fragmentView;
@@ -43,19 +50,18 @@ public class PPListFragment extends BaseFragment {
 
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     ppNearbyRV.setLayoutManager(layoutManager);
-    nearbyAssignmentAdapter = new HomeAssignmentAdapter(nearbyList);
+    nearbyAssignmentAdapter = new HomeAssignmentAdapter(getContext(), nearbyList);
     ppNearbyRV.setAdapter(nearbyAssignmentAdapter);
 
     LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
     ppMoreRV.setLayoutManager(layoutManager1);
-    moreAssignmentAdapter = new HomeAssignmentAdapter(moreList);
+    moreAssignmentAdapter = new HomeAssignmentAdapter(getContext(), moreList);
     ppMoreRV.setAdapter(moreAssignmentAdapter);
 
     nearbyAssignmentAdapter.setOnItemClickListener(new HomeAssignmentAdapter.OnItemClickListener() {
       @Override
       public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-//        bundle.putSerializable("AssignmentDetail", nearbyAssignmentAdapter.getItem(position));
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE);
@@ -66,13 +72,19 @@ public class PPListFragment extends BaseFragment {
       @Override
       public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-//        bundle.putSerializable("AssignmentDetail", nearbyAssignmentAdapter.getItem(position));
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_CODE);
       }
     });
 
+    fetchPPList();
+
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
   }
 
   @Override
@@ -84,17 +96,7 @@ public class PPListFragment extends BaseFragment {
   protected void initData() {
     nearbyList.clear();
     moreList.clear();
-    for(int i = 0; i < 3; i++) {
-//      Assignment assignment = new Assignment("求好心人帮拿快递！", 0, 5, 1, "17:40", "明6邮局", "至善园2号123", 12, 20);
-//      Assignment assignment1 = new Assignment("求好心人帮拿外卖！", 0, 2, 1, "17:40", "明6邮局", "至善园2号123", 20, 35);
-      Assignment assignment = new Assignment(1, 1, 5, 0, 1,1,"17:40", "2", "求好心人帮拿快递！？谢啦", "aaaaaa", new ArrayList<String>(), new ArrayList<User>(),  "明6邮局", "至善园2号123", "123", 12, 20);
-      Assignment assignment1 = new Assignment(2, 1, 5, 1, 0,2,"17:40", "5", "求好心人帮拿外卖", "aaaaaa", new ArrayList<String>(), new ArrayList<User>(),  "明6邮局", "至善园2号123", "123", 20, 30);
-      nearbyList.add(assignment);
-      moreList.add(assignment1);
-    }
   }
-
-
 
   @Override
   protected View initView() {
@@ -110,4 +112,43 @@ public class PPListFragment extends BaseFragment {
     super.onDestroyView();
   }
 
+  private void fetchPPList() {
+    nearbyList.clear();
+    moreList.clear();
+
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          String res;
+          SharedPreferences sharedPreferences = getActivity().getSharedPreferences("share",MODE_PRIVATE);
+          String userId = sharedPreferences.getString("userid","");
+
+          res = HttpClient.getInstance().get("/user/" + userId + "/Privary");
+          User user = gson.fromJson(res, User.class);
+
+          res = HttpClient.getInstance().get("/task/PP");
+          List<Assignment> assignmentList = gson.fromJson(res, new TypeToken<List<Assignment>>(){}.getType());
+
+          for (Assignment assignment : assignmentList) {
+            if (assignment.getPublishorInfo().getDormitory().equals(user.getDormitory())) {
+              nearbyList.add(assignment);
+            } else {
+              moreList.add(assignment);
+            }
+          }
+
+          getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              nearbyAssignmentAdapter.notifyDataSetChanged();
+              moreAssignmentAdapter.notifyDataSetChanged();
+            }
+          });
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }).start();
+  }
 }

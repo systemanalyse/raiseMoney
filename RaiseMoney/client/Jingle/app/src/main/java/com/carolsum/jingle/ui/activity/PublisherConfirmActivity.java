@@ -5,10 +5,16 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.ui.adapters.HomeAssignmentAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,8 +25,14 @@ public class PublisherConfirmActivity extends AppCompatActivity {
   AppBarLayout appBarLayout;
   @BindView(R.id.detail_toolbar)
   Toolbar toolbar;
+  @BindView(R.id.rv_publisher_confirm_acceptor_list)
+  RecyclerView rvAccpetorList;
 
   private Unbinder unbinder;
+
+  private List<Assignment> ddList = new ArrayList<>();
+
+  private HomeAssignmentAdapter ddAssignmentAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

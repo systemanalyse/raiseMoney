@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.carolsum.jingle.R;
@@ -61,9 +62,8 @@ public class PPListFragment extends BaseFragment {
     nearbyAssignmentAdapter.setOnItemClickListener(new HomeAssignmentAdapter.OnItemClickListener() {
       @Override
       public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
-        intent.putExtras(bundle);
+        intent.putExtra("assignment", nearbyList.get(position));
         startActivityForResult(intent, REQUEST_CODE);
       }
     });
@@ -71,9 +71,8 @@ public class PPListFragment extends BaseFragment {
     moreAssignmentAdapter.setOnItemClickListener(new HomeAssignmentAdapter.OnItemClickListener() {
       @Override
       public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
-        intent.putExtras(bundle);
+        intent.putExtra("assignment", moreList.get(position));
         startActivityForResult(intent, REQUEST_CODE);
       }
     });
@@ -129,6 +128,7 @@ public class PPListFragment extends BaseFragment {
 
           res = HttpClient.getInstance().get("/task/PP");
           List<Assignment> assignmentList = gson.fromJson(res, new TypeToken<List<Assignment>>(){}.getType());
+          Log.i("data", res);
 
           for (Assignment assignment : assignmentList) {
             if (assignment.getPublishorInfo().getDormitory().equals(user.getDormitory())) {

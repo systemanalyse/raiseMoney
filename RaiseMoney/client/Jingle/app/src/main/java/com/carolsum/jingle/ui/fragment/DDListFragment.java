@@ -53,9 +53,8 @@ public class DDListFragment extends BaseFragment {
     ddAssignmentAdapter.setOnItemClickListener(new HomeAssignmentAdapter.OnItemClickListener() {
       @Override
       public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
-        intent.putExtras(bundle);
+        intent.putExtra("assignment", ddList.get(position));
         startActivityForResult(intent, REQUEST_CODE);
       }
     });

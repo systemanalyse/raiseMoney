@@ -2,7 +2,7 @@
 
 import requests
 
-url = 'http://127.0.0.1:3000/'
+url = 'http://118.89.20.188:3000/'
 
 def testRegister():
   params = {
@@ -124,7 +124,7 @@ def testChangeWallet():
   params = {
     "Jin": 100
   }
-  r = s.put(url + 'user/1/Wallet', data=params)
+  r = s.put(url + 'user/12/Wallet', data=params)
   print(r.content)
 
   s.get(url + 'logout')
@@ -160,27 +160,25 @@ def testReadNotice():
 
 def testPublishTask():
   params = {
-    "email": "test1@qq.com",
+    "email": "test@qq.com",
     "password": "test"
   }
   s = requests.Session()
   s.post(url + 'login', data=params)
 
   params = {
-    "taskType": 1,
-    "statusCode": 0,
+    "taskType": 0,
     "beginTime": 100,
     "value": 10,
     "allocation": 0,
     "title": "test",
     "desc": "test",
-    "time": 1,
-    "startPosition": "",
-    "endPosition": "",
+    "startPosition": "test",
+    "endPosition": "test",
     "ddl": 100,
-    "totalNum": 10
+    "totalNum": 1
   }
-  r = s.post(url + 'task/Publish/1/', data=params)
+  r = s.post(url + 'task/Publish/12/', data=params)
   print(r.content)
 
   s.get(url + 'logout')
@@ -331,5 +329,22 @@ def testConfirmFeedback():
 
   s.get(url + 'logout')
 
+def testGetDDValue():
+  params = {
+    "email": "test@qq.com",
+    "password": "test"
+  }
+
+  s = requests.Session()
+  s.post(url + 'login', data=params)
+
+  params = {
+    'photourl': ['test']
+  }
+  r = s.get(url + 'task/DD/1/12/2/')
+  print(r.content)
+
+  s.get(url + 'logout')
+
 if __name__ == "__main__":
-  testRegister()
+  testGetDDValue()

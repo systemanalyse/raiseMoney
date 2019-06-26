@@ -1,15 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:background="#F5F8FA"
+  tools:context=".ui.fragment.PublishFragment">
+
+  <LinearLayout
+    android:id="@+id/ll_publish_pp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.PublishFragment">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/publish_bg"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="This is Publish page" />
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-</FrameLayout>
+      <TextView
+        android:layout_width="64dp"
+        android:layout_height="22dp"
+        android:text="找人跑跑"
+        android:textColor="#ff646464"
+        android:textSize="16sp" />
+
+      <TextView
+        android:layout_width="126dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="5dp"
+        android:text="足不出户，动动手指帮你搞定～"
+        android:textColor="#ff9e9e9e"
+        android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="127dp"
+      android:layout_height="133dp"
+      android:layout_marginLeft="6dp"
+      android:src="@drawable/publish_pp" />
+
+
+    <ImageView
+      android:layout_width="11dp"
+      android:layout_height="35dp"
+      android:layout_gravity="center_vertical"
+      android:layout_marginLeft="33dp"
+      android:src="@drawable/publish_arrow" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/ll_publish_dd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="23dp"
+    android:padding="16dp"
+    android:orientation="horizontal"
+    android:background="@drawable/publish_bg">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="64dp"
+        android:layout_height="22dp"
+        android:text="找人点点"
+        android:textColor="#ff646464"
+        android:textSize="16sp"
+        />
+
+      <TextView
+        android:layout_width="126dp"
+        android:layout_height="28dp"
+        android:text="投票，问卷，点赞…手指点点马上来人！"
+        android:textColor="#ff9e9e9e"
+        android:textSize="10sp"
+        android:layout_marginTop="5dp"
+        />
+
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="127dp"
+      android:layout_height="133dp"
+      android:layout_marginLeft="6dp"
+      android:src="@drawable/publish_dd"
+      android:layout_marginRight="30dp"
+      />
+
+    <ImageView
+      android:layout_width="11dp"
+      android:layout_height="35dp"
+      android:layout_gravity="center_vertical"
+      android:src="@drawable/publish_arrow"/>
+
+  </LinearLayout>
+
+</LinearLayout>

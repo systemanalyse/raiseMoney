@@ -68,10 +68,10 @@ public class HomeAssignmentAdapter extends RecyclerView.Adapter<HomeAssignmentAd
     viewHolder.publisherName.setText(assignment.getPublishorInfo().getName());
     if (assignment.getPublishorInfo().getAvatarURL() != null && !assignment.getPublishorInfo().getAvatarURL().equals("")) {
       // 加载用户头像
-      Glide.with(context).load(HttpClient.getPictureBaseUrl + viewHolder.publisherAvatar).into(viewHolder.publisherAvatar);
+      Glide.with(context).load(HttpClient.getPictureBaseUrl + assignment.getPublishorInfo().getAvatarURL()).into(viewHolder.publisherAvatar);
     } else {
       // 加载默认头像
-      Glide.with(context).load(R.drawable.default_avatar).into(viewHolder.publisherAvatar);
+      Glide.with(context).load(HttpClient.getPictureBaseUrl + assignment.getPublishorInfo().getAvatarURL()).into(viewHolder.publisherAvatar);
     }
 
     if (onItemClickListener != null) {

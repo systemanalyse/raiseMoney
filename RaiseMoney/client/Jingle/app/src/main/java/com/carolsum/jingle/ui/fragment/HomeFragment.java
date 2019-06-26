@@ -25,6 +25,8 @@ import butterknife.Unbinder;
 public class HomeFragment extends BaseFragment {
 
   private View fragmentView;
+  private Unbinder unbinder;
+
   @BindView(R.id.tabs)
   TabLayout tabLayout;
   @BindView(R.id.fragment_home_viewpager)
@@ -32,8 +34,6 @@ public class HomeFragment extends BaseFragment {
 
   private ArrayList<Fragment> fragments = new ArrayList();
   private ArrayList<String> titles = new ArrayList<>();
-
-  private Unbinder unbinder;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +45,17 @@ public class HomeFragment extends BaseFragment {
 
     titles.add("跑跑");
     titles.add("点点");
+
+//    String from = getActivity().getIntent().getStringExtra("from");
+//    if (from.equals("") && from != null) {
+//      if (from.equals("pp"))
+//      getChildFragmentManager()
+//      .beginTransaction()
+//      .replace()
+//      .addToBackStack(null)
+//      .commit();
+//
+//    }
   }
 
   @Override

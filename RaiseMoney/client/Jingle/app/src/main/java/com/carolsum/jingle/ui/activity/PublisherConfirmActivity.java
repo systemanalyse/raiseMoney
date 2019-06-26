@@ -34,6 +34,8 @@ public class PublisherConfirmActivity extends AppCompatActivity {
 
   private HomeAssignmentAdapter ddAssignmentAdapter;
 
+  Assignment assignment;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -55,6 +57,8 @@ public class PublisherConfirmActivity extends AppCompatActivity {
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setDisplayShowTitleEnabled(false);
     }
+
+    assignment = (Assignment) getIntent().getSerializableExtra("assignment");
   }
 
   @Override

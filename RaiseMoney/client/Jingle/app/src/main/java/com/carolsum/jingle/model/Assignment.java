@@ -95,6 +95,10 @@ public class Assignment implements Serializable {
   public int totalNum;
 
   public User publishorInfo;
+  public int allocation;
+  public List<String> photoURL;
+
+  public Assignment(){}
 
   public Assignment(int taskid, int userid, int origin, int taskStatus, int taskType, int statusCode, String beginTime, String value, String title, String desc, List<String> finishor, List<User> acceptor, String startPosition, String endPosition, String ddl, int finishNum, int totalNum) {
     this.taskid = taskid;
@@ -258,5 +262,21 @@ public class Assignment implements Serializable {
 
   public void setPublishorInfo(User publishorInfo) {
     this.publishorInfo = publishorInfo;
+  }
+
+  public int getAllocation() {
+    return allocation;
+  }
+
+  public void setAllocation(int allocation) {
+    this.allocation = allocation;
+  }
+
+  public List<String> getPhotoURL() {
+    return photoURL;
+  }
+
+  public void setPhotoURL(List<String> photoURL) {
+    this.photoURL = photoURL;
   }
 }

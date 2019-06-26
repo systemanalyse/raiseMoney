@@ -36,6 +36,8 @@
     <activity android:name=".ui.activity.AssignmentDetailActivity" />
     <activity android:name=".ui.activity.AcceptorConfirmActivity" />
     <activity android:name=".ui.activity.ConfirmFeedbackActivity" />
+    <activity android:name=".ui.activity.PublishPPActivity" />
+    <activity android:name=".ui.activity.PublishDDActivity" />
   </application>
 
 </manifest>

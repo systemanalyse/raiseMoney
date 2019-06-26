@@ -1,18 +1,22 @@
 package com.carolsum.jingle.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.carolsum.jingle.R;
@@ -20,7 +24,12 @@ import com.carolsum.jingle.model.Assignment;
 import com.carolsum.jingle.model.Receipt;
 import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.net.HttpClient;
+import com.carolsum.jingle.ui.fragment.DDListFragment;
+import com.carolsum.jingle.ui.fragment.PPListFragment;
+import com.google.gson.reflect.TypeToken;
 import com.liulishuo.magicprogresswidget.MagicProgressBar;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,8 +37,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.carolsum.jingle.net.HttpClient.gson;
@@ -97,7 +109,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   @BindView(R.id.space_publish_number)
   TextView publishNum;
 
-  // 提示信息
+  // 任务提示信息
   @BindView(R.id.ll_status_wait_for_order)
   LinearLayout llStatusWaitForOrder;
   @BindView(R.id.ll_status_accepted)
@@ -119,7 +131,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   @BindView(R.id.iv_status_unconfirm_image1)
   ImageView ivImage1;
   @BindView(R.id.tv_status_finish_hint)
-    TextView tvStatusFinishHint;
+  TextView tvStatusFinishHint;
   @BindView(R.id.iv_status_finish_logo)
   ImageView tvStatusFinishLogo;
   @BindView(R.id.tv_overdue_title)
@@ -127,7 +139,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   @BindView(R.id.ll_status_overdue_hint)
   LinearLayout llStatusOverdueHint;
   @BindView(R.id.tv_status_overdue_text)
-    TextView tvStatusOverdueText;
+  TextView tvStatusOverdueText;
   @BindView(R.id.tv_not_on_time_title)
   TextView tvNotOnTimeTitle;
   @BindView(R.id.ll_status_not_on_time_hint)
@@ -135,11 +147,32 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   @BindView(R.id.tv_status_not_on_time_text)
   TextView tvStatusNotOnTimeText;
 
+  // 底部按钮
+  @BindView(R.id.ll_detail_bottom_button1)
+  LinearLayout llBottomButton1;
+  @BindView(R.id.ll_detail_bottom_button2)
+  LinearLayout llBottomButton2;
+  @BindView(R.id.ll_detail_bottom_text1)
+  LinearLayout llBottomText1;
+  @BindView(R.id.ll_detail_bottom_text2)
+  LinearLayout llBottomText2;
+  @BindView(R.id.tv_detail_bottom_button1)
+  TextView tvBottomButton1;
+  @BindView(R.id.tv_detail_bottom_button2)
+  TextView tvBottomButton2;
+  @BindView(R.id.tv_detail_bottom_text1)
+  TextView tvBottomText1;
+  @BindView(R.id.tv_detail_bottom_text2)
+  TextView tvBottomText2;
+  @BindView(R.id.iv_detail_bottom_text2)
+  ImageView ivBottomText2;
 
 
   Assignment assignment;
 
   private Unbinder unbinder;
+
+  static private String TAG = "data";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -163,11 +196,15 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
       actionBar.setDisplayShowTitleEnabled(false);
     }
 
+    assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+
     init();
   }
 
   private void init() {
-    assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+
+    SharedPreferences sharedPreferences = getSharedPreferences("share", MODE_PRIVATE);
+    String userId = sharedPreferences.getString("userid", "");
 
     // assignment title
     tvAssignmentTitle.setText(assignment.getTitle());
@@ -176,20 +213,20 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     tvAssignmentPublishTime.setText(assignment.getBeginTime());
 
 
-
-    // 任务详情部分
+    /**
+     * 任务详情部分
+     */
     if (assignment != null) {
       if (assignment.getTaskType() == 0) {
         // page title
         tvPageTitle.setText("跑跑详情");
 
-        // 3 column
+        // 上方三信息栏
         llDetailPpContain1.setVisibility(View.VISIBLE);
         llDetailPpContain2.setVisibility(View.VISIBLE);
         llDetailDdContain1.setVisibility(View.GONE);
         llDetailDdContain2.setVisibility(View.GONE);
 
-        //
         tvStartPostion.setText(assignment.getStartPosition());
         tvEndPostion.setText(assignment.getEndPosition());
         tvDetailPpTime.setText(assignment.getDdl());
@@ -200,75 +237,176 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         // page title
         tvPageTitle.setText("点点详情");
 
-        // 3 column
+        // 上方三信息栏
         llDetailPpContain1.setVisibility(View.GONE);
         llDetailPpContain2.setVisibility(View.GONE);
         llDetailDdContain1.setVisibility(View.VISIBLE);
         llDetailDdContain2.setVisibility(View.VISIBLE);
 
-        //
         mpbDetailDdProgress.setSmoothPercent((float) assignment.getFinishNum() / assignment.getTotalNum());
         tvDetailDdProgress.setText(Integer.toString(assignment.getFinishNum()) + "/" + Integer.toString(assignment.getTotalNum()));
         tvDetailDdDdl.setText(assignment.getDdl());
-        // TODO: 赏金分配方式
+        if (assignment.getAllocation() == 0) {
+          tvDetailDdValueType.setText("随机分");
+        } else {
+          tvDetailDdValueType.setText("每人");
+        }
         tvDetailDdValue.setText(assignment.getValue() + " JIN币");
       }
 
 
+      /**
+       * 发起者/接收者信息部分
+       */
+      // 作为待接单方
+      if (assignment.getOrigin() == 0) {
+        llDetailCertification.setVisibility(View.VISIBLE);
+        llPublisherPrivate.setVisibility(View.GONE);
+        setUserInfo(assignment.getPublishorInfo());
 
-      // 发起者/接收者信息部分
-      // 作为发布方
-      if (assignment.getOrigin() == 1) {
+      // 作为发布方，跑跑
+      } else if (assignment.getOrigin() == 1 && assignment.getTaskType() == 0) {
         // 待接单或已超期，无接受方
         if (assignment.getStatusCode() == 0 || assignment.getStatusCode() == 4) {
-
           llDetailCertification.setVisibility(View.GONE);
-
         } else {
-          fetchUserInfo(assignment.getPublishorInfo().getUserid());
+          llDetailCertification.setVisibility(View.VISIBLE);
+          setUserInfo(assignment.getAcceptor().get(0));
         }
 
       // 作为接受方
       } else if (assignment.getOrigin() == 2) {
-
-        fetchUserInfo(assignment.getPublishorInfo().getUserid());
-
-      // 接受方待接单
-      } else {
         llDetailCertification.setVisibility(View.VISIBLE);
-        llPublisherPrivate.setVisibility(View.GONE);
-
-        fetchUserInfo(assignment.getPublishorInfo().getUserid());
+        setUserInfo(assignment.getPublishorInfo());
       }
 
 
-
-      // assignment status
+      /**
+       * 设置：状态图片、下方任务提示信息栏、底部按钮与响应事件
+       */
       switch (assignment.getStatusCode()) {
         case 0:
+          /**
+           * 状态图片
+           */
           ivAssignmentStatus.setImageResource(R.drawable.state_wait_for_order);
+
+          /**
+           * 下方任务提示信息栏、底部按钮与响应事件
+           */
           // 作为发布方
           if (assignment.getOrigin() == 1) {
             llStatusWaitForOrder.setVisibility(View.VISIBLE);
           }
 
+          /**
+           * 底部按钮与响应事件
+           */
+          if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomText1.setText(assignment.getValue());
+            tvBottomButton2.setText("查看快递截图");
+
+            // TODO: 只获取了第一张
+            screenShotListener(llBottomButton2, assignment.getPhotoURL().get(0));
+
+          } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomText1.setText(assignment.getValue());
+            tvBottomButton2.setText("接单");
+
+            receivePPListner(assignment.getTaskid(), Integer.parseInt(userId));
+
+          } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            ivBottomText2.setVisibility(View.VISIBLE);
+            if (assignment.getAllocation() == 0) {
+              tvBottomText2.setText("?");
+            } else {
+              tvBottomText2.setText(Integer.parseInt(assignment.getValue()) / assignment.getTotalNum());
+            }
+
+          } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            if (assignment.getAllocation() == 0) {
+              tvBottomText1.setText("?");
+            } else {
+              tvBottomText1.setText(Integer.parseInt(assignment.getValue()) / assignment.getTotalNum());
+            }
+            tvBottomButton2.setText("接单");
+
+            receiveDDListner(assignment.getTaskid(), Integer.parseInt(userId));
+
+          }
           break;
         case 1:
           ivAssignmentStatus.setImageResource(R.drawable.state_running);
           llStatusAccepted.setVisibility(View.VISIBLE);
           tvStatusAcceptedTimeToGo.setText(assignment.getDdl());
 
+          if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.VISIBLE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton2.setText("确认收到");
+
+            confirmListener();
+
+          } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.VISIBLE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton1.setText("查看快递截图");
+            tvBottomButton2.setText("通知已取");
+
+            finishPPlistener();
+            // TODO: 只获取了第一张
+            screenShotListener(llBottomButton2, assignment.getPhotoURL().get(0));
+
+
+          } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton2.setText("查看回执清单");
+
+            receiptListener();
+
+          } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton2.setText("通知对方已完成");
+
+            finishDDlistener();
+
+          }
           break;
         case 2:
           ivAssignmentStatus.setImageResource(R.drawable.state_unconfirm);
           llStatusUnconfirm.setVisibility(View.VISIBLE);
+
           // 作为接单方
           if (assignment.getOrigin() == 2) {
             tvStatusUnconfirmTitle.setText("已通知对方，等待确认…");
-              // 调用API，获取回执
-              SharedPreferences sharedPreferences = getSharedPreferences("share",MODE_PRIVATE);
-              String userId = sharedPreferences.getString("userid","");
-              fetchReceipt(assignment.getTaskid(), Integer.parseInt(userId));
+            // 调用API，获取回执
+            fetchReceipt(assignment.getTaskid(), Integer.parseInt(userId));
           } else {
             // 跑跑
             if (assignment.getTaskType() == 0) {
@@ -277,16 +415,72 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             }
           }
 
+          if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.GONE);
+            llBottomButton1.setVisibility(View.VISIBLE);
+            llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton2.setText("确认收到");
+
+            confirmListener();
+
+          } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomButton2.setText("等待对方确认");
+
+          } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
+
+          } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.GONE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomButton2.setText("等待对方确认");
+          }
           break;
         case 3:
           ivAssignmentStatus.setImageResource(R.drawable.state_finish);
           llStatusFinish.setVisibility(View.VISIBLE);
+
           // 作为发起方
           if (assignment.getOrigin() == 1) {
             tvStatusFinishHint.setText("Jingle~你已确认订单，任务完成！");
             tvStatusFinishLogo.setImageResource(R.drawable.pp_acceptor_finish);
           }
 
+          if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomText1.setText("- " + assignment.getValue());
+
+          } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomText1.setText("+ " + assignment.getValue());
+
+          } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomText1.setText("- " + assignment.getValue());
+
+          } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            // TODO: 接收者获得的赏金数
+            tvBottomText1.setText("+ " + assignment.getValue());
+
+          }
           break;
         case 4:
           ivAssignmentStatus.setImageResource(R.drawable.state_overdue);
@@ -303,9 +497,36 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             llStatusOverdueHint.setVisibility(View.GONE);
             tvOverdueTitle.setText("很遗憾，你未能按时完成任务");
           }
+          if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            tvBottomText1.setText("- 0");
+            tvBottomText2.setText("已超期");
 
+          } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+
+          } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
+            llBottomText1.setVisibility(View.VISIBLE);
+            llBottomText2.setVisibility(View.VISIBLE);
+            llBottomButton1.setVisibility(View.GONE);
+            llBottomButton2.setVisibility(View.GONE);
+            if (assignment.getFinishNum() == 0) {
+              // 无人回执
+              tvBottomText1.setText("- 0");
+            } else {
+              tvBottomText1.setText("- " + assignment.getValue());
+              // TODO: 接收者已获取总赏金
+            }
+            tvBottomText2.setText("已超期");
+
+          } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
+
+          }
           break;
         case 5:
+          // TODO
 //          ivAssignmentStatus.setImageResource(R.drawable.state_not_on_time);
 //          llStatusNotOnTime.setVisibility(View.VISIBLE);
 //          // 作为发起方
@@ -320,40 +541,13 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
 //            llStatusNotOnTimeHint.setVisibility(View.GONE);
 //            tvNotOnTimeTitle.setText("很遗憾，你未能按时完成任务");
 //          }
-
           break;
       }
     }
   }
 
-  private void fetchUserInfo(int userid) {
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-          try {
-            String res = HttpClient.getInstance().get("/user/" + userid + "/Public");
-
-            if (res.startsWith("{")) {
-              User user = gson.fromJson(res, User.class);
-              runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                  setUserInfo(user);
-                }
-              });
-            }
-          } catch (IOException e) {
-            e.printStackTrace();
-          } catch (IllegalStateException e) {
-            e.printStackTrace();
-          }
-        }
-
-    }).start();
-  }
-
-  private void setUserInfo(User currentUser) {
-    if (currentUser != null &&  currentUser.avatarURL != null && !currentUser.avatarURL.equals("")) {
+  private void setUserInfo (User currentUser){
+    if (currentUser != null && currentUser.avatarURL != null && !currentUser.avatarURL.equals("")) {
       // 加载用户头像
       Glide.with(this).load(HttpClient.getPictureBaseUrl + currentUser.avatarURL).into(userAvatar);
     } else {
@@ -371,7 +565,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     publishNum.setText(Integer.toString(currentUser.getPublishNum()));
   }
 
-  private void fetchReceipt(int taskid, int userid) {
+  private void fetchReceipt ( int taskid, int userid){
     new Thread(new Runnable() {
       @Override
       public void run() {
@@ -398,20 +592,173 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     }).start();
   }
 
+  public void screenShotListener(LinearLayout ll, String url) {
+    ll.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        LayoutInflater inflater = LayoutInflater.from(AssignmentDetailActivity.this);
+        View imgEntryView = inflater.inflate(R.layout.dialog_photo, null);
+        // 加载自定义的布局文件
+        final AlertDialog dialog = new AlertDialog.Builder(AssignmentDetailActivity.this).create();
+        ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
+//        img.setImageResource(R.drawable.pp_overdue);
+        Glide.with(getApplicationContext()).load(url).into(img);
+        dialog.setView(imgEntryView); // 自定义dialog
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+        // 点击大图关闭dialog
+        imgEntryView.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View paramView) {
+            dialog.cancel();
+          }
+        });
+
+      }
+    });
+  }
+
+  public void receivePPListner(int taskid, int userid) {
+    llBottomButton2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        new Thread(new Runnable() {
+          @Override
+          public void run() {
+            try {
+              JSONObject object = new JSONObject();
+              HttpClient.getInstance().put("/task/ReceivePP/" + taskid + "/" + userid, object.toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                  String res = response.body().string();
+                  Log.i(TAG, res);
+                  assignment = gson.fromJson(res, Assignment.class);
+                  runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                      if (response.isSuccessful()) {
+                        Log.i(TAG, "User " + userid + " receive PP " + taskid);
+
+                        init();
+                      } else {
+                        Log.i(TAG, "User " + userid + " receive PP " + taskid + " failure");
+                      }
+                    }
+                  });
+                }
+              });
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          }
+        }).start();
+      }
+    });
+  }
+
+  public void receiveDDListner(int taskid, int userid) {
+    llBottomButton2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        new Thread(new Runnable() {
+          @Override
+          public void run() {
+            try {
+              JSONObject object = new JSONObject();
+              HttpClient.getInstance().put("/task/ReceiveDD/" + taskid + "/" + userid, object.toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                  String res = response.body().string();
+                  assignment = gson.fromJson(res, Assignment.class);
+                  runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                      if (response.isSuccessful()) {
+                        Log.i(TAG, "User " + userid + " receive DD " + taskid);
+
+                        init();
+                      } else {
+                        Log.i(TAG, "User " + userid + " receive DD " + taskid + " failure");
+                      }
+                    }
+                  });
+                }
+              });
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          }
+        }).start();
+      }
+    });
+  }
+
+  public void finishPPlistener() {
+    llBottomButton2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(AssignmentDetailActivity.this, AcceptorConfirmActivity.class);
+        intent.putExtra("assignment", assignment);
+        startActivity(intent);
+      }
+    });
+  }
+
+  public void finishDDlistener() {
+    llBottomButton2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(AssignmentDetailActivity.this, AcceptorConfirmActivity.class);
+        intent.putExtra("assignment", assignment);
+        startActivity(intent);
+      }
+    });
+  }
+
+  public void confirmListener() {
+    llBottomButton2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(AssignmentDetailActivity.this, PublisherConfirmActivity.class);
+        intent.putExtra("assignment", assignment);
+        startActivity(intent);
+      }
+    });
+  }
+
+  public void receiptListener() {
+    // TODO 获取回执
+  }
+
   @Override
-  protected void onDestroy() {
+  public void onBackPressed() {
+    finish();
+  }
+
+  @Override
+  protected void onDestroy () {
     unbinder.unbind();
     super.onDestroy();
   }
 
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()){
+  public boolean onOptionsItemSelected (MenuItem item){
+    switch (item.getItemId()) {
       case android.R.id.home:
         finish();
         return true;
     }
     return super.onOptionsItemSelected(item);
   }
+
 }

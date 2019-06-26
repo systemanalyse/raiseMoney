@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.Assignment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +22,8 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
   Toolbar toolbar;
 
   private Unbinder unbinder;
+
+  Assignment assignment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setDisplayShowTitleEnabled(false);
     }
+
+    assignment = (Assignment) getIntent().getSerializableExtra("assignment");
   }
 
   @Override

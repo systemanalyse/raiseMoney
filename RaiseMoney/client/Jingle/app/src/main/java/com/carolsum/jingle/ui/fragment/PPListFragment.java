@@ -73,7 +73,7 @@ public class PPListFragment extends BaseFragment {
       public void onItemClick(int position) {
         Intent intent = new Intent(getContext(), AssignmentDetailActivity.class);
         intent.putExtra("assignment", moreList.get(position));
-        startActivityForResult(intent, REQUEST_CODE);
+        startActivity(intent);
       }
     });
 
@@ -128,13 +128,15 @@ public class PPListFragment extends BaseFragment {
 
           res = HttpClient.getInstance().get("/task/PP");
           List<Assignment> assignmentList = gson.fromJson(res, new TypeToken<List<Assignment>>(){}.getType());
-          Log.i("data", res);
+          Log.i("data", "PP: " + res);
 
           for (Assignment assignment : assignmentList) {
-            if (assignment.getPublishorInfo().getDormitory().equals(user.getDormitory())) {
-              nearbyList.add(assignment);
-            } else {
-              moreList.add(assignment);
+            if (assignment.getTaskType() == 0) {
+              if (assignment.getPublishorInfo().getDormitory().equals(user.getDormitory())) {
+                nearbyList.add(assignment);
+              } else {
+                moreList.add(assignment);
+              }
             }
           }
 

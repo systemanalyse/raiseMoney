@@ -101,9 +101,12 @@ public class DDListFragment extends BaseFragment {
 
           res = HttpClient.getInstance().get("/task/DD");
           List<Assignment> assignmentList = gson.fromJson(res, new TypeToken<List<Assignment>>(){}.getType());
+          Log.i("data", "DD: " + res);
 
           for (Assignment assignment : assignmentList) {
-            ddList.add(assignment);
+            if (assignment.getTaskType() == 1) {
+              ddList.add(assignment);
+            }
           }
 
           getActivity().runOnUiThread(new Runnable() {

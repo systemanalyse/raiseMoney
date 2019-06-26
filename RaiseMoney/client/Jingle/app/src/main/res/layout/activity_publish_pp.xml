@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="#FFFFFF"
-  tools:context=".ui.activity.CertificationActivity">
+  tools:context=".ui.activity.PublishPPActivity">
 
   <android.support.design.widget.AppBarLayout
     android:id="@+id/appbarLayout"
@@ -16,7 +16,7 @@
     app:liftOnScroll="true">
 
     <android.support.v7.widget.Toolbar
-      android:id="@+id/certification_toolbar"
+      android:id="@+id/pp_toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
       android:background="#fff"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="校园认证"
+        android:text="找人跑跑"
         android:textColor="@color/black"
         android:textSize="17sp" />
 
@@ -65,7 +65,7 @@
           android:id="@+id/pp_screenshot"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:src="@drawable/add_student_card_image"
+          android:src="@drawable/add_screenshot"
           android:scaleType="fitXY"
           />
 
@@ -88,13 +88,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="14sp"
-            android:text="姓名"/>
+            android:text="标题"/>
 
           <EditText
-            android:id="@+id/register_username"
+            android:id="@+id/pp_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="点击输入"
+            android:hint="点击输入，不超过32字"
             android:textSize="14sp"
             />
 
@@ -110,49 +110,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="14sp"
-            android:text="性别"/>
-
-          <RadioGroup
-            android:id="@+id/register_radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-              android:id="@+id/register_male_radio"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textSize="0sp"
-              android:text="男生"/>
-
-            <RadioButton
-              android:id="@+id/register_female_radio"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textSize="0sp"
-              android:text="女生"/>
-
-          </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:text="学校"/>
+            android:text="地点"/>
 
           <EditText
-            android:id="@+id/register_school"
+            android:id="@+id/pp_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="中山大学"
+            android:hint="点击输入"
             android:textSize="14sp"/>
 
         </LinearLayout>
@@ -167,16 +131,37 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="14sp"
-            android:text="入学年份"/>
+            android:text="截止时间"/>
 
           <EditText
-            android:id="@+id/register_enrollment"
+            android:id="@+id/pp_ddl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:hint="年份选择器"/>
+            android:hint="点击选择"/>
 
         </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="14sp"
+          android:text="重量"/>
+
+        <EditText
+          android:id="@+id/pp_weight"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="14sp"
+          android:hint="3Kg以下"/>
+
+      </LinearLayout>
 
         <LinearLayout
           android:layout_width="match_parent"
@@ -188,13 +173,14 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="14sp"
-            android:text="宿舍地址"/>
+            android:text="赏金"/>
 
           <EditText
-            android:id="@+id/register_dorm"
+            android:id="@+id/pp_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="如：至善园2号522"
+            android:inputType="number"
+            android:hint="如：点击输入，1 JIN币 = 0.1 人民币"
             android:textSize="14sp"/>
 
         </LinearLayout>
@@ -206,11 +192,11 @@
   </ScrollView>
 
   <android.support.design.button.MaterialButton
-      android:id="@+id/confirm_btn"
+    android:id="@+id/pp_confirm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="信息变更，重新认证"
-    android:layout_marginBottom="30dp"
+    android:text="发布"
+    android:layout_marginBottom="21dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:textSize="16sp"

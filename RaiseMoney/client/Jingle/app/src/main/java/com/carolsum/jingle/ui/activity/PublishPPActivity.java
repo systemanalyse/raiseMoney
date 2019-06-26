@@ -258,8 +258,8 @@ public class PublishPPActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                   if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "发布成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PublishPPActivity.this, ConfirmFeedbackActivity.class);
+                    intent.putExtra("operation", "publishPP");
                     startActivity(intent);
                     finish();
                   } else {

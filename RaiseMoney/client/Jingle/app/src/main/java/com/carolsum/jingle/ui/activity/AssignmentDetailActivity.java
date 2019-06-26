@@ -32,6 +32,8 @@ import com.liulishuo.magicprogresswidget.MagicProgressBar;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,11 +208,15 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     SharedPreferences sharedPreferences = getSharedPreferences("share", MODE_PRIVATE);
     String userId = sharedPreferences.getString("userid", "");
 
+
+    DateFormat dateFormatTime = new SimpleDateFormat("HH:mm");
+    DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
+
     // assignment title
     tvAssignmentTitle.setText(assignment.getTitle());
 
     // assignment publish time
-    tvAssignmentPublishTime.setText(assignment.getBeginTime());
+    tvAssignmentPublishTime.setText(dateFormatDate.format(Long.parseLong(assignment.getBeginTime())));
 
 
     /**
@@ -229,7 +235,9 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
 
         tvStartPostion.setText(assignment.getStartPosition());
         tvEndPostion.setText(assignment.getEndPosition());
-        tvDetailPpTime.setText(assignment.getDdl());
+
+        // 格式化时间戳
+        tvDetailPpTime.setText(dateFormatTime.format(Long.parseLong(assignment.getDdl())));
         // TODO: Weight
 
 
@@ -245,7 +253,8 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
 
         mpbDetailDdProgress.setSmoothPercent((float) assignment.getFinishNum() / assignment.getTotalNum());
         tvDetailDdProgress.setText(Integer.toString(assignment.getFinishNum()) + "/" + Integer.toString(assignment.getTotalNum()));
-        tvDetailDdDdl.setText(assignment.getDdl());
+        tvDetailDdDate.setText(dateFormatDate.format(Long.parseLong(assignment.getDdl())));
+        tvDetailDdDdl.setText(dateFormatTime.format(Long.parseLong(assignment.getDdl())));
         if (assignment.getAllocation() == 0) {
           tvDetailDdValueType.setText("随机分");
         } else {
@@ -343,7 +352,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             if (assignment.getAllocation() == 0) {
               tvBottomText1.setText("?");
             } else {
-              tvBottomText1.setText(Integer.parseInt(assignment.getValue()) / assignment.getTotalNum());
+              tvBottomText1.setText(String.valueOf(Integer.parseInt(assignment.getValue()) / assignment.getTotalNum()));
             }
             tvBottomButton2.setText("接单");
 
@@ -679,6 +688,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                   String res = response.body().string();
                   assignment = gson.fromJson(res, Assignment.class);
+                  Log.i(TAG, "status: " + assignment.getStatusCode());
                   runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

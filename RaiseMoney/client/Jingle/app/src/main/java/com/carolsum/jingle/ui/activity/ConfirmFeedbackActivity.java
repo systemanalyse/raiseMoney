@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.carolsum.jingle.R;
 
@@ -19,6 +20,13 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
   AppBarLayout appBarLayout;
   @BindView(R.id.detail_toolbar)
   Toolbar toolbar;
+
+  @BindView(R.id.title)
+  TextView title;
+  @BindView(R.id.hint)
+  TextView hint;
+  @BindView(R.id.btn_text)
+  TextView btnText;
 
   private Unbinder unbinder;
 
@@ -43,6 +51,8 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setDisplayShowTitleEnabled(false);
     }
+
+    init();
   }
 
   @Override
@@ -60,5 +70,27 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  public void init() {
+    // TODO
+    String op = getIntent().getStringExtra("operation");
+    if (op.equals("publishPP")) {
+      title.setText("找人跑跑");
+      hint.setText("发布成功");
+      btnText.setText("立即查看");
+    } else if (op.equals("publishDD")) {
+      title.setText("找人点点");
+      hint.setText("发布成功");
+      btnText.setText("立即查看");
+    } else if (op.equals("finishPP")) {
+      title.setText("通知已取");
+      hint.setText("发送成功");
+      btnText.setText("返回任务详情");
+    } else if (op.equals("finishDD")) {
+      title.setText("通知已完成");
+      hint.setText("发送成功");
+      btnText.setText("返回任务详情");
+    }
   }
 }

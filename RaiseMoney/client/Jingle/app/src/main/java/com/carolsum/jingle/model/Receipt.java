@@ -1,6 +1,7 @@
 package com.carolsum.jingle.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Receipt implements Serializable {
   /**
@@ -10,16 +11,18 @@ public class Receipt implements Serializable {
     "time": "string"
   }
   */
-  public String imgURL;
+  public List<String> photourl;
   public String desc;
   public String time;
 
-  public String getImgURL() {
-    return imgURL;
+  public Receipt() {};
+
+  public List<String> getPhotourl() {
+    return photourl;
   }
 
-  public void setImgURL(String imgURL) {
-    this.imgURL = imgURL;
+  public void setPhotourl(List<String> photourl) {
+    this.photourl = photourl;
   }
 
   public String getDesc() {

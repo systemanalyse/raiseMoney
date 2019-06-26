@@ -17,6 +17,8 @@ import com.carolsum.jingle.net.HttpClient;
 import com.carolsum.jingle.ui.fragment.PPListFragment;
 import com.liulishuo.magicprogresswidget.MagicProgressBar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,7 +63,10 @@ public class HomeAssignmentAdapter extends RecyclerView.Adapter<HomeAssignmentAd
     if (i == assignmentList.size() - 1) {
       viewHolder.splitLine.setVisibility(View.GONE);
     }
-    viewHolder.assignmentTime.setText(assignment.getDdl());
+
+    // 格式化时间戳
+    DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+    viewHolder.assignmentTime.setText(dateFormat.format(Long.parseLong(assignment.getBeginTime())));
     viewHolder.assignmentValue.setText(assignment.getValue());
 
     // publisher information

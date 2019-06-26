@@ -72,6 +72,11 @@ public class PublishDDActivity extends AppCompatActivity {
   ImageView imagePick;
   @BindView(R.id.remove_image)
   ImageView removeImage;
+  @BindView(R.id.image_1)
+  ImageView image1;
+  @BindView(R.id.image_num)
+  TextView imageNum;
+
   @BindView(R.id.dd_title)
   EditText ddTitle;
   @BindView(R.id.dd_ddl)
@@ -86,10 +91,6 @@ public class PublishDDActivity extends AppCompatActivity {
   RadioButton ddAverage;
   @BindView(R.id.dd_random)
   RadioButton ddRandom;
-  @BindView(R.id.image_1)
-  ImageView image1;
-  @BindView(R.id.image_num)
-  TextView imageNum;
 
   private Unbinder unbinder;
 
@@ -98,8 +99,8 @@ public class PublishDDActivity extends AppCompatActivity {
   private String userId;
   private Calendar calendar;
 
-  private String selectedReceiptImagePath = "";
-  private final int SELECT_RECEIPT_IMAGE = 10002;
+  private String selectedDiandianInformationImagePath = "";
+  private final int SELECT_DIANDIAN_INFORMATION_IMAGE = 10002;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -177,13 +178,13 @@ public class PublishDDActivity extends AppCompatActivity {
 
 
   @OnClick(R.id.image_pick)
-  public void selectReceiptImage() {
+  public void selectDiandianInformationImage() {
     int checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
     if (checkPermission == PackageManager.PERMISSION_GRANTED){
-      pickImage(SELECT_RECEIPT_IMAGE);
+      pickImage(SELECT_DIANDIAN_INFORMATION_IMAGE);
     } else {
       ActivityCompat.requestPermissions(this,
-        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SELECT_RECEIPT_IMAGE);
+        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SELECT_DIANDIAN_INFORMATION_IMAGE);
     }
   }
 
@@ -198,7 +199,7 @@ public class PublishDDActivity extends AppCompatActivity {
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     switch (requestCode) {
-      case SELECT_RECEIPT_IMAGE: {
+      case SELECT_DIANDIAN_INFORMATION_IMAGE: {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           pickImage(requestCode);
         } else {
@@ -211,18 +212,18 @@ public class PublishDDActivity extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK && requestCode == SELECT_RECEIPT_IMAGE) {
+    if (resultCode == Activity.RESULT_OK && requestCode == SELECT_DIANDIAN_INFORMATION_IMAGE) {
       final ArrayList<String> pathList =
         data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT_SELECTION);
       final boolean original =
         data.getBooleanExtra(PhotoPickerActivity.EXTRA_RESULT_ORIGINAL, false);
       if (pathList.size() == 1) {
-        if (requestCode == SELECT_RECEIPT_IMAGE) {
+        if (requestCode == SELECT_DIANDIAN_INFORMATION_IMAGE) {
           Glide.with(this).load(pathList.get(0)).into(image1);
           image1.setVisibility(View.VISIBLE);
           removeImage.setVisibility(View.VISIBLE);
           imageNum.setText("（1/2）");
-          this.selectedReceiptImagePath = pathList.get(0);
+          this.selectedDiandianInformationImagePath = pathList.get(0);
         }
       }
     }
@@ -230,7 +231,7 @@ public class PublishDDActivity extends AppCompatActivity {
 
   @OnClick(R.id.remove_image)
   public void removeImage() {
-    selectedReceiptImagePath = "";
+    selectedDiandianInformationImagePath = "";
     image1.setVisibility(View.GONE);
     removeImage.setVisibility(View.GONE);
     imageNum.setText("（0/2）");
@@ -303,9 +304,9 @@ public class PublishDDActivity extends AppCompatActivity {
         assignment.setDdl(String.valueOf(calendar.getTimeInMillis()));
         assignment.setTotalNum(Integer.parseInt(ddPeopleNum.getText().toString()));
 
-        if (!selectedReceiptImagePath.equals("")) {
+        if (!selectedDiandianInformationImagePath.equals("")) {
           // 上传截图以获取对应的url
-          String res = HttpClient.getInstance().upload(selectedReceiptImagePath);
+          String res = HttpClient.getInstance().upload(selectedDiandianInformationImagePath);
           if (res != null) {
             user.setStudentCardURL(res.replace("\n", ""));
           }
@@ -324,8 +325,8 @@ public class PublishDDActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                   if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "发布成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PublishDDActivity.this, ConfirmFeedbackActivity.class);
+                    intent.putExtra("operation", "publishDD");
                     startActivity(intent);
                     finish();
                   } else {

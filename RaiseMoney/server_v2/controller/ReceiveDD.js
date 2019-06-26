@@ -1,5 +1,6 @@
 const Task = require('../model/Task')
 const CreateNotice = require('./CreateNotice')
+const GetPublicUser = require('./GetPublicUser')
 
 var ReceiveDD = async (taskid, userid) => {
   let task = new Task(taskid)
@@ -13,13 +14,19 @@ var ReceiveDD = async (taskid, userid) => {
   if (result[0]['userid'] == userid) {
     return {
       'status': 403,
-      'data': '刷单呢'
+      'data': '?'
     }
   }
   if (result[0]['taskType'] == 0) {
     return {
       'status': 403,
-      'data': '这是点点'
+      'data': 'This is DD'
+    }
+  }
+  if (result[0]['statusCode'] > 1) {
+    return {
+      'status': 403,
+      'data': 'Task has been finished'
     }
   }
   let acceptor = result[0]['acceptor'].split(',')
@@ -39,15 +46,33 @@ var ReceiveDD = async (taskid, userid) => {
       'userid': result[0]['userid'],
       'cuserid': userid,
       'taskid': taskid,
-      'userType': true,
-      'taskType': true,
+      'userType': 1,
+      'taskType': 1,
       'time': Date.parse(new Date()),
       'title': result[0]['title'],
       'descr': result[0]['descr'],
     })
+    let info = await GetPublicUser(result[i]['userid'])
+    let publishorInfo = Object.assign(info['data'], {
+      'userid': result[i]['userid']
+    })
     return {
       'status': 200,
-      'data': true
+      'data': {
+        "taskid": result[i]['id'],
+        "taskStatus": result[i]['taskStatus'],
+        "taskType": result[i]['taskType'],
+        "statusCode": result[i]['statusCode'],
+        "beginTime": result[i]['beginTime'],
+        "value": result[i]['totalValue'],
+        "title": result[i]['title'],
+        "desc": result[i]['descr'],
+        "ddl": result[i]['ddl'],
+        "allocation": result[i]['allocation'],
+        "finishNum": result[i]['finishNum'],
+        "totalNum": result[i]['totalNum'],
+        "publishorInfo": publishorInfo
+      }
     }
   }
 }

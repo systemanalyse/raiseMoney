@@ -13,7 +13,7 @@ var randAlloc = async (total, min, max, length) => {
     const usable = restValue - restMin;
     const minValue = Math.max(min, restValue - restMax);
     const limit = Math.min(usable - minValue, (max - minValue) * 2);
-    result[i] = Math.min(max, minValue + Math.floor(limit * Math.random()));
+    result[i] = Math.min(max, minValue + Math.floor(limit * Math.random())).toFixed(1);
     restValue -= result[i];
   }
   result[length - 1] = parseFloat(restValue).toFixed(1);
@@ -25,19 +25,16 @@ var PublishTask = async (userid, params) => {
   values = {
     "userid": userid,
     "taskType": params['taskType'],
-    "statusCode": params['statusCode'],
+    "statusCode": 0,
     "beginTime": params['beginTime'],
     "allocation": params['allocation'],
     "totalValue": params['value'],
     "title": params['title'],
     "descr": params['desc'],
-    "time": params['time'],
     "startPosition": params['startPosition'],
     "endPosition": params['endPosition'],
     "ddl": params['ddl'],
-    "totalNum": params['totalNum'],
-    "acceptor": "",
-    "finishor": ""
+    "totalNum": params['totalNum']
   }
   let wallet = await GetWallet(userid)
   if (parseFloat(wallet['data']) < parseFloat(params['value'])) {

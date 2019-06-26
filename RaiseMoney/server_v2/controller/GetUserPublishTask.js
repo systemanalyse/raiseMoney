@@ -21,17 +21,21 @@ var GetUserPublishTask = async (userid) => {
       }))
     }
     let finishor = result[i]['finishor'].split(',')
+    if (finishor[0] == '') {
+      finishor.splice(0,1)
+    }
     values.push({
+      "origin": 1,
       "userid": userid,
       "taskid": result[i]['id'],
       "taskStatus": result[i]['taskStatus'],
       "taskType": result[i]['taskType'],
       "statusCode": result[i]['statusCode'],
       "beginTime": result[i]['beginTime'],
+      "allocation": result[i]['allocation'],
       "value": result[i]['totalValue'],
       "title": result[i]['title'],
-      "descr": result[i]['desc'],
-      "time": result[i]['time'],
+      "desc": result[i]['descr'],
       "startPosition": result[i]['startPosition'],
       "endPosition": result[i]['endPosition'],
       "ddl": result[i]['ddl'],

@@ -2,6 +2,7 @@ const Task = require('../model/Task')
 const GetWallet = require('./GetWallet')
 const ChangeWallet = require('./ChangeWallet')
 const CreateNotice = require('./CreateNotice')
+const Feedback = require('../model/Feedback')
 
 var ConfirmTask = async (taskid, userid, fuserid) => {
   let task = new Task(userid)
@@ -15,29 +16,41 @@ var ConfirmTask = async (taskid, userid, fuserid) => {
       'data': 'Task not found'
     }
   }
-  // if (result[0]['statusCode'] == 10) {
-  //   return {
-  //     'status': 403,
-  //     'data': 'don\'t hack me'
-  //   }
-  // }
+  if (result[0]['statusCode'] > 2) {
+    return {
+      'status': 403,
+      'data': 'don\'t hack me'
+    }
+  }
   let taskType = result[0]['taskType']
   let finishor = result[0]['finishor'].split(',')
+  let confirmor = result[0]['confiror'].split(',')
   if (!finishor.includes(fuserid)) {
     return {
       'status': 403,
       'data': 'don\'t hack me'
     }
   }
+  if (!confirmor.includes(fuserid)) {
+    return {
+      'status': 403,
+      'data': 'Has been confirmed'
+    }
+  }
   let money = await GetWallet(fuserid)
   let confirmNum = result[0]['confirmNum'] + 1
-  let statusCode = 8
-  if (confirmNum == result[0]['finishNum']) {
-    statusCode = 10
+  let statusCode = 1
+  if (result[0]['statusCode'] == 2) {
+    statusCode = 2
   }
+  if (confirmNum == result[0]['finishNum'] && result[0]['totalNum'] == confirmNum) {
+    statusCode = 3
+  }
+  confirmor.push(fuserid)
   let r = await task.updateTask({
     'statusCode': statusCode,
-    'confirmNum' : confirmNum
+    'confirmNum' : confirmNum,
+    'confirmor': confirmor.join(',')
   })
   let bonus = 0
   if (taskType == 0) {
@@ -54,6 +67,14 @@ var ConfirmTask = async (taskid, userid, fuserid) => {
     }
   } else {
     ChangeWallet(fuserid, bonus + parseFloat(money['data']))
+    let feedback = new Feedback()
+    feedback.condition = {
+      'taskid': taskid,
+      'userid': fuserid
+    }
+    feedback.updateFeedback({
+      'whetherConfirm': 1
+    })
     CreateNotice({
       'userid': fuserid,
       'cuserid': userid,

@@ -19,7 +19,9 @@ var GetFeedback = async (userid, taskid) => {
     let userinfo = await GetPublicUser(result[i]['userid'])
     values.push(Object.assign({
       'photourl': result[i]['photourl'].split(','),
-      'userid': result[i]['userid']
+      'userid': result[i]['userid'],
+      'finishtime': result[i]['finishtime'],
+      'desc': result[i]['descr']
     }, userinfo['data']))
   }
   return {

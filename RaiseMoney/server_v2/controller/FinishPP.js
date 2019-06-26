@@ -1,8 +1,9 @@
 const Task = require('../model/Task')
 const Feedback = require('../model/Feedback')
 const CreateNotice = require('./CreateNotice')
+const GetPublicUser = require('./GetPublicUser')
 
-var FinishPP = async (taskid, userid, photourl) => {
+var FinishPP = async (taskid, userid, photourl, desc) => {
   let task = new Task(taskid)
   let result = await task.queryTask(['*'])
   if (result.length == 0) {
@@ -24,10 +25,16 @@ var FinishPP = async (taskid, userid, photourl) => {
       'data': 'Don\'t hack me'
     }
   }
+  if (result[0]['statusCode'] != 1) {
+    return {
+      'status': 403,
+      'data': '?'
+    }
+  }
   let r = await task.updateTask({
     'finishor': userid,
     'finishNum': 1,
-    'statusCode': 9
+    'statusCode': 2
   })
   if (!r) {
     return {
@@ -40,21 +47,40 @@ var FinishPP = async (taskid, userid, photourl) => {
       'userid': userid,
       'taskid': taskid,
       'puserid': result[0]['userid'],
-      'photourl': photourl.join(',')
+      'photourl': photourl.join(','),
+      'finishtime': Date.parse(new Date()),
+      'descr': desc
     })
     CreateNotice({
       'userid': result[0]['userid'],
       'cuserid': userid,
       'taskid': taskid,
-      'userType': true,
-      'taskType': false,
+      'userType': 1,
+      'taskType': 0,
       'time': Date.parse(new Date()),
       'title': result[0]['title'],
       'descr': result[0]['descr'],
     })
+    let info = await GetPublicUser(result[0]['userid'])
+    let publishorInfo = Object.assign(info['data'], {
+      'userid': result[0]['userid']
+    })
     return {
       'status': 200,
-      'data': true
+      'data': {
+        "taskid": result[0]['id'],
+        "taskStatus": result[0]['taskStatus'],
+        "taskType": result[0]['taskType'],
+        "statusCode": result[0]['statusCode'],
+        "beginTime": result[0]['beginTime'],
+        "value": result[0]['totalValue'],
+        "title": result[0]['title'],
+        "desc": result[0]['descr'],
+        "startPosition": result[0]['startPosition'],
+        "endPosition": result[0]['endPosition'],
+        "ddl": result[0]['ddl'],
+        "publishorInfo": publishorInfo
+      }
     }
   }
 }

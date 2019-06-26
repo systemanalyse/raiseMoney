@@ -23,15 +23,13 @@ var GetDDValue = async (taskid, userid, number) => {
   let confirmNum = parseInt(result[0]['confirmNum'])
   let allMoney = 0
   for (let i = 0; i < parseInt(number); i++) {
-    allMoney += value[confirmNum + i]
+    allMoney += parseFloat(value[confirmNum + i])
   }
 
   return {
     'status': 200,
     'data': String(allMoney)
   }
-
-
 
 }
 

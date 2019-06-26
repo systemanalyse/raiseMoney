@@ -6,6 +6,7 @@ var FileStore = require('session-file-store')(session);
 
 var Login = require('../controller/Login')
 var Rigist = require('../controller/Regist')
+var ConcludeWhetherRunning = require('../controller/ConcludeWhetherRunning')
 
 router.use(session({
   secret: 'userid', // 用来对session id相关的cookie进行签名
@@ -59,12 +60,17 @@ router.post('/regist', async (req, res) => {
   }
 })
 
+router.get('/robot', async (req, res) => {
+  await ConcludeWhetherRunning()
+  res.status(200).send('ok')
+})
+
 router.get('/logout', async (req, res) => {
   if (!req.session.userid) {
     res.status(406).send({
       'data': 'Have not logined.'
     })
-  } else{
+  } else {
     req.session.destroy()
     res.status(200).send({
       'data': 'Successfully'

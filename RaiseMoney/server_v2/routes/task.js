@@ -49,7 +49,7 @@ router.get('/DD', async (req, res) => {
   if (!!!req.session.userid) {
     res.status(401).send('Unauthorized, need to authorized')
   } else {
-    let result = await GetAllDD()
+    let result = await GetAllDD(req.session.userid)
     res.status(result['status']).send(result['data'])
   }
 })
@@ -58,7 +58,7 @@ router.get('/PP', async (req, res) => {
   if (!!!req.session.userid) {
     res.status(401).send('Unauthorized, need to authorized')
   } else {
-    let result = await GetAllPP()
+    let result = await GetAllPP(req.session.userid)
     res.status(result['status']).send(result['data'])
   }
 })
@@ -113,7 +113,7 @@ router.put('/FinishDD/:taskid/:userid', async (req, res) => {
   } else if (req.session.userid != req.params.userid) {
     res.status(403).send('Request refused')
   } else {
-    let result = await FinishDD(req.params.taskid, req.params.userid, req.body.photourl)
+    let result = await FinishDD(req.params.taskid, req.params.userid, req.body.photourl, req.body.desc)
     res.status(result['status']).send(result['data'])
   }
 })
@@ -124,7 +124,7 @@ router.put('/FinishPP/:taskid/:userid', async (req, res) => {
   } else if (req.session.userid != req.params.userid) {
     res.status(403).send('Request refused')
   } else {
-    let result = await FinishPP(req.params.taskid, req.params.userid, req.body.photourl)
+    let result = await FinishPP(req.params.taskid, req.params.userid, req.body.photourl, req.body.desc)
     res.status(result['status']).send(result['data'])
   }
 })

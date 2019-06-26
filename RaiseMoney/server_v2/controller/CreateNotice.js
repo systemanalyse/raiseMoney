@@ -11,7 +11,7 @@ var CreateNotice = async (params) => {
     'title': params['title'],
     'descr': params['descr'],
     'time': params['time'],
-    'status': true
+    'status': 1
   })
   if (!result) {
     return {

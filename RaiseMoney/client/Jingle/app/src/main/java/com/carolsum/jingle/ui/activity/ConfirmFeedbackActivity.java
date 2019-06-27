@@ -1,18 +1,24 @@
 package com.carolsum.jingle.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.carolsum.jingle.R;
+import com.carolsum.jingle.model.Assignment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ConfirmFeedbackActivity extends AppCompatActivity {
@@ -25,10 +31,14 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
   TextView title;
   @BindView(R.id.hint)
   TextView hint;
+  @BindView(R.id.btn)
+  LinearLayout btn;
   @BindView(R.id.btn_text)
   TextView btnText;
 
   private Unbinder unbinder;
+
+  Assignment assignment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,8 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setDisplayShowTitleEnabled(false);
     }
+
+    assignment = new Assignment();
 
     init();
   }
@@ -79,18 +91,60 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
       title.setText("找人跑跑");
       hint.setText("发布成功");
       btnText.setText("立即查看");
+
+      btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          finish();
+        }
+      });
+
+
     } else if (op.equals("publishDD")) {
       title.setText("找人点点");
       hint.setText("发布成功");
       btnText.setText("立即查看");
+
+      btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          finish();
+        }
+      });
+
+
     } else if (op.equals("finishPP")) {
       title.setText("通知已取");
       hint.setText("发送成功");
       btnText.setText("返回任务详情");
+
+      btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+          Intent intent = new Intent(ConfirmFeedbackActivity.this, AssignmentDetailActivity.class);
+          intent.putExtra("assignment", assignment);
+          startActivity(intent);
+          finish();
+        }
+      });
+
     } else if (op.equals("finishDD")) {
       title.setText("通知已完成");
       hint.setText("发送成功");
       btnText.setText("返回任务详情");
+
+      btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+          Intent intent = new Intent(ConfirmFeedbackActivity.this, AssignmentDetailActivity.class);
+          intent.putExtra("assignment", assignment);
+          startActivity(intent);
+          finish();
+        }
+      });
+
     }
   }
 }

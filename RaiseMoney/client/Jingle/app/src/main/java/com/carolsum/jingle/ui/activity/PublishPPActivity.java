@@ -197,6 +197,7 @@ public class PublishPPActivity extends AppCompatActivity {
         if (requestCode == SELECT_PP_SCREENSHOT) {
           Glide.with(this).load(pathList.get(0)).into(ppScreenshot);
           this.selectedScreenshotImagePath = pathList.get(0);
+
         }
       }
     }
@@ -241,9 +242,12 @@ public class PublishPPActivity extends AppCompatActivity {
           // 上传快递截图以获取对应的url
           String res = HttpClient.getInstance().upload(selectedScreenshotImagePath);
           if (res != null) {
-            user.setStudentCardURL(res.replace("\n", ""));
+            Log.i("data", "screenshot url: " + res);
+            assignment.setPhotourl(res.replace("\n", ""));
           }
         }
+
+
         try {
           HttpClient.getInstance().post("/task/Publish/" + userId, gson.toJson(assignment), new Callback() {
             @Override
@@ -263,7 +267,10 @@ public class PublishPPActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                   } else {
-                    Toast.makeText(getApplicationContext(), "发生错误", Toast.LENGTH_SHORT).show();
+                    if (res.equals("Your wallet is poor")) {
+                      Toast.makeText(getApplicationContext(), "账户余额不足！", Toast.LENGTH_SHORT).show();
+
+                    }
                   }
                 }
               });

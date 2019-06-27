@@ -848,9 +848,10 @@
               <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/phone" />
+                android:src="@drawable/detail_phone" />
 
               <TextView
+                android:id="@+id/phoneNumber"
                 android:layout_width="0dp"
                 android:layout_height="17dp"
                 android:layout_marginLeft="8dp"
@@ -953,7 +954,7 @@
 
           <TextView
             android:id="@+id/tv_status_unconfirm_title"
-            android:layout_width="154dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="已通知对方，等待确认…"
             android:textColor="#ff606466"
@@ -964,33 +965,27 @@
             android:layout_height="wrap_content"
             android:background="@drawable/detail_notification_text_bg"
             android:orientation="vertical"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="8dp"
+            android:paddingLeft="18dp"
+            android:paddingTop="14dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="14dp"
             android:layout_marginTop="10dp">
 
             <TextView
               android:id="@+id/tv_status_unconfirm_description"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
               android:text="你的快递我放这里了哦～"
               android:textColor="#ff909599"
               android:textSize="12sp" />
 
             <LinearLayout
+              android:id="@+id/ll_status_unconfirm_image"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="right|bottom"
               android:layout_marginTop="23dp"
               android:orientation="horizontal">
-
-              <ImageView
-                android:id="@+id/iv_status_unconfirm_image2"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:src="@drawable/complete_task_1"
-                android:visibility="gone"/>
 
               <ImageView
                 android:id="@+id/iv_status_unconfirm_image1"
@@ -1138,7 +1133,11 @@
         </LinearLayout>
 
 
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
 
+      </LinearLayout>
 
       </LinearLayout>
 

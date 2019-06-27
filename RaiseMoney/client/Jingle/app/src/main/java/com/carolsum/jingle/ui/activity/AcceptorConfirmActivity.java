@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import com.carolsum.jingle.model.User;
 import com.carolsum.jingle.net.HttpClient;
 import com.google.gson.JsonObject;
 import com.imnjh.imagepicker.ImageLoader;
+import com.imnjh.imagepicker.PickerConfig;
 import com.imnjh.imagepicker.SImagePicker;
 import com.imnjh.imagepicker.activity.PhotoPickerActivity;
 
@@ -99,6 +101,10 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
     setContentView(R.layout.activity_accpter_confirm);
     unbinder = ButterKnife.bind(this);
 
+    SImagePicker.init(new PickerConfig.Builder().setAppContext(this)
+      .setImageLoader(new GlideImageLoader())
+      .setToolbaseColor(getColor(R.color.colorPrimary))
+      .build());
 
     // 获取状态栏高度 更新toolbar的marginTop
     int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -259,15 +265,15 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
         if (!selectedReceiptImagePath.equals("")) {
           // 上传截图以获取对应的url
           String res = HttpClient.getInstance().upload(selectedReceiptImagePath);
-          ArrayList<String> photourl = new ArrayList<String>();
-          photourl.add(res);
+          ArrayList<String> photourl = new ArrayList<>();
+          photourl.add(res.replace("\n", ""));
           receipt.setPhotourl(photourl);
-          receipt.setDesc(receiptDesc.getText().toString());
-          receipt.setTime(String.valueOf(System.currentTimeMillis()));
         }
+        receipt.setDesc(receiptDesc.getText().toString());
+
         try {
           if (assignment.getTaskType() == 0) {
-            HttpClient.getInstance().put("/task/FinishPP/" + assignment.getTaskid() + "/" + userId, gson.toJson(assignment), new Callback() {
+            HttpClient.getInstance().put("/task/FinishPP/" + assignment.getTaskid() + "/" + userId, gson.toJson(receipt), new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
 
@@ -280,8 +286,15 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
                   @Override
                   public void run() {
                     if (response.isSuccessful()) {
+                      Log.i("data", "FinishPP: " + res);
+                      assignment = gson.fromJson(res, Assignment.class);
+                      /**
+                       * api 返回没有 origin 字段
+                       */
+                      assignment.setOrigin(2);
                       Intent intent = new Intent(AcceptorConfirmActivity.this, ConfirmFeedbackActivity.class);
-                      intent.putExtra("operation", "FinishPP");
+                      intent.putExtra("operation", "finishPP");
+                      intent.putExtra("assignment", assignment);
                       startActivity(intent);
                       finish();
                     } else {
@@ -292,7 +305,7 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
               }
             });
           } else {
-            HttpClient.getInstance().put("/task/FinishDD/" + assignment.getTaskid() + "/" + userId, gson.toJson(assignment), new Callback() {
+            HttpClient.getInstance().put("/task/FinishDD/" + assignment.getTaskid() + "/" + userId, gson.toJson(receipt), new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
 
@@ -305,8 +318,13 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
                   @Override
                   public void run() {
                     if (response.isSuccessful()) {
+                      Log.i("data", "FinishDD: " + res);
+                      assignment = gson.fromJson(res, Assignment.class);
+                      assignment.setOrigin(2);
+
                       Intent intent = new Intent(AcceptorConfirmActivity.this, ConfirmFeedbackActivity.class);
-                      intent.putExtra("operation", "FinishDD");
+                      intent.putExtra("operation", "finishDD");
+                      intent.putExtra("assignment", assignment);
                       startActivity(intent);
                       finish();
                     } else {

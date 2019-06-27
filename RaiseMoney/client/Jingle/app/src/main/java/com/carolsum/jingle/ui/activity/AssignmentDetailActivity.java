@@ -110,6 +110,8 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   TextView acceptNum;
   @BindView(R.id.space_publish_number)
   TextView publishNum;
+  @BindView(R.id.phoneNumber)
+  TextView phoneNumber;
 
   // 任务提示信息
   @BindView(R.id.ll_status_wait_for_order)
@@ -129,7 +131,9 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   @BindView(R.id.tv_status_unconfirm_title)
   TextView tvStatusUnconfirmTitle;
   @BindView(R.id.tv_status_unconfirm_description)
-  TextView getTvStatusUnconfirmDescription;
+  TextView tvStatusUnconfirmDescription;
+  @BindView(R.id.ll_status_unconfirm_image)
+  LinearLayout llStatusUnconfirmImage;
   @BindView(R.id.iv_status_unconfirm_image1)
   ImageView ivImage1;
   @BindView(R.id.tv_status_finish_hint)
@@ -171,6 +175,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
 
 
   Assignment assignment;
+  ArrayList<Receipt> receipts = new ArrayList<>();
 
   private Unbinder unbinder;
 
@@ -211,12 +216,24 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
 
     DateFormat dateFormatTime = new SimpleDateFormat("HH:mm");
     DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat dateFormatLeft = new SimpleDateFormat("H 小时 m 分钟");
+
+
+    llStatusWaitForOrder.setVisibility(View.GONE);
+    llStatusAccepted.setVisibility(View.GONE);
+    llStatusUnconfirm.setVisibility(View.GONE);
+    llStatusFinish.setVisibility(View.GONE);
+    llStatusNotOnTime.setVisibility(View.GONE);
+    llStatusOverdue.setVisibility(View.GONE);
+
+
+
 
     // assignment title
     tvAssignmentTitle.setText(assignment.getTitle());
 
     // assignment publish time
-    tvAssignmentPublishTime.setText(dateFormatDate.format(Long.parseLong(assignment.getBeginTime())));
+    tvAssignmentPublishTime.setText(dateFormatTime.format(Long.parseLong(assignment.getBeginTime())));
 
 
     /**
@@ -273,19 +290,21 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         llPublisherPrivate.setVisibility(View.GONE);
         setUserInfo(assignment.getPublishorInfo());
 
-      // 作为发布方，跑跑
+        // 作为发布方，跑跑
       } else if (assignment.getOrigin() == 1 && assignment.getTaskType() == 0) {
         // 待接单或已超期，无接受方
         if (assignment.getStatusCode() == 0 || assignment.getStatusCode() == 4) {
           llDetailCertification.setVisibility(View.GONE);
         } else {
           llDetailCertification.setVisibility(View.VISIBLE);
+          llPublisherPrivate.setVisibility(View.VISIBLE);
           setUserInfo(assignment.getAcceptor().get(0));
         }
 
-      // 作为接受方
+        // 作为接受方
       } else if (assignment.getOrigin() == 2) {
         llDetailCertification.setVisibility(View.VISIBLE);
+        llPublisherPrivate.setVisibility(View.VISIBLE);
         setUserInfo(assignment.getPublishorInfo());
       }
 
@@ -319,8 +338,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             tvBottomText1.setText(assignment.getValue());
             tvBottomButton2.setText("查看快递截图");
 
-            // TODO: 只获取了第一张
-            screenShotListener(llBottomButton2, assignment.getPhotoURL().get(0));
+            screenShotListener(llBottomButton2, assignment.getPhotourl());
 
           } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
             llBottomText1.setVisibility(View.VISIBLE);
@@ -362,8 +380,10 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
           break;
         case 1:
           ivAssignmentStatus.setImageResource(R.drawable.state_running);
+
           llStatusAccepted.setVisibility(View.VISIBLE);
-          tvStatusAcceptedTimeToGo.setText(assignment.getDdl());
+
+          tvStatusAcceptedTimeToGo.setText(dateFormatLeft.format(Long.parseLong(assignment.getDdl()) - System.currentTimeMillis()));
 
           if (assignment.getTaskType() == 0 && assignment.getOrigin() == 1) {
             llBottomText1.setVisibility(View.GONE);
@@ -383,8 +403,8 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             tvBottomButton2.setText("通知已取");
 
             finishPPlistener();
-            // TODO: 只获取了第一张
-            screenShotListener(llBottomButton2, assignment.getPhotoURL().get(0));
+
+            screenShotListener(llBottomButton1, assignment.getPhotourl());
 
 
           } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
@@ -394,7 +414,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             llBottomButton2.setVisibility(View.VISIBLE);
             tvBottomButton2.setText("查看回执清单");
 
-            receiptListener();
+            receiptListener(assignment.getTaskid(), Integer.parseInt(userId), 0);
 
           } else if (assignment.getTaskType() == 1 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
             llBottomText1.setVisibility(View.GONE);
@@ -415,12 +435,12 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
           if (assignment.getOrigin() == 2) {
             tvStatusUnconfirmTitle.setText("已通知对方，等待确认…");
             // 调用API，获取回执
-            fetchReceipt(assignment.getTaskid(), Integer.parseInt(userId));
+            fetchReceipt(assignment.getTaskid(), Integer.parseInt(userId), 1);
           } else {
             // 跑跑
             if (assignment.getTaskType() == 0) {
               tvStatusUnconfirmTitle.setText("对方已帮你取到，这是TA的任务回执");
-              fetchReceipt(assignment.getTaskid(), assignment.getPublishorInfo().getUserid());
+              fetchReceipt(assignment.getTaskid(), Integer.parseInt(userId), 0);
             }
           }
 
@@ -556,7 +576,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   }
 
   private void setUserInfo (User currentUser){
-    if (currentUser != null && currentUser.avatarURL != null && !currentUser.avatarURL.equals("")) {
+    if (currentUser != null && currentUser.avatarURL != null && !currentUser.avatarURL.equals("") && !currentUser.avatarURL.equals("undefined")) {
       // 加载用户头像
       Glide.with(this).load(HttpClient.getPictureBaseUrl + currentUser.avatarURL).into(userAvatar);
     } else {
@@ -572,26 +592,36 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     }
     acceptNum.setText(Integer.toString(currentUser.getAcceptNum()));
     publishNum.setText(Integer.toString(currentUser.getPublishNum()));
+    phoneNumber.setText(currentUser.getPhone());
   }
 
-  private void fetchReceipt ( int taskid, int userid){
+  private void fetchReceipt (int taskid, int userid, int userType){
     new Thread(new Runnable() {
       @Override
       public void run() {
         try {
-          String res = HttpClient.getInstance().get("/task/Feedback/" + taskid + "/" + userid);
+          String res = HttpClient.getInstance().get("/task/Feedback/" + taskid + "/" + userid + "/" + userType);
+          Log.i("data", "Feedback: " + res);
 
-          if (res.startsWith("{")) {
-            Receipt receipt = gson.fromJson(res, Receipt.class);
-            runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                getTvStatusUnconfirmDescription.setText(receipt.getDesc());
-                Glide.with(getApplicationContext()).load(HttpClient.getPictureBaseUrl + receipt.getImgURL()).into(ivImage1);
-                // TODO: 或有两张返回图片
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              if (res.startsWith("[")) {
+                receipts = gson.fromJson(res, new TypeToken<List<Receipt>>(){}.getType());
+
+                tvStatusUnconfirmDescription.setText(receipts.get(0).getDesc());
+                // 右下角显示图片并设置点击事件
+                if (receipts.get(0).getPhotourl() != null && !receipts.get(0).getPhotourl().get(0).equals("") && !receipts.get(0).getPhotourl().get(0).equals("undefined")) {
+                  Glide.with(AssignmentDetailActivity.this).load(HttpClient.getPictureBaseUrl + receipts.get(0).getPhotourl().get(0)).into(ivImage1);
+                  screenShotListener(llStatusUnconfirmImage, receipts.get(0).getPhotourl().get(0));
+                } else {
+                  llStatusUnconfirmImage.setVisibility(View.GONE);
+                }
+              } else {
+                Toast.makeText(AssignmentDetailActivity.this, "获取回执失败", Toast.LENGTH_SHORT);
               }
-            });
-          }
+            }
+          });
         } catch (IOException e) {
           e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -605,22 +635,25 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
     ll.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        LayoutInflater inflater = LayoutInflater.from(AssignmentDetailActivity.this);
-        View imgEntryView = inflater.inflate(R.layout.dialog_photo, null);
-        // 加载自定义的布局文件
-        final AlertDialog dialog = new AlertDialog.Builder(AssignmentDetailActivity.this).create();
-        ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
-//        img.setImageResource(R.drawable.pp_overdue);
-        Glide.with(getApplicationContext()).load(url).into(img);
-        dialog.setView(imgEntryView); // 自定义dialog
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.show();
-        // 点击大图关闭dialog
-        imgEntryView.setOnClickListener(new View.OnClickListener() {
-          public void onClick(View paramView) {
-            dialog.cancel();
-          }
-        });
+        if (url != null && !url.equals("") && !url.equals("undefined")) {
+          LayoutInflater inflater = LayoutInflater.from(AssignmentDetailActivity.this);
+          View imgEntryView = inflater.inflate(R.layout.dialog_photo, null);
+          // 加载自定义的布局文件
+          final AlertDialog dialog = new AlertDialog.Builder(AssignmentDetailActivity.this).create();
+          ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
+          Glide.with(AssignmentDetailActivity.this).load(HttpClient.getPictureBaseUrl + url).into(img);
+          dialog.setView(imgEntryView); // 自定义dialog
+          dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+          dialog.show();
+          // 点击大图关闭dialog
+          imgEntryView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramView) {
+              dialog.cancel();
+            }
+          });
+        } else {
+          Toast.makeText(AssignmentDetailActivity.this, "没有图片", Toast.LENGTH_SHORT);
+        }
 
       }
     });
@@ -644,17 +677,18 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                   String res = response.body().string();
-                  Log.i(TAG, res);
-                  assignment = gson.fromJson(res, Assignment.class);
+                  Log.i("data", "ReceivePP: " + res);
                   runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                       if (response.isSuccessful()) {
+                        assignment = gson.fromJson(res, Assignment.class);
+                        assignment.setOrigin(2);
                         Log.i(TAG, "User " + userid + " receive PP " + taskid);
 
                         init();
                       } else {
-                        Log.i(TAG, "User " + userid + " receive PP " + taskid + " failure");
+                        Toast.makeText(AssignmentDetailActivity.this, "接受跑跑任务失败", Toast.LENGTH_SHORT);
                       }
                     }
                   });
@@ -687,17 +721,18 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                   String res = response.body().string();
-                  assignment = gson.fromJson(res, Assignment.class);
-                  Log.i(TAG, "status: " + assignment.getStatusCode());
+                  Log.i("data", "ReceiveDD: " + res);
                   runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                       if (response.isSuccessful()) {
+                        assignment = gson.fromJson(res, Assignment.class);
+                        assignment.setOrigin(2);
                         Log.i(TAG, "User " + userid + " receive DD " + taskid);
 
                         init();
                       } else {
-                        Log.i(TAG, "User " + userid + " receive DD " + taskid + " failure");
+                        Toast.makeText(AssignmentDetailActivity.this, "接受点点任务失败", Toast.LENGTH_SHORT);
                       }
                     }
                   });
@@ -719,6 +754,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         Intent intent = new Intent(AssignmentDetailActivity.this, AcceptorConfirmActivity.class);
         intent.putExtra("assignment", assignment);
         startActivity(intent);
+        finish();
       }
     });
   }
@@ -730,6 +766,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         Intent intent = new Intent(AssignmentDetailActivity.this, AcceptorConfirmActivity.class);
         intent.putExtra("assignment", assignment);
         startActivity(intent);
+        finish();
       }
     });
   }
@@ -741,12 +778,45 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
         Intent intent = new Intent(AssignmentDetailActivity.this, PublisherConfirmActivity.class);
         intent.putExtra("assignment", assignment);
         startActivity(intent);
+        finish();
       }
     });
   }
 
-  public void receiptListener() {
-    // TODO 获取回执
+  public void receiptListener(int taskid, int userid, int userType) {
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          String res = HttpClient.getInstance().get("/task/Feedback/" + taskid + "/" + userid + "/" + userType);
+          Log.i("data", "Feedback: " + res);
+
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              if (res.startsWith("[")) {
+                receipts = gson.fromJson(res, new TypeToken<List<Receipt>>(){}.getType());
+                llBottomButton2.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                    Intent intent = new Intent(AssignmentDetailActivity.this, ReceiptActivity.class);
+                    intent.putExtra("receipts", receipts);
+                    startActivity(intent);
+                    finish();
+                  }
+                });
+              } else {
+                Toast.makeText(AssignmentDetailActivity.this, "获取回执失败", Toast.LENGTH_SHORT);
+              }
+            }
+          });
+        } catch (IOException e) {
+          e.printStackTrace();
+        } catch (IllegalStateException e) {
+          e.printStackTrace();
+        }
+      }
+    }).start();
   }
 
   @Override

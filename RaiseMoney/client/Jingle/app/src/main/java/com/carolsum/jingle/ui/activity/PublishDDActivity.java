@@ -66,8 +66,8 @@ public class PublishDDActivity extends AppCompatActivity {
   Toolbar toolbar;
   @BindView(R.id.appbarLayout)
   AppBarLayout appBarLayout;
-  @BindView(R.id.receipt_desc)
-  EditText receiptDesc;
+  @BindView(R.id.desc)
+  EditText desc;
   @BindView(R.id.image_pick)
   ImageView imagePick;
   @BindView(R.id.remove_image)
@@ -300,7 +300,7 @@ public class PublishDDActivity extends AppCompatActivity {
           assignment.setAllocation(0);
         }
         assignment.setTitle(ddTitle.getText().toString());
-        assignment.setDesc(receiptDesc.getText().toString());
+        assignment.setDesc(desc.getText().toString());
         assignment.setDdl(String.valueOf(calendar.getTimeInMillis()));
         assignment.setTotalNum(Integer.parseInt(ddPeopleNum.getText().toString()));
 
@@ -308,7 +308,7 @@ public class PublishDDActivity extends AppCompatActivity {
           // 上传截图以获取对应的url
           String res = HttpClient.getInstance().upload(selectedDiandianInformationImagePath);
           if (res != null) {
-            user.setStudentCardURL(res.replace("\n", ""));
+            assignment.setPhotourl(res.replace("\n", ""));
           }
         }
         try {
@@ -330,7 +330,10 @@ public class PublishDDActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                   } else {
-                    Toast.makeText(getApplicationContext(), "发生错误", Toast.LENGTH_SHORT).show();
+                    if (res.equals("Your wallet is poor")) {
+                      Toast.makeText(getApplicationContext(), "账户余额不足！", Toast.LENGTH_SHORT).show();
+
+                    }
                   }
                 }
               });

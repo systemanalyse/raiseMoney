@@ -77,13 +77,12 @@ public class PPListFragment extends BaseFragment {
       }
     });
 
-    fetchPPList();
-
   }
 
   @Override
   public void onResume() {
     super.onResume();
+    fetchPPList();
   }
 
   @Override

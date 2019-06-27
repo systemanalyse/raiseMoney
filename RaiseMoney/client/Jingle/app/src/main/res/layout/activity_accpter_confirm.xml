@@ -116,7 +116,7 @@
 
         <EditText
           android:id="@+id/receipt_desc"
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="80dp"
           android:hint="在此编辑你的内容…"
           android:textColor="#ff696969"
@@ -129,7 +129,7 @@
           />
 
         <ImageView
-          android:id="@+id/pick_image"
+          android:id="@+id/image_pick"
           android:layout_width="28dp"
           android:layout_height="28dp"
           android:src="@drawable/pick_image"
@@ -141,7 +141,7 @@
           android:id="@+id/image_num"
           android:layout_width="50dp"
           android:layout_height="20dp"
-          android:text="（1/2）"
+          android:text="（0/2）"
           android:textColor="#ff94999d"
           android:textSize="14sp"
           android:layout_marginLeft="46dp"
@@ -163,7 +163,8 @@
           android:layout_marginRight="34dp"
           android:layout_marginBottom="26dp"
           android:layout_gravity="bottom|right"
-          android:src="@drawable/remove_image"/>
+          android:src="@drawable/remove_image"
+          android:visibility="gone"/>
 
       </FrameLayout>
 

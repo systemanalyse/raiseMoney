@@ -13,7 +13,9 @@ public class Receipt implements Serializable {
   */
   public List<String> photourl;
   public String desc;
-  public String time;
+  public String finishtime;
+  public User userinfo;
+  public int whetherConfirm;
 
   public Receipt() {};
 
@@ -33,12 +35,27 @@ public class Receipt implements Serializable {
     this.desc = desc;
   }
 
-  public String getTime() {
-    return time;
+  public String getFinishtime() {
+    return finishtime;
   }
 
-  public void setTime(String time) {
-    this.time = time;
+  public void setFinishtime(String finishtime) {
+    this.finishtime = finishtime;
   }
 
+  public User getUserinfo() {
+    return userinfo;
+  }
+
+  public void setUserinfo(User userinfo) {
+    this.userinfo = userinfo;
+  }
+
+  public int getWhetherConfirm() {
+    return whetherConfirm;
+  }
+
+  public void setWhetherConfirm(int whetherConfirm) {
+    this.whetherConfirm = whetherConfirm;
+  }
 }

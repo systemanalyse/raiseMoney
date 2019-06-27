@@ -67,7 +67,7 @@
         android:background="#fff5f8fa">
 
         <EditText
-          android:id="@+id/receipt_desc"
+          android:id="@+id/desc"
           android:layout_width="wrap_content"
           android:layout_height="80dp"
           android:hint="在此编辑你的内容…"

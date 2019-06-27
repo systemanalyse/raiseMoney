@@ -96,7 +96,7 @@ public class Assignment implements Serializable {
 
   public User publishorInfo;
   public int allocation;
-  public List<String> photoURL;
+  public String photourl;
 
   public Assignment(){}
 
@@ -272,11 +272,11 @@ public class Assignment implements Serializable {
     this.allocation = allocation;
   }
 
-  public List<String> getPhotoURL() {
-    return photoURL;
+  public String getPhotourl() {
+    return photourl;
   }
 
-  public void setPhotoURL(List<String> photoURL) {
-    this.photoURL = photoURL;
+  public void setPhotourl(String photourl) {
+    this.photourl = photourl;
   }
 }

@@ -9,10 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.carolsum.jingle.R;
 import com.carolsum.jingle.model.Assignment;
+import com.carolsum.jingle.model.Receipt;
 import com.carolsum.jingle.ui.adapters.AcceptorAdapter;
 
 import java.util.ArrayList;
@@ -35,8 +37,8 @@ public class ReceiptActivity extends AppCompatActivity {
 
     private Unbinder unbinder;
 
-    private List<Assignment> unconfirmList = new ArrayList<>();
-    private List<Assignment> finishList = new ArrayList<>();
+    private List<Receipt> unconfirmList = new ArrayList<>();
+    private List<Receipt> finishList = new ArrayList<>();
 
     private AcceptorAdapter unconfirmAdapter;
     private AcceptorAdapter finishAdapter;
@@ -65,41 +67,43 @@ public class ReceiptActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
+        // 待确认
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvReceiptUnconfirm.setLayoutManager(layoutManager);
-        unconfirmAdapter = new AcceptorAdapter(unconfirmList);
+        unconfirmAdapter = new AcceptorAdapter(getApplicationContext(), unconfirmList);
         rvReceiptUnconfirm.setAdapter(unconfirmAdapter);
 
+        // 已确认
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         rvReceiptFinish.setLayoutManager(layoutManager1);
-        finishAdapter = new AcceptorAdapter(finishList);
+        finishAdapter = new AcceptorAdapter(getApplicationContext(), finishList);
         rvReceiptFinish.setAdapter(finishAdapter);
 
-        unconfirmAdapter.setOnItemClickListener(new AcceptorAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+//        unconfirmAdapter.setOnItemClickListener(new AcceptorAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("AssignmentDetail", unconfirmAdapter.getItem(position));
 //                Intent intent = new Intent(ReceiptActivity.this, AssignmentDetailActivity.class);
 //                intent.putExtras(bundle);
 //                startActivityForResult(intent, REQUEST_CODE);
-                Toast.makeText(ReceiptActivity.this, "跳转到名片页",Toast.LENGTH_SHORT).show();
-                // TODO: 页面跳转
-            }
-        });
+//                Toast.makeText(ReceiptActivity.this, "跳转到名片页",Toast.LENGTH_SHORT).show();
+//                // TODO: 页面跳转
+//            }
+//        });
 
-        finishAdapter.setOnItemClickListener(new AcceptorAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+//        finishAdapter.setOnItemClickListener(new AcceptorAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("AssignmentDetail", finishAdapter.getItem(position));
 //                Intent intent = new Intent(ReceiptActivity.this, AssignmentDetailActivity.class);
 //                intent.putExtras(bundle);
 //                startActivityForResult(intent, REQUEST_CODE);
-                Toast.makeText(ReceiptActivity.this, "跳转到名片页",Toast.LENGTH_SHORT).show();
-                // TODO: 页面跳转
-            }
-        });
+//                Toast.makeText(ReceiptActivity.this, "跳转到名片页",Toast.LENGTH_SHORT).show();
+//                // TODO: 页面跳转
+//            }
+//        });
     }
 
     @Override

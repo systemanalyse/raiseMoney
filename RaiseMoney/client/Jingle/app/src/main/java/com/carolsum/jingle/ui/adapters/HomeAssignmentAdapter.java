@@ -43,12 +43,14 @@ public class HomeAssignmentAdapter extends RecyclerView.Adapter<HomeAssignmentAd
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
     Assignment assignment = assignmentList.get(i);
     if (assignment.getTaskType() == 0) {
       // paopao
       viewHolder.startPos.setText(assignment.getStartPosition());
       viewHolder.endPos.setText(assignment.getEndPosition());
-      viewHolder.ddl.setText(assignment.getDdl());
+      viewHolder.ddl.setText(dateFormat.format(Long.parseLong(assignment.getDdl())));
       viewHolder.paopaoInfoLayout.setVisibility(View.VISIBLE);
       viewHolder.diandianInfoLayout.setVisibility(View.GONE);
     } else {
@@ -65,18 +67,17 @@ public class HomeAssignmentAdapter extends RecyclerView.Adapter<HomeAssignmentAd
     }
 
     // 格式化时间戳
-    DateFormat dateFormat = new SimpleDateFormat("HH:mm");
     viewHolder.assignmentTime.setText(dateFormat.format(Long.parseLong(assignment.getBeginTime())));
     viewHolder.assignmentValue.setText(assignment.getValue());
 
     // publisher information
     viewHolder.publisherName.setText(assignment.getPublishorInfo().getName());
-    if (assignment.getPublishorInfo().getAvatarURL() != null && !assignment.getPublishorInfo().getAvatarURL().equals("")) {
+    if (assignment.getPublishorInfo().getAvatarURL() != null && !assignment.getPublishorInfo().getAvatarURL().equals("") && !assignment.getPublishorInfo().getAvatarURL().equals("undefined")) {
       // 加载用户头像
       Glide.with(context).load(HttpClient.getPictureBaseUrl + assignment.getPublishorInfo().getAvatarURL()).into(viewHolder.publisherAvatar);
     } else {
       // 加载默认头像
-      Glide.with(context).load(HttpClient.getPictureBaseUrl + assignment.getPublishorInfo().getAvatarURL()).into(viewHolder.publisherAvatar);
+      Glide.with(context).load(R.drawable.default_avatar).into(viewHolder.publisherAvatar);
     }
 
     if (onItemClickListener != null) {

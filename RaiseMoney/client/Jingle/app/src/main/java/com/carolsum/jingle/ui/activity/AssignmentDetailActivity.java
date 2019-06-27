@@ -209,6 +209,8 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
   }
 
   private void init() {
+    Log.i("data", "AssignmentDetailActivity: " + gson.toJson(assignment).toString());
+
 
     SharedPreferences sharedPreferences = getSharedPreferences("share", MODE_PRIVATE);
     String userId = sharedPreferences.getString("userid", "");
@@ -390,8 +392,10 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             llBottomText2.setVisibility(View.GONE);
             llBottomButton1.setVisibility(View.VISIBLE);
             llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton1.setText("查看快递截图");
             tvBottomButton2.setText("确认收到");
 
+            screenShotListener(llBottomButton1, assignment.getPhotourl());
             confirmListener();
 
           } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
@@ -402,9 +406,8 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             tvBottomButton1.setText("查看快递截图");
             tvBottomButton2.setText("通知已取");
 
-            finishPPlistener();
-
             screenShotListener(llBottomButton1, assignment.getPhotourl());
+            finishPPlistener();
 
 
           } else if (assignment.getTaskType() == 1 && assignment.getOrigin() == 1) {
@@ -449,8 +452,10 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             llBottomText2.setVisibility(View.GONE);
             llBottomButton1.setVisibility(View.VISIBLE);
             llBottomButton2.setVisibility(View.VISIBLE);
+            tvBottomButton1.setText("查看快递截图");
             tvBottomButton2.setText("确认收到");
 
+            screenShotListener(llBottomButton1, assignment.getPhotourl());
             confirmListener();
 
           } else if (assignment.getTaskType() == 0 && (assignment.getOrigin() == 0 || assignment.getOrigin() == 2)) {
@@ -652,7 +657,7 @@ public class AssignmentDetailActivity  extends AppCompatActivity {
             }
           });
         } else {
-          Toast.makeText(AssignmentDetailActivity.this, "没有图片", Toast.LENGTH_SHORT);
+          Toast.makeText(AssignmentDetailActivity.this, "未添加图片", Toast.LENGTH_SHORT).show();
         }
 
       }

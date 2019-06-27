@@ -35,9 +35,11 @@
     <activity android:name=".ui.activity.GuideActivity"></activity>
     <activity android:name=".ui.activity.AssignmentDetailActivity" />
     <activity android:name=".ui.activity.AcceptorConfirmActivity" />
+    <activity android:name=".ui.activity.PublisherConfirmActivity" />
     <activity android:name=".ui.activity.ConfirmFeedbackActivity" />
     <activity android:name=".ui.activity.PublishPPActivity" />
     <activity android:name=".ui.activity.PublishDDActivity" />
+    <activity android:name=".ui.activity.ReceiptActivity" />
   </application>
 
 </manifest>

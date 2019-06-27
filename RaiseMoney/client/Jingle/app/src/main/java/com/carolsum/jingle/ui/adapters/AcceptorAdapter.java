@@ -49,7 +49,7 @@ public class AcceptorAdapter extends RecyclerView.Adapter<AcceptorAdapter.ViewHo
     Receipt receipt = receiptList.get(i);
 
 
-    if (select) {
+    if (select && receipt.getWhetherConfirm() == 0) {
       viewHolder.checkBox.setVisibility(View.VISIBLE);
     } else {
       viewHolder.checkBox.setVisibility(View.GONE);

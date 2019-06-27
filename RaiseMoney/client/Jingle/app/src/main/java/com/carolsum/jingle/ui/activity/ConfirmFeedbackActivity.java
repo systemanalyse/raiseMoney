@@ -145,6 +145,22 @@ public class ConfirmFeedbackActivity extends AppCompatActivity {
         }
       });
 
+    } else if (op.equals("confirm")) {
+      title.setText("确认完成");
+      hint.setText("确认成功");
+      btnText.setText("返回查看");
+
+      btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+          Intent intent = new Intent(ConfirmFeedbackActivity.this, AssignmentDetailActivity.class);
+          intent.putExtra("assignment", assignment);
+          startActivity(intent);
+          finish();
+        }
+      });
+
     }
   }
 }

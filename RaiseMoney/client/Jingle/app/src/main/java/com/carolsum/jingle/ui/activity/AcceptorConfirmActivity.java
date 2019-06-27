@@ -159,7 +159,7 @@ public class AcceptorConfirmActivity extends AppCompatActivity {
     }
 
     assignmentTitle.setText(assignment.getTitle());
-    if (assignment.getPublishorInfo().getAvatarURL() != null && !assignment.getPublishorInfo().getAvatarURL().equals("")) {
+    if (assignment.getPublishorInfo().getAvatarURL() != null && !assignment.getPublishorInfo().getAvatarURL().equals("") || assignment.getPublishorInfo().getAvatarURL().equals("undefined")) {
       // 加载用户头像
       Glide.with(this).load(HttpClient.getPictureBaseUrl + assignment.getPublishorInfo().getAvatarURL()).into(userAvatar);
     } else {

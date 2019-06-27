@@ -5,10 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.carolsum.jingle.R;
@@ -46,16 +50,8 @@ public class HomeFragment extends BaseFragment {
     titles.add("跑跑");
     titles.add("点点");
 
-//    String from = getActivity().getIntent().getStringExtra("from");
-//    if (from.equals("") && from != null) {
-//      if (from.equals("pp"))
-//      getChildFragmentManager()
-//      .beginTransaction()
-//      .replace()
-//      .addToBackStack(null)
-//      .commit();
-//
-//    }
+
+
   }
 
   @Override
@@ -63,6 +59,7 @@ public class HomeFragment extends BaseFragment {
     super.onActivityCreated(savedInstanceState);
 
     initViewPager();
+
   }
 
   @Override
@@ -95,19 +92,41 @@ public class HomeFragment extends BaseFragment {
     });
 
     tabLayout.setupWithViewPager(viewPager);
+    for (int i = 0; i < tabLayout.getTabCount(); i++) {
+      TabLayout.Tab tab = tabLayout.getTabAt(i);
+      if (tab != null) {
+        tab.setCustomView(getTabView(i));
+      }
+    }
+
+    tabLayout.getTabAt(0).select();
+    viewPager.setCurrentItem(1);
+    viewPager.setCurrentItem(0);
   }
 
   @Override
-  protected void initEvent() {
+  protected void initEvent () {
     tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
       @Override
       public void onTabSelected(TabLayout.Tab tab) {
         String type = tab.getText().toString();
         EventBus.getDefault().post(new LoginEvent(type));
+
+        View view = tab.getCustomView();
+        if (null != view && view instanceof TextView) {
+          ((TextView) view).setTextSize(22);
+          ((TextView) view).setTextColor(ContextCompat.getColor(getContext(), R.color.home_tab_selected));
+        }
+
       }
 
       @Override
       public void onTabUnselected(TabLayout.Tab tab) {
+        View view = tab.getCustomView();
+        if (null != view && view instanceof TextView) {
+          ((TextView) view).setTextSize(18);
+          ((TextView) view).setTextColor(ContextCompat.getColor(getContext(), R.color.home_tab_unselected));
+        }
 
       }
 
@@ -119,8 +138,19 @@ public class HomeFragment extends BaseFragment {
   }
 
   @Override
-  public void onDestroyView() {
+  public void onDestroyView () {
     unbinder.unbind();
     super.onDestroyView();
   }
+
+  /**
+   * 自定义Tab的View
+   */
+  private View getTabView(int currentPosition) {
+    View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_tab, null);
+    TextView textView = (TextView) view.findViewById(R.id.tab_item_textview);
+    textView.setText(titles.get(currentPosition));
+    return view;
+  }
+
 }

@@ -31,4 +31,6 @@
     <color name="withdraw_card_bg">#B2DC85</color>
     <color name="progress_bar_fill">#C4D2FF</color>
     <color name="unread_msg_color">#FF1C38</color>
+  <color name="home_tab_selected">#303233</color>
+  <color name="home_tab_unselected">#A2A2A2</color>
 </resources>

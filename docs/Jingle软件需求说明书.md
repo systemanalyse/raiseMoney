@@ -117,13 +117,13 @@ Axure rp及html文件已上传至文件夹 PrototypeDesign
 ## 二、产品结构
 
 ### 2.1 信息架构图
-![](./images/Information architecture.png)
+![](./images/Information_architecture.png)
 
 
 
 ### 2.2 功能结构图
 
-![](./images/Functional structure.png)
+![](./images/Functional_structure.png)
 
 
 

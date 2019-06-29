@@ -35,13 +35,13 @@
 
 ### 2.1 信息架构图
 
-![](/Users/shiro/Desktop/images/Information%20architecture.png)
+![](./images/Information_architecture.png)
 
 
 
 ### 2.2 功能结构图
 
-![](/Users/shiro/Desktop/images/Functional%20structure.png)
+![](./images/Functional_structure.png)
 
 
 
@@ -51,11 +51,13 @@
 
 ### 3.1 跑跑任务
 
-![](/Users/shiro/Desktop/images/paopao_process.png)
+![](./images/paopao_process.png)
 
 
 
-### 3.2 点点任务![](/Users/shiro/Desktop/images/diandian_process.png)
+### 3.2 点点任务
+
+![](./images/diandian_process.png)
 
 
 
@@ -80,7 +82,7 @@
 
 ### 5.1 引导/启动页
 
-![](/Users/shiro/Desktop/images/5_2.png)
+![](./images/5_2.png)
 
 | 页面名称 | 引导/启动页                                                  |
 | :------- | :----------------------------------------------------------- |
@@ -99,7 +101,7 @@
 #### **5.2.1 登陆**
 
 （低/高保真原型图）
-![](/Users/shiro/Desktop/images/5_3_1.png)
+![](./images/5_3_1.png)
 
 
 
@@ -118,9 +120,9 @@
 
 （低/高保真原型图）
 
-![](/Users/shiro/Desktop/images/5_3_2_a.png)
+![](./images/5_3_2_a.png)
 
-![](/Users/shiro/Desktop/images/5_3_2_b.png)
+![](./images/5_3_2_b.png)
 
 
 
@@ -140,7 +142,7 @@
 ### **5.3.1 跑跑**
 
 **跑跑任务接单方页面流程**
-![](/Users/shiro/Desktop/images/5_4_1.png)
+![](./images/5_4_1.png)
 
 |  功能描述  | 跑跑任务接单方                                               |
 | :--------: | :----------------------------------------------------------- |
@@ -156,7 +158,7 @@
 
 **跑跑任务发起方页面流程**
 
-![](/Users/shiro/Desktop/images/5_4_1_b.png)
+![](./images/5_4_1_b.png)
 
 
 
@@ -174,7 +176,7 @@
 ### 5.3.2 点点
 
 **点点任务接单方页面流程**
-![](/Users/shiro/Desktop/images/5_4_2_a.png)
+![](./images/5_4_2_a.png)
 
 
 
@@ -191,7 +193,7 @@
 
 
 **点点任务发起方页面流程**
-![](/Users/shiro/Desktop/images/5_4_2_b.png)
+![](./images/5_4_2_b.png)
 
 
 
@@ -207,7 +209,7 @@
 
 
 **回执清单空状态**
-![](/Users/shiro/Desktop/images/5_4_2_c.png)
+![](./images/5_4_2_c.png)
 
 
 
@@ -216,9 +218,9 @@
 ------
 
 （低/高保真原型图）
-![](/Users/shiro/Desktop/images/5_5_a.png)
+![](./images/5_5_a.png)
 
-![](/Users/shiro/Desktop/images/5_5_b.png)
+![](./images/5_5_b.png)
 
 
 
@@ -269,7 +271,7 @@
 
 
 
-![](/Users/shiro/Desktop/images/5_6.png)
+![](./images/5_6.png)
 
 
 
@@ -286,9 +288,9 @@
 
 
 
-![](/Users/shiro/Desktop/images/5_6_2_a.png)
+![](./images/5_6_2_a.png)
 
-![](/Users/shiro/Desktop/images/5_6_2_b.png)
+![](./images/5_6_2_b.png)
 
 
 
@@ -306,7 +308,7 @@
 
 
 
-![](/Users/shiro/Desktop/images/5_6_3.png)
+![](./images/5_6_3.png)
 
 
 
@@ -324,7 +326,7 @@
 
 
 
-![](/Users/shiro/Desktop/images/5_6_4.png)
+![](./images/5_6_4.png)
 
 
 
@@ -342,9 +344,9 @@
 
 
 （低/高保真原型图）
-![](/Users/shiro/Desktop/images/5_6_5_a.png)
+![](./images/5_6_5_a.png)
 
-![](/Users/shiro/Desktop/images/5_6_5_b.png)
+![](./images/5_6_5_b.png)
 
 
 
